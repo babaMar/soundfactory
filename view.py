@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import argparse
 
 from utils.signal import get_envelope, load_audio
