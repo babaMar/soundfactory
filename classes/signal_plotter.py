@@ -19,8 +19,8 @@ class SignalPlotter(object):
         # Mono signal is treated as left only
         self.left_raw = l_signal
         self.plot_envelope = plot_envelope
-        self.y_label = r"$\mathrm{Mono~Channel}~(t)$"
-        self.x_label = r"$t~~\mathrm{[sec]}$"
+        self.y_label = "Mono~Channel (t)"
+        self.x_label = "[sec]"
 
         if any(l_signal_envelope):
             self.left_envelope = l_signal_envelope
@@ -72,7 +72,7 @@ class SignalPlotter(object):
             Pxx, freqs, bins, im = \
                 ax.specgram(channel, NFFT=npoints, Fs=self.sampling_rate, noverlap=overlap, cmap=plt.cm.jet)
             ax.set_xlabel(self.x_label)
-            ax.set_ylabel(r"$Frequency~~\mathrm{[Hz]}$")
+            ax.set_ylabel("Frequency [Hz]")
             ax.set_ylim(20., 20000.)
             ax.set_yscale('log')
             # TODO only label ticks for values that are present in the spectrum, not readable otherwise

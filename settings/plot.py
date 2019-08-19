@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from itertools import cycle
 
 
-plt.rc('text', usetex=True)
+plt.rc('text', usetex=False)
 plt.rcParams['legend.numpoints'] = 1
 plt.rc('font', serif='Palatino')
 plt.rcParams['ytick.labelsize'] = 16

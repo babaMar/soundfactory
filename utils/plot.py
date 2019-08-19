@@ -8,7 +8,7 @@ def time_domain_signal(time_array, signal_arrays, tmin=0., tmax=1.):
     ax = fig.add_subplot(111)
     for signal_array in signal_arrays:
         ax.plot(time_array, signal_array, lw=1)
-    ax.set_ylabel(r"$\mathrm{Audio~Mono}~(t)$")
-    ax.set_xlabel(r"$t~~\mathrm{[sec]}$")
+    ax.set_ylabel("Audio~Mono (t)")
+    ax.set_xlabel("t [sec]")
     ax.set_xlim(tmin, tmax)
     plt.show()
