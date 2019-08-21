@@ -1,13 +1,18 @@
 #!/usr/bin/env python
 
 import click
-
+from settings.input_validators import ExistentWav
 from utils.signal import get_envelope, load_audio
 from classes.signal_plotter import SignalPlotter
 
 
 @click.command()
-@click.argument("input-file", metavar="INPUT")
+@click.option(
+    "--input-file",
+    "-i",
+    metavar="INPUT",
+    required=True,
+    type=ExistentWav())
 @click.option(
     "--calculate_envelope", "-e",
     default=False,
@@ -15,6 +20,7 @@ from classes.signal_plotter import SignalPlotter
 @click.option(
     "--msec-window", "-w",
     default=1,
+    type=float,
     metavar="MSECWINDOW",
     help="Time window for sliding FFT in Specgram Plot")
 def main(input_file, calculate_envelope, msec_window):
@@ -39,14 +45,14 @@ def main(input_file, calculate_envelope, msec_window):
         ch1_envelope, ch2_envelope = get_envelope(ch1), get_envelope(ch2)
         show_envelope = True
 
-    Plotter = SignalPlotter(
+    plotter = SignalPlotter(
         ch1,
         l_signal_envelope=ch1_envelope,
         r_signal=ch2,
         r_signal_envelope=ch2_envelope,
         sampling_rate=samplerate,
         plot_envelope=show_envelope)
-    Plotter.show(wmsec=float(msec_window))
+    plotter.show(wmsec=float(msec_window))
 
 
 if __name__ == '__main__':
