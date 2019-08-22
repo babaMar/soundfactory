@@ -1,49 +1,57 @@
 #!/usr/bin/env python
 
-import argparse
-
+import click
+from settings.input_validators import ExistentWav
 from utils.signal import get_envelope, load_audio
 from classes.signal_plotter import SignalPlotter
 
 
-def parse_arguments():
-    parser = argparse.ArgumentParser(description='Visualize the Signal in a wave file')
-    parser.add_argument('-i', '--input-file', metavar='INPUT', required=True, help='Path to wav input file')
-    parser.add_argument('-e', '--calculate-envelope', action='store_true', help='Whether to show the signal envelope')
-    parser.add_argument('-w', '--msec-window', metavar='MSECWINDOW', default=1, help='Time window for sliding FFT in Specgram Plot.')
-    args = parser.parse_args()
-    return args
-
-
-def main():
-    args = parse_arguments()
-
-    audio_file = args.input_file
+@click.command()
+@click.option(
+    "--input-file", "-i",
+    metavar="INPUT",
+    required=True,
+    type=ExistentWav())
+@click.option(
+    "--calculate_envelope", "-e", is_flag=True,
+    help="Whether to show the signal envelope")
+@click.option(
+    "--msec-window", "-w",
+    default=1,
+    type=click.FLOAT,
+    metavar="MSECWINDOW",
+    help="Time window for sliding FFT in Specgram Plot")
+@click.option("--start", type=click.FLOAT, help="seconds to start from")
+@click.option("--end", type=click.FLOAT, help="seconds to end to")
+def main(input_file, calculate_envelope, msec_window, start, end):
+    """
+    Visualize the signal in an INPUT wav file
+    """
     # TODO Logging!
 
     # Load signal and sampling rate
-    signal, samplerate = load_audio(audio_file)
+    signal, samplerate = load_audio(input_file)
 
     # Mono signal
     ch1, ch2 = signal, ()
     # Check if stereo signal
     if len(signal.shape) == 2:
-        ch1, ch2 = signal[:,0], signal[:,1]
+        ch1, ch2 = signal[:, 0], signal[:, 1]
 
     show_envelope = False
     ch1_envelope, ch2_envelope = (), ()
-    if args.calculate_envelope:
+    if calculate_envelope:
         # Volume envelopes
         ch1_envelope, ch2_envelope = get_envelope(ch1), get_envelope(ch2)
         show_envelope = True
-
-    Plotter = SignalPlotter(ch1,
-                            l_signal_envelope=ch1_envelope,
-                            r_signal=ch2,
-                            r_signal_envelope=ch2_envelope,
-                            sampling_rate=samplerate,
-                            plot_envelope=show_envelope)
-    Plotter.show(wmsec=float(args.msec_window))
+    plotter = SignalPlotter(
+        ch1,
+        l_signal_envelope=ch1_envelope,
+        r_signal=ch2,
+        r_signal_envelope=ch2_envelope,
+        sampling_rate=samplerate,
+        plot_envelope=show_envelope)
+    plotter.show(wmsec=float(msec_window), start=start, end=end)
 
 
 if __name__ == '__main__':

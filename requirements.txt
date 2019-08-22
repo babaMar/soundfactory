@@ -1,4 +1,5 @@
 cffi==1.11.2
+Click==7.0
 cycler==0.10.0
 lxml==4.2.5
 matplotlib==2.1.1
