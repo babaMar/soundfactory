@@ -13,7 +13,7 @@ from classes.signal_plotter import SignalPlotter
     required=True,
     type=ExistentWav())
 @click.option(
-    "--calculate_envelope", "-e",
+    "--calculate_envelope", "-e", is_flag=True,
     help="Whether to show the signal envelope")
 @click.option(
     "--msec-window", "-w",
@@ -44,7 +44,6 @@ def main(input_file, calculate_envelope, msec_window, start, end):
         # Volume envelopes
         ch1_envelope, ch2_envelope = get_envelope(ch1), get_envelope(ch2)
         show_envelope = True
-
     plotter = SignalPlotter(
         ch1,
         l_signal_envelope=ch1_envelope,
