@@ -47,50 +47,58 @@ class SignalPlotter(object):
     def _create_figures(self, size=figure_size_single):
         return [next(figure_generator(size=size)) for _ in range(self.n_figures)]
 
-    def _plot_signal(self):
-        figures = self._create_figures()
-        axes = [f.add_subplot(111) for f in figures]
-
+    def _plot_signal(self, axes):
         for ax, channel in zip(axes, self.channels):
             c = next(colors)
             ax.plot(self.time_range, channel, c + '--', lw=0.1)
             if self.plot_envelope:
-                ax.plot(self.time_range, self.envelopes[self.i_env], 'k-', lw=0.1)
+                ax.plot(
+                    self.time_range, self.envelopes[self.i_env], 'k-', lw=0.1)
                 self.i_env += 1
             ax.set_ylabel(self.y_label)
             ax.set_xlabel(self.x_label)
             self.y_label = self.y_label.replace('Left', 'Right')
 
-    def _plot_spectrogram(self, wmsec=0.005):
-        figures = self._create_figures(size=figure_size_double)
-        axes = [f.add_subplot(111) for f in figures]
+    def _plot_spectrogram(self, axes, wmsec=0.005):
         npoints = int(self.sampling_rate * wmsec)
         overlap = int(self.sampling_rate * wmsec / 2.)
         tone_freqs = [v for v in TONE_FREQ_MAP.values()]
         tone_names = [k for k in TONE_FREQ_MAP.keys()]
         for ax, channel, in zip(axes, self.channels):
-            Pxx, freqs, bins, im = \
-                ax.specgram(channel, NFFT=npoints, Fs=self.sampling_rate, noverlap=overlap, cmap=plt.cm.jet)
+            Pxx, freqs, bins, im = ax.specgram(
+                channel, NFFT=npoints, Fs=self.sampling_rate,
+                noverlap=overlap, cmap=plt.cm.jet)
             ax.set_xlabel(self.x_label)
             ax.set_ylabel("Frequency [Hz]")
             ax.set_ylim(20., 20000.)
             ax.set_yscale('log')
-            # TODO only label ticks for values that are present in the spectrum, not readable otherwise
+            """
+            TODO only label ticks for values that are present
+            in the spectrum, not readable otherwise
+            """
             # Calculate FFT and pass find dominant frequencies
             ax.set_yticks(tone_freqs)
             ax.set_yticklabels(tone_names)
 
-    def _set_xlim(self, left=None, right=None):
-        figures = list(map(plt.figure, plt.get_fignums()))
-        for fig in figures:
-            axes = fig.get_axes()
-            for ax in axes:
-                ax.set_xlim(left, right)
+    def _set_xlim(self, axes, left=None, right=None):
+        for ax in axes:
+            ax.set_xlim(left, right)
 
-    def show(self, wmsec=1, start=None, end=None):
+    def show(self, wmsec=1, start=None, end=None, mode="separate"):
         # TODO define figures here and pass to class methods
-        self._plot_signal()
-        self._plot_spectrogram(wmsec=wmsec)
+        if mode == "separate":
+            spec_figs = self._create_figures(size=figure_size_double)
+            spec_axes = [f.add_subplot(111) for f in spec_figs]
+            signal_figs = self._create_figures()
+            signal_axes = [f.add_subplot(111) for f in signal_figs]
+        elif mode == "single":
+            nrows, ncols = 2, self.n_figures
+            fig = plt.figure(constrained_layout=True)
+            spec = fig.add_gridspec(ncols=ncols, nrows=nrows)
+            signal_axes = [fig.add_subplot(spec[0, c]) for c in range(ncols)]
+            spec_axes = [fig.add_subplot(spec[1, c]) for c in range(ncols)]
+        self._plot_signal(signal_axes)
+        self._plot_spectrogram(spec_axes, wmsec=wmsec)
         if any([start, end]):
-            self._set_xlim(start, end)
+            self._set_xlim(spec_axes + signal_axes, start, end)
         plt.show()
