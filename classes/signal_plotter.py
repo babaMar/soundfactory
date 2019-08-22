@@ -80,9 +80,17 @@ class SignalPlotter(object):
             ax.set_yticks(tone_freqs)
             ax.set_yticklabels(tone_names)
 
-    def show(self, wmsec=1):
+    def _set_xlim(self, left=None, right=None):
+        figures = list(map(plt.figure, plt.get_fignums()))
+        for fig in figures:
+            axes = fig.get_axes()
+            for ax in axes:
+                ax.set_xlim(left, right)
+
+    def show(self, wmsec=1, start=None, end=None):
         # TODO define figures here and pass to class methods
         self._plot_signal()
         self._plot_spectrogram(wmsec=wmsec)
-
+        if any([start, end]):
+            self._set_xlim(start, end)
         plt.show()

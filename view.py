@@ -8,22 +8,22 @@ from classes.signal_plotter import SignalPlotter
 
 @click.command()
 @click.option(
-    "--input-file",
-    "-i",
+    "--input-file", "-i",
     metavar="INPUT",
     required=True,
     type=ExistentWav())
 @click.option(
     "--calculate_envelope", "-e",
-    default=False,
     help="Whether to show the signal envelope")
 @click.option(
     "--msec-window", "-w",
     default=1,
-    type=float,
+    type=click.FLOAT,
     metavar="MSECWINDOW",
     help="Time window for sliding FFT in Specgram Plot")
-def main(input_file, calculate_envelope, msec_window):
+@click.option("--start", type=click.FLOAT, help="seconds to start from")
+@click.option("--end", type=click.FLOAT, help="seconds to end to")
+def main(input_file, calculate_envelope, msec_window, start, end):
     """
     Visualize the signal in an INPUT wav file
     """
@@ -52,7 +52,7 @@ def main(input_file, calculate_envelope, msec_window):
         r_signal_envelope=ch2_envelope,
         sampling_rate=samplerate,
         plot_envelope=show_envelope)
-    plotter.show(wmsec=float(msec_window))
+    plotter.show(wmsec=float(msec_window), start=start, end=end)
 
 
 if __name__ == '__main__':
