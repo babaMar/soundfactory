@@ -84,7 +84,15 @@ class SignalPlotter(object):
         for ax in axes:
             ax.set_xlim(left, right)
 
-    def show(self, wmsec=1, start=None, end=None, mode="separate"):
+    def _set_ylim(self, axes, bottom=None, top=None):
+        for ax in axes:
+            ax.set_ylim(bottom, top)
+
+    def show(
+            self, wmsec=1,
+            start=None, end=None,
+            min_freq=None, max_freq=None,
+            mode="separate"):
         # TODO define figures here and pass to class methods
         if mode == "separate":
             spec_figs = self._create_figures(size=figure_size_double)
@@ -101,4 +109,6 @@ class SignalPlotter(object):
         self._plot_spectrogram(spec_axes, wmsec=wmsec)
         if any([start, end]):
             self._set_xlim(spec_axes + signal_axes, start, end)
+        if any([min_freq, max_freq]):
+            self._set_ylim(spec_axes, min_freq, max_freq)
         plt.show()
