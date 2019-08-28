@@ -127,5 +127,10 @@ TONE_FREQ_MAP = {"C0": 16.35,
                  }
 
 
+AMP_THRESHOLD = .05  # percentage on max amplitude threshold
+FREQ_MIN_MARGIN = 40
+FREQ_MAX_MARGIN = 80
+
+
 def figure_generator(size=figure_size_double):
     yield plt.figure(figsize=size)
