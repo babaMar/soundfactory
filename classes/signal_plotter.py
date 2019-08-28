@@ -61,7 +61,7 @@ class SignalPlotter(object):
         return x[mask_idx[0]], x[mask_idx[-1]]
 
     def _plot_fft(self, axes, axcolors=None):
-        if axcolors is None:
+        if not axcolors:
             axcolors = [next(colors) for _ in range(len(axes))]
         for ax, channel, c in zip(axes, self.channels, axcolors):
             freqs, pws = spectrum(channel, self.sampling_rate)
@@ -72,7 +72,7 @@ class SignalPlotter(object):
             self,
             axes,
             axcolors=None):
-        if axcolors is None:
+        if not axcolors:
             axcolors = [next(colors) for _ in range(self.n_figures)]
         for ax, channel, c in zip(axes, self.channels, axcolors):
             ax.plot(self.time_range, channel, c + '--', lw=0.1)
@@ -105,11 +105,13 @@ class SignalPlotter(object):
             # ax.set_yticks(tone_freqs)
             # ax.set_yticklabels(tone_names)
 
-    def _set_xlim(self, axes, left=None, right=None):
+    @staticmethod
+    def _set_xlim(axes, left=None, right=None):
         for ax in axes:
             ax.set_xlim(left, right)
 
-    def _set_ylim(self, axes, bottom=None, top=None):
+    @staticmethod
+    def _set_ylim(axes, bottom=None, top=None):
         for ax in axes:
             ax.set_ylim(bottom, top)
 
@@ -119,7 +121,6 @@ class SignalPlotter(object):
             min_freq=None, max_freq=None,
             threshold=AMP_THRESHOLD,
             mode="separate"):
-        # TODO define figures here and pass to class methods
         if mode == "separate":
             spec_figs = self._create_figures(size=figure_size_double)
             spec_axes = [f.add_subplot(111) for f in spec_figs]
