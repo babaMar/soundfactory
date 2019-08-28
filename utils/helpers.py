@@ -1,4 +1,5 @@
 from math import log
+import numpy as np
 
 BASE = 2
 CENTS_PER_OCTAVE = 1200
@@ -20,3 +21,17 @@ def freq_at_n_semitones(tone_freq, n):
 def freq_at_n_quartertones(tone_freq, n):
     cents_interval = n * QUARTERTONE_CENTS
     return tone_freq * pow(2, cents_interval / CENTS_PER_OCTAVE)
+
+
+def above_thr_mask(a, threshold=.1):
+    """a is a numpy.array"""
+    peak_threshold = threshold * a.max()
+    return a >= peak_threshold
+
+
+def spectrum(signal, samplerate):
+    fft = np.fft.rfft(signal)
+    freqs = np.fft.fftfreq(signal.size, d=1/samplerate)
+    freqs_mask = np.where(freqs >= 0)[0]
+    pws = np.abs(fft)**2
+    return freqs[freqs_mask], pws[freqs_mask]

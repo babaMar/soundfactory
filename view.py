@@ -2,6 +2,7 @@
 
 import click
 from settings.input_validators import ExistentWav
+from settings.plot import AMP_THRESHOLD
 from utils.signal import get_envelope, load_audio
 from classes.signal_plotter import SignalPlotter
 
@@ -23,7 +24,21 @@ from classes.signal_plotter import SignalPlotter
     help="Time window for sliding FFT in Specgram Plot")
 @click.option("--start", type=click.FLOAT, help="seconds to start from")
 @click.option("--end", type=click.FLOAT, help="seconds to end to")
-def main(input_file, calculate_envelope, msec_window, start, end):
+@click.option("--min-freq", type=click.FLOAT, help="min frequency to show")
+@click.option("--max-freq", type=click.FLOAT, help="max frequency to show")
+@click.option("--single", "mode", flag_value="single")
+@click.option("--separate", "mode", flag_value="separate", default=True)
+@click.option(
+    "--thr", "threshold",
+    type=click.FLOAT,
+    default=AMP_THRESHOLD,
+    help="amplitude percentage threshold")
+def main(
+        input_file, calculate_envelope,
+        msec_window, start, end, mode,
+        min_freq, max_freq, threshold
+):
+
     """
     Visualize the signal in an INPUT wav file
     """
@@ -51,7 +66,12 @@ def main(input_file, calculate_envelope, msec_window, start, end):
         r_signal_envelope=ch2_envelope,
         sampling_rate=samplerate,
         plot_envelope=show_envelope)
-    plotter.show(wmsec=float(msec_window), start=start, end=end)
+    plotter.show(
+        wmsec=float(msec_window),
+        start=start, end=end,
+        min_freq=min_freq, max_freq=max_freq,
+        threshold=threshold,
+        mode=mode)
 
 
 if __name__ == '__main__':
