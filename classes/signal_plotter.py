@@ -1,11 +1,17 @@
 import numpy as np
 import matplotlib.ticker as ticker
-from settings.plot import (plt,
-                           figure_size_single,
-                           figure_size_double,
-                           figure_generator,
-                           colors,
-                           TONE_FREQ_MAP)
+from utils.helpers import above_thr_mask, spectrum
+from settings.plot import (
+    plt,
+    figure_size_single,
+    figure_size_double,
+    figure_generator,
+    colors,
+    TONE_FREQ_MAP,
+    AMP_THRESHOLD,
+    FREQ_MAX_MARGIN,
+    FREQ_MIN_MARGIN
+)
 
 
 class SignalPlotter(object):
@@ -48,39 +54,17 @@ class SignalPlotter(object):
     def _create_figures(self, size=figure_size_single):
         return [next(figure_generator(size=size)) for _ in range(self.n_figures)]
 
-    def _spectrum(self, signal, samplerate):
-        fft = np.fft.rfft(signal)
-        freqs = np.fft.fftfreq(signal.size, d=1/samplerate)
-        freqs_mask = np.where(freqs >= 0)[0]
-        pws = np.abs(fft)**2
-        return freqs[freqs_mask], pws[freqs_mask]
-
-    def _find_last_contrib_idx(self, a, threshold=0.1):
-        peak_threshold = threshold * a.max()
-        mask = a >= peak_threshold
-        return np.where(mask)[0][-1]
-
-    def _find_first_contrib_idx(self, a, threshold=0.1):
-        peak_threshold = threshold * a.max()
-        mask = a >= peak_threshold
-        first = np.where(mask)[0][0]
-        return first
-
     def _lims_above_thr(self, ax, threshold=.1):
         x, y = ax.lines[0].get_xdata(), ax.lines[0].get_ydata()
-        first = self._find_first_contrib_idx(y)
-        last = self._find_last_contrib_idx(y)
-        return x[first], x[last]
+        mask = above_thr_mask(y, threshold=threshold)
+        mask_idx = np.where(mask)[0]
+        return x[mask_idx[0]], x[mask_idx[-1]]
 
-    def _plot_fft(
-            self,
-            axes,
-            axcolors=None,
-            threshold=.1):
+    def _plot_fft(self, axes, axcolors=None):
         if axcolors is None:
             axcolors = [next(colors) for _ in range(len(axes))]
         for ax, channel, c in zip(axes, self.channels, axcolors):
-            freqs, pws = self._spectrum(channel, self.sampling_rate)
+            freqs, pws = spectrum(channel, self.sampling_rate)
             ax.plot(freqs, pws, c + "--")
             ax.set_xscale("log")
 
@@ -133,6 +117,7 @@ class SignalPlotter(object):
             self, wmsec=1,
             start=None, end=None,
             min_freq=None, max_freq=None,
+            threshold=AMP_THRESHOLD,
             mode="separate"):
         # TODO define figures here and pass to class methods
         if mode == "separate":
@@ -160,6 +145,8 @@ class SignalPlotter(object):
             self._set_xlim(fft_axes, min_freq, max_freq)
         else:
             for ax in fft_axes:
-                min_freq, max_freq = self._lims_above_thr(ax, threshold=.05)
-                ax.set_xlim(min_freq - 40, max_freq + 80)
+                min_freq, max_freq = self._lims_above_thr(
+                    ax, threshold=threshold)
+                ax.set_xlim(
+                    min_freq - FREQ_MIN_MARGIN, max_freq + FREQ_MAX_MARGIN)
         plt.show()
