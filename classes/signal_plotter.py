@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.ticker as ticker
 from settings.plot import (plt,
                            figure_size_single,
                            figure_size_double,
@@ -47,9 +48,49 @@ class SignalPlotter(object):
     def _create_figures(self, size=figure_size_single):
         return [next(figure_generator(size=size)) for _ in range(self.n_figures)]
 
-    def _plot_signal(self, axes):
-        for ax, channel in zip(axes, self.channels):
-            c = next(colors)
+    def _spectrum(self, signal, samplerate):
+        fft = np.fft.rfft(signal)
+        freqs = np.fft.fftfreq(signal.size, d=1/samplerate)
+        freqs_mask = np.where(freqs >= 0)[0]
+        pws = np.abs(fft)**2
+        return freqs[freqs_mask], pws[freqs_mask]
+
+    def _find_last_contrib_idx(self, a, threshold=0.1):
+        peak_threshold = threshold * a.max()
+        mask = a >= peak_threshold
+        return np.where(mask)[0][-1]
+
+    def _find_first_contrib_idx(self, a, threshold=0.1):
+        peak_threshold = threshold * a.max()
+        mask = a >= peak_threshold
+        first = np.where(mask)[0][0]
+        return first
+
+    def _lims_above_thr(self, ax, threshold=.1):
+        x, y = ax.lines[0].get_xdata(), ax.lines[0].get_ydata()
+        first = self._find_first_contrib_idx(y)
+        last = self._find_last_contrib_idx(y)
+        return x[first], x[last]
+
+    def _plot_fft(
+            self,
+            axes,
+            axcolors=None,
+            threshold=.1):
+        if axcolors is None:
+            axcolors = [next(colors) for _ in range(len(axes))]
+        for ax, channel, c in zip(axes, self.channels, axcolors):
+            freqs, pws = self._spectrum(channel, self.sampling_rate)
+            ax.plot(freqs, pws, c + "--")
+            ax.set_xscale("log")
+
+    def _plot_signal(
+            self,
+            axes,
+            axcolors=None):
+        if axcolors is None:
+            axcolors = [next(colors) for _ in range(self.n_figures)]
+        for ax, channel, c in zip(axes, self.channels, axcolors):
             ax.plot(self.time_range, channel, c + '--', lw=0.1)
             if self.plot_envelope:
                 ax.plot(
@@ -62,8 +103,8 @@ class SignalPlotter(object):
     def _plot_spectrogram(self, axes, wmsec=0.005):
         npoints = int(self.sampling_rate * wmsec)
         overlap = int(self.sampling_rate * wmsec / 2.)
-        tone_freqs = [v for v in TONE_FREQ_MAP.values()]
-        tone_names = [k for k in TONE_FREQ_MAP.keys()]
+        # tone_freqs = [v for v in TONE_FREQ_MAP.values()]
+        # tone_names = [k for k in TONE_FREQ_MAP.keys()]
         for ax, channel, in zip(axes, self.channels):
             Pxx, freqs, bins, im = ax.specgram(
                 channel, NFFT=npoints, Fs=self.sampling_rate,
@@ -77,8 +118,8 @@ class SignalPlotter(object):
             in the spectrum, not readable otherwise
             """
             # Calculate FFT and pass find dominant frequencies
-            ax.set_yticks(tone_freqs)
-            ax.set_yticklabels(tone_names)
+            # ax.set_yticks(tone_freqs)
+            # ax.set_yticklabels(tone_names)
 
     def _set_xlim(self, axes, left=None, right=None):
         for ax in axes:
@@ -99,16 +140,26 @@ class SignalPlotter(object):
             spec_axes = [f.add_subplot(111) for f in spec_figs]
             signal_figs = self._create_figures()
             signal_axes = [f.add_subplot(111) for f in signal_figs]
+            fft_figs = self._create_figures()
+            fft_axes = [f.add_subplot(111) for f in fft_figs]
         elif mode == "single":
-            nrows, ncols = 2, self.n_figures
+            nrows, ncols = 3, self.n_figures
             fig = plt.figure(constrained_layout=True)
             spec = fig.add_gridspec(ncols=ncols, nrows=nrows)
             signal_axes = [fig.add_subplot(spec[0, c]) for c in range(ncols)]
-            spec_axes = [fig.add_subplot(spec[1, c]) for c in range(ncols)]
-        self._plot_signal(signal_axes)
+            fft_axes = [fig.add_subplot(spec[1, c]) for c in range(ncols)]
+            spec_axes = [fig.add_subplot(spec[2, c]) for c in range(ncols)]
+        axcolors = [next(colors) for _ in range(self.n_figures)]
+        self._plot_signal(signal_axes, axcolors=axcolors)
+        self._plot_fft(fft_axes, axcolors=axcolors)
         self._plot_spectrogram(spec_axes, wmsec=wmsec)
         if any([start, end]):
             self._set_xlim(spec_axes + signal_axes, start, end)
         if any([min_freq, max_freq]):
             self._set_ylim(spec_axes, min_freq, max_freq)
+            self._set_xlim(fft_axes, min_freq, max_freq)
+        else:
+            for ax in fft_axes:
+                min_freq, max_freq = self._lims_above_thr(ax, threshold=.05)
+                ax.set_xlim(min_freq - 40, max_freq + 80)
         plt.show()
