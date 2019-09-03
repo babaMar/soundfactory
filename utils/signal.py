@@ -23,3 +23,17 @@ def wn(n, freq):
     # Return the w_n angular frequency
     wn = (2 * np.pi * n) * freq
     return wn
+
+
+def sf_wav_sub(depth, default=16):
+    """ Find wav subtype for given bit depth"""
+    try:
+        subs = sf.available_subtypes("wav")
+        r = next(
+            k for k in subs
+            if k.startswith("PCM") and k.endswith(str(depth))
+        )
+    except StopIteration:
+        print("depth not available, default {} bits selected".format(default))
+        r = "PCM_{}".format(default)
+    return r
