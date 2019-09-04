@@ -1,8 +1,10 @@
 from random import choice
 import numpy as np
-
+from utils.signal import load_audio
 from classes.signal_builder import SignalBuilder
-from tests.conftest import sine_wave, square_wave, time_range, sawtooth_wave, triangle_wave
+from tests.conftest import (
+    sine_wave, square_wave, time_range, sawtooth_wave, triangle_wave
+    )
 import matplotlib.pyplot as plt
 
 TIME_RANGE = time_range()
@@ -64,3 +66,22 @@ def test_signal_approximation():
 
 
 test_signal_approximation()
+
+
+def test_export():
+    filename = "export_test.wav"
+    samplerate = 44100
+    f = [432]
+    a = [1]
+    f, a = np.array(f), np.array(a)
+    s = SignalBuilder(f, a, wave_type="sine", t_resolution=samplerate)
+    s.export(filename, samplerate=samplerate)
+
+    signal, samplerate = load_audio(filename)
+    fft = np.fft.fft(signal)
+    freqs = np.fft.fftfreq(len(signal), d=1/samplerate)
+    amps = 2 * (np.abs(fft) / len(signal))
+    idx = np.where((amps > 1e-4) & (freqs >= 0))[0]
+    assert (freqs[idx] - f < 1e-5).all()
+    assert (amps[idx] - a < 1e-5).all()
+
