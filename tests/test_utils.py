@@ -1,7 +1,10 @@
 from settings.plot import TONE_FREQ_MAP
-from utils.helpers import (cents_from_freq_ratio,
-                           freq_at_n_semitones,
-                           freq_at_n_quartertones)
+from utils.helpers import (
+    cents_from_freq_ratio,
+    freq_at_n_semitones,
+    freq_at_n_quartertones)
+from utils.signal import freq_indexes, build_fft
+import numpy as np
 
 
 def test_cents_from_freq_ratio():
@@ -21,3 +24,47 @@ def test_freq_at_n_semitones():
 def test_freq_at_n_quartertones():
     # Need to integrate quarter-tone notes in TONE_FREQ_MAP first
     pass
+
+
+def test_freq_indexes():
+    def test(n, samplerate):
+        f = np.fft.fftfreq(n=n, d=1/samplerate)
+        fi = freq_indexes(f, n=n, samplerate=samplerate)
+        ranf = np.random.permutation(f)
+        ranfi = freq_indexes(ranf, n=n, samplerate=samplerate)
+        assert (f[fi] == f).all()
+        assert (f[ranfi] == ranf).all()
+    test(121, 121.354)
+    test(1, 1)
+    test(1, 4)
+    test(12, 1)
+    test(3, 12)
+    test(3 * 44100, 44100)
+
+
+def test_build_fft():
+    def X(L, n):
+        return np.linspace(0, L, n)
+
+    def test(signal, samplerate):
+        fft = np.fft.fft(signal)
+        n = len(signal)
+        if n % 2 == 0:
+            fft[n//2] = 0
+        freqs = np.fft.fftfreq(n, d=1/samplerate)
+        amps = np.abs(fft) / n
+        phases = np.angle(fft)
+        rev_fft = build_fft(freqs, amps, phases, n / samplerate, samplerate)
+        assert ((rev_fft.real - fft.real) < 1e-8).all()
+        assert ((rev_fft.imag - fft.imag) < 1e-8).all()
+
+    samplerate = 44100
+    f1 = X(1, 101)
+    f2 = 3.4 * np.sin(X(1, 202))
+    f3 = 2 * np.sin(X(10, 80000)) + X(1, 80000) + np.exp(X(1, 80000))
+    f4 = [0] * 44101
+    test(f1, samplerate)
+    test(f2, samplerate)
+    test(f3, samplerate)
+    test(f4, samplerate)
+
