@@ -5,8 +5,7 @@ import soundfile as sf
 
 
 class SignalBuilder(object):
-    """ Create a Signal from Fourier Series
-    """
+    """ Create a Signal from Fourier Series """
     def __init__(
             self, frequencies, amplitudes,
             n_max=1000, wave_type='square', t_resolution=10000):
@@ -22,6 +21,7 @@ class SignalBuilder(object):
             0., 1., self.time_resolution, endpoint=False)
         self.coefficients = B_N_COEFF_MAP[wave_type]   # array
         self.a0 = 0
+        self.signal = self.build_signal()
 
     def get_time_space(self):
         return self.time_space
@@ -46,10 +46,6 @@ class SignalBuilder(object):
             signal += self._single_component(amp, freq)
         return signal
 
-    def export(self, signal, filename, bit_depth=16, samplerate=44100):
-        try:
-            signal = signal.real
-        except AttributeError:
-            signal = np.asarray(signal).real
+    def export(self, filename, bit_depth=16, samplerate=44100):
         subtype = sf_wav_sub(bit_depth)
-        sf.write(filename, signal, samplerate, subtype=subtype)
+        sf.write(filename, self.signal, samplerate, subtype=subtype)
