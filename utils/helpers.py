@@ -30,8 +30,9 @@ def above_thr_mask(a, threshold=.1):
 
 
 def spectrum(signal, samplerate):
+    n = len(signal)
     fft = np.fft.rfft(signal)
-    freqs = np.fft.fftfreq(signal.size, d=1/samplerate)
+    freqs = np.fft.fftfreq(n, d=1/samplerate)
     freqs_mask = np.where(freqs >= 0)[0]
-    pws = np.abs(fft)**2
+    pws = 2 * ((np.abs(fft) / n) ** 2)  # amps = 2 * (np.abs(fft) / n)
     return freqs[freqs_mask], pws[freqs_mask]
