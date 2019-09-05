@@ -69,6 +69,7 @@ def build_fft(freqs, amps, phases, period=1, samplerate=44100):
     freqs, amps and phases must be in the same order to refer to the
     Fourier component
     """
+    freqs, amps, phases = np.array(freqs), np.array(amps), np.array(phases)
     idx = np.where(freqs >= 0)[0]
     freqs, amps, phases = freqs[idx], amps[idx], phases[idx]
     n = np.round(period * samplerate).astype(int)
