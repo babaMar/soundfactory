@@ -65,7 +65,7 @@ class SignalBuilder(object):
         if len({len(x) for x in [f, a, p]}) > 1:
             raise ValueError("Inputs must have same lenght")
         if any(not isinstance(x, numbers.Real) for l in [f, a, p] for x in l):
-            raise TypeError("Can use real numbers")
+            raise TypeError("Use just real numbers (floats or ints)")
 
     def set_phases(self, phases):
         if phases is None:
