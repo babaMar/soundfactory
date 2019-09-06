@@ -8,9 +8,6 @@ from settings.signal import B_N_COEFF_MAP
 from settings.logging_settings import createlog
 
 
-logger = createlog
-
-
 @click.command()
 @click.option(
     '--freq_amp', "-fa", required=True,
@@ -35,11 +32,11 @@ def main(freq_amp, wave, out, samplerate):
     freqs = [x[0] for x in freq_amp]
     amps = [x[1] for x in freq_amp]
     freqs, amps = np.array(freqs), np.array(amps)
-    logger.info("Building signal")
+    createlog.info("Building signal")
     s = SignalBuilder(freqs, amps, wave_type=wave, t_resolution=samplerate)
-    logger.info("Exporting signal")
+    createlog.info("Exporting signal")
     s.export(out, samplerate=samplerate)
-    logger.info("Saved audio on {}".format(out))
+    createlog.info("Saved audio on {}".format(out))
 
 
 if __name__ == "__main__":
