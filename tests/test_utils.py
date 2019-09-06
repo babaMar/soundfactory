@@ -27,26 +27,27 @@ def test_freq_at_n_quartertones():
 
 
 def test_freq_indexes():
-    def test(n, samplerate):
+    def _test_case(n, samplerate):
         f = np.fft.fftfreq(n=n, d=1/samplerate)
         fi = freq_indexes(f, n=n, samplerate=samplerate)
         ranf = np.random.permutation(f)
         ranfi = freq_indexes(ranf, n=n, samplerate=samplerate)
         assert (f[fi] == f).all()
         assert (f[ranfi] == ranf).all()
-    test(121, 121.354)
-    test(1, 1)
-    test(1, 4)
-    test(12, 1)
-    test(3, 12)
-    test(3 * 44100, 44100)
+
+    _test_case(121, 121.354)
+    _test_case(1, 1)
+    _test_case(1, 4)
+    _test_case(12, 1)
+    _test_case(3, 12)
+    _test_case(3 * 44100, 44100)
 
 
 def test_build_fft():
     def X(L, n):
         return np.linspace(0, L, n)
 
-    def test(signal, samplerate):
+    def _test_case(signal, samplerate):
         fft = np.fft.fft(signal)
         n = len(signal)
         if n % 2 == 0:
@@ -63,8 +64,7 @@ def test_build_fft():
     f2 = 3.4 * np.sin(X(1, 202))
     f3 = 2 * np.sin(X(10, 80000)) + X(1, 80000) + np.exp(X(1, 80000))
     f4 = [0] * 44101
-    test(f1, samplerate)
-    test(f2, samplerate)
-    test(f3, samplerate)
-    test(f4, samplerate)
-
+    _test_case(f1, samplerate)
+    _test_case(f2, samplerate)
+    _test_case(f3, samplerate)
+    _test_case(f4, samplerate)
