@@ -55,7 +55,7 @@ class SignalBuilder(object):
         return signal
 
     def export(self, filename, bit_depth=16, samplerate=44100):
-        subtype = find_soundfile_subtype(depth)
+        subtype = find_soundfile_subtype(bit_depth)
         sf.write(filename, self.signal, samplerate, subtype=subtype)
 
     def check_input(self):
