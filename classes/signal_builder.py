@@ -13,7 +13,7 @@ class SignalBuilder(object):
             amplitudes,
             phases=None,
             n_max=1000,
-            wave_type='square',
+            wave_type='sine',
             t_resolution=10000):
         self.frequencies = frequencies
         self.amplitudes = amplitudes
