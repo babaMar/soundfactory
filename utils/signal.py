@@ -25,7 +25,7 @@ def wn(n, freq):
     return wn
 
 
-def sf_wav_sub(depth, default=16):
+def find_soundfile_subtype(depth, default=16):
     """ Find wav subtype for given bit depth"""
     try:
         subs = sf.available_subtypes("wav")

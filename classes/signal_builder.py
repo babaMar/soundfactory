@@ -1,6 +1,6 @@
 import numpy as np
 from settings.signal import B_N_COEFF_MAP
-from utils.signal import wn, sf_wav_sub
+from utils.signal import wn, find_soundfile_subtype
 import soundfile as sf
 import numbers
 
@@ -55,7 +55,7 @@ class SignalBuilder(object):
         return signal
 
     def export(self, filename, bit_depth=16, samplerate=44100):
-        subtype = sf_wav_sub(bit_depth)
+        subtype = find_soundfile_subtype(depth)
         sf.write(filename, self.signal, samplerate, subtype=subtype)
 
     def check_input(self):
