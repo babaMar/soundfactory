@@ -26,7 +26,7 @@ def test_freq_at_n_quartertones():
     pass
 
 
-def test_freq_indexes():
+def test_freq_indexes(lengths_samplerates):
     def _test_case(n, samplerate):
         f = np.fft.fftfreq(n=n, d=1/samplerate)
         fi = freq_indexes(f, n=n, samplerate=samplerate)
@@ -35,18 +35,12 @@ def test_freq_indexes():
         assert (f[fi] == f).all()
         assert (f[ranfi] == ranf).all()
 
-    _test_case(121, 121.354)
-    _test_case(1, 1)
-    _test_case(1, 4)
-    _test_case(12, 1)
-    _test_case(3, 12)
-    _test_case(3 * 44100, 44100)
+    for case in lengths_samplerates:
+        length, samplerate = case
+        _test_case(length, samplerate)
 
 
-def test_build_fft():
-    def X(L, n):
-        return np.linspace(0, L, n)
-
+def test_build_fft(signals):
     def _test_case(signal, samplerate):
         fft = np.fft.fft(signal)
         n = len(signal)
@@ -60,11 +54,5 @@ def test_build_fft():
         assert ((rev_fft.imag - fft.imag) < 1e-8).all()
 
     samplerate = 44100
-    f1 = X(1, 101)
-    f2 = 3.4 * np.sin(X(1, 202))
-    f3 = 2 * np.sin(X(10, 80000)) + X(1, 80000) + np.exp(X(1, 80000))
-    f4 = [0] * 44101
-    _test_case(f1, samplerate)
-    _test_case(f2, samplerate)
-    _test_case(f3, samplerate)
-    _test_case(f4, samplerate)
+    for signal in signals:
+        _test_case(signal, samplerate)

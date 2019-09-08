@@ -1,3 +1,4 @@
+import pytest
 import numpy as np
 import scipy.signal as signal
 
@@ -31,3 +32,18 @@ def triangle_wave(freq):
     phase_shift = np.pi / 2.  # a phase shift of 90° is needed to have signal=0. at t=0.
     sig = signal.sawtooth(2 * np.pi * freq * t + phase_shift, width=0.5)
     return sig
+
+
+@pytest.fixture
+def lengths_samplerates():
+    yield ((121, 121.354), (1, 1), (1, 4), (12, 1), (3, 12), (3 * 44100, 44100))
+
+
+@pytest.fixture
+def signals():
+    def _x(L, n):
+        return np.linspace(0, L, n)
+    yield (_x(1, 101),
+           3.4 * np.sin(_x(1, 202)),
+           2 * np.sin(_x(10, 80000)) + _x(1, 80000) + np.exp(_x(1, 80000)),
+           [0] * 44101)
