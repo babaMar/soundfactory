@@ -1,6 +1,5 @@
-from math import log
 import numpy as np
-import logging
+from math import log
 
 BASE = 2
 CENTS_PER_OCTAVE = 1200
@@ -37,35 +36,3 @@ def spectrum(signal, samplerate):
     freqs_mask = np.where(freqs >= 0)[0]
     pws = 2 * ((np.abs(fft) / n) ** 2)  # amps = 2 * (np.abs(fft) / n)
     return freqs[freqs_mask], pws[freqs_mask]
-
-
-def get_logger(name):
-    """
-    Add a StreamHandler to a logger if still not added and
-    return the logger
-
-    Notes
-    -----
-    This avoids creation of multiple streamers when logging from different
-    modules
-
-    Create a logger by:
-    >>> logger.get_logger(__name__)
-
-    instead of logging method:
-    >>> logger.getLogger(__name__)
-
-    # TODO
-    pass Formatter as argument
-
-    """
-    logger = logging.getLogger(name)
-    if not logger.handlers:
-        logger.propagate = 1  # propagate to parent
-        console = logging.StreamHandler()
-        logger.addHandler(console)
-        formatter = logging.Formatter(
-            '%(asctime)s - %(name)s [%(levelname)s] %(message)s')
-        console.setFormatter(formatter)
-    return logger
-
