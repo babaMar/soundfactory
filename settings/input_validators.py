@@ -12,3 +12,13 @@ class ExistentWav(click.ParamType):
         if not os.path.isfile(value):
             self.fail('{} not found'.format(value), param, ctx)
         return value
+
+
+class Wav(click.ParamType):
+    name = '--out'
+
+    def convert(self, value, param, ctx):
+        is_wav = os.path.splitext(value)[1] == ".wav"
+        if not is_wav:
+            self.fail('Output should be a .wav', param, ctx)
+        return value
