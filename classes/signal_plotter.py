@@ -26,8 +26,8 @@ class SignalPlotter(object):
         # Mono signal is treated as left only
         self.left_raw = l_signal
         self.plot_envelope = plot_envelope
-        self.y_label = "Mono~Channel (t)"
-        self.x_label = "[sec]"
+        self.y_label = "Mono Channel (t)"
+        self.x_label = "t [sec]"
 
         if any(l_signal_envelope):
             self.left_envelope = l_signal_envelope
@@ -65,8 +65,10 @@ class SignalPlotter(object):
             axcolors = [next(colors) for _ in range(len(axes))]
         for ax, channel, c in zip(axes, self.channels, axcolors):
             freqs, pws = spectrum(channel, self.sampling_rate)
-            ax.plot(freqs, pws, c + "--")
+            ax.plot(freqs, pws, c + "-")
+            ax.set_xlabel("Frequency [Hz]")
             ax.set_xscale("log")
+            # ax.set_yscale('log')
 
     def _plot_signal(
             self,
