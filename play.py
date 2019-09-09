@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from settings.input_validators import ExistentWav
 import click
 import simpleaudio as sa
