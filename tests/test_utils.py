@@ -1,10 +1,18 @@
-from settings.plot import TONE_FREQ_MAP
+import numpy as np
+
 from utils.helpers import (
     cents_from_freq_ratio,
     freq_at_n_semitones,
-    freq_at_n_quartertones)
+    freq_at_n_quartertones,
+    half_sharp_up,
+    sharp_up
+)
+from constants import (
+    _24_TET_SCALE_INIT,
+    A_SUB_SUB_CONTRA_FREQ
+)
+from settings.plot import TONE_FREQ_MAP
 from utils.signal import freq_indexes, build_fft
-import numpy as np
 
 
 def test_cents_from_freq_ratio():
@@ -16,14 +24,15 @@ def test_cents_from_freq_ratio():
     assert int(round(tone_cents)) == 200
 
 
+def test_freq_at_n_quartertones():
+    freq_quartertone_up = freq_at_n_quartertones(A_SUB_SUB_CONTRA_FREQ, 1)
+    # See https://en.wikipedia.org/wiki/Cent_(music)#Use
+    assert freq_quartertone_up == A_SUB_SUB_CONTRA_FREQ * pow(2, 50 / 1200)
+
+
 def test_freq_at_n_semitones():
     freq_semitone_up = freq_at_n_semitones(TONE_FREQ_MAP['A3'], 1)
     assert round(freq_semitone_up, 2) == TONE_FREQ_MAP['A3#']
-
-
-def test_freq_at_n_quartertones():
-    # Need to integrate quarter-tone notes in TONE_FREQ_MAP first
-    pass
 
 
 def test_freq_indexes(lengths_samplerates):
@@ -56,3 +65,33 @@ def test_build_fft(signals):
     samplerate = 44100
     for signal in signals:
         _test_case(signal, samplerate)
+
+
+def test_tone_frequency_transposers():
+    ref_label = list(_24_TET_SCALE_INIT.keys())[-1]
+    ref_frequency = list(_24_TET_SCALE_INIT.values())[-1]
+
+    quarter_tone_up_label, quarter_tone_up_freq = \
+        half_sharp_up(ref_label, ref_frequency)
+    assert quarter_tone_up_label == 'A-1𝄲'
+    assert abs(quarter_tone_up_freq - (A_SUB_SUB_CONTRA_FREQ * pow(2, 50 / 1200))) < 1e-2
+
+    semitone_tone_up_label, semitone_tone_up_freq = \
+        sharp_up(ref_label, ref_frequency)
+    assert semitone_tone_up_label == 'A-1#'
+    assert abs(semitone_tone_up_freq - (A_SUB_SUB_CONTRA_FREQ * pow(2, 100 / 1200))) < 1e-2
+
+    three_quarter_tone_up_label, three_quarter_tone_up_freq = \
+        half_sharp_up(*sharp_up(ref_label, ref_frequency))
+    assert three_quarter_tone_up_label == 'B-1𝄳'
+    assert abs(three_quarter_tone_up_freq - (A_SUB_SUB_CONTRA_FREQ * pow(2, 150 / 1200))) < 1e-2
+
+    tone_up_label, tone_up_freq = \
+        sharp_up(*sharp_up(ref_label, ref_frequency))
+    assert tone_up_label == 'B-1'
+    assert abs(tone_up_freq - (A_SUB_SUB_CONTRA_FREQ * pow(2, 200 / 1200))) < 1e-2
+
+    tone_and_a_half_up_label, tone_and_a_half_up_freq = \
+        sharp_up(*sharp_up(*sharp_up(ref_label, ref_frequency)))
+    assert tone_and_a_half_up_label == 'C0'
+    assert abs(tone_and_a_half_up_freq - (A_SUB_SUB_CONTRA_FREQ * pow(2, 300 / 1200))) < 1e-2

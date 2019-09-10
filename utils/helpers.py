@@ -1,11 +1,15 @@
 import numpy as np
 from math import log
 
-BASE = 2
-CENTS_PER_OCTAVE = 1200
-CENT = pow(BASE, 1. / CENTS_PER_OCTAVE)
-SEMITONE_CENTS = 100
-QUARTERTONE_CENTS = 50
+from constants import (
+    CENTS_PER_OCTAVE,
+    BASE,
+    SEMITONE_CENTS,
+    QUARTERTONE_CENTS,
+    QUARTER_TONE_FLAT_SYMBOL,
+    SHARP_SYMBOL,
+    QUARTER_TONE_SHARP_SYMBOL
+)
 
 
 def cents_from_freq_ratio(upper_tone, lower_tone):
@@ -103,3 +107,34 @@ def progress_time(
         suffix=suffix
     ), end='\r')
 
+
+def half_sharp_up(ref_label, ref_freq):
+    ref_note = ref_label[0]
+    octave = ref_label[1] if '-' not in ref_label else ref_label[1:3]
+    if SHARP_SYMBOL in ref_label:
+        note_label = chr(ord(ref_note) + 1)
+        label = note_label + octave + QUARTER_TONE_FLAT_SYMBOL
+    else:
+        label = ref_label + QUARTER_TONE_SHARP_SYMBOL
+
+    freq = freq_at_n_quartertones(ref_freq, 1)
+    return label, freq
+
+
+def sharp_up(ref_label, ref_freq):
+    ref_note = ref_label[0]
+    octave = ref_label[1] if '-' not in ref_label else ref_label[1:3]
+    if SHARP_SYMBOL in ref_label:
+        note_label = chr(ord(ref_note) + 1)
+        label = note_label + octave
+    else:
+        # handle case Bi-1 -> Ci
+        if ref_note == 'B':
+            octave = str(int(octave) + 1)
+            note_label = chr(ord(ref_note) + 1)
+            label = note_label + octave
+        else:
+            label = ref_note + octave + SHARP_SYMBOL
+
+    freq = freq_at_n_quartertones(ref_freq, 2)
+    return label, freq
