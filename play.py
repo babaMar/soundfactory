@@ -4,7 +4,8 @@ from settings.input_validators import ExistentWav
 import click
 import simpleaudio as sa
 import soundfile as sf
-import getch
+import time
+from utils.helpers import progress_time
 
 
 @click.command()
@@ -16,22 +17,13 @@ import getch
 def main(input_file):
     with sf.SoundFile(input_file) as f:
         channels, samplerate = f.channels, f.samplerate
-        is_paused = False
         audio = f.read(dtype="int16")
+        total_seconds = len(f) / samplerate
         play_obj = sa.play_buffer(audio, channels, 2, samplerate)
-        print("Playing")
+        start_time = time.time()
         while play_obj.is_playing():
-            command = getch.getch()
-            if command == " ":
-                if is_paused:
-                    play_obj.resume()
-                    print("Playing")
-                    is_paused = False
-                else:
-                    play_obj.pause()
-                    print("Paused")
-                    is_paused = True
-        play_obj.wait_done()
+            progress_time(total_seconds, time.time() - start_time)
+        print("\n")
 
 
 if __name__ == "__main__":
