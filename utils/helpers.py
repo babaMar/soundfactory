@@ -36,3 +36,70 @@ def spectrum(signal, samplerate):
     freqs_mask = np.where(freqs >= 0)[0]
     pws = 2 * ((np.abs(fft) / n) ** 2)  # amps = 2 * (np.abs(fft) / n)
     return freqs[freqs_mask], pws[freqs_mask]
+
+
+def progress_bar(
+        iteration,
+        total,
+        prefix='',
+        suffix='',
+        decimals=1,
+        length=100,
+        fill='█'):
+    """
+    Call in a loop to create terminal progress bar
+    @params:
+        iteration   - Required  : current iteration (Int)
+        total       - Required  : total iterations (Int)
+        prefix      - Optional  : prefix string (Str)
+        suffix      - Optional  : suffix string (Str)
+        decimals    - Optional  : positive number of decimals
+                                  in percent complete (Int)
+        length      - Optional  : character length of bar (Int)
+        fill        - Optional  : bar fill character (Str)
+    """
+    x = 100 * (iteration / total)
+    percent = round(x, decimals)
+    filled_length = int(length * iteration // total)
+    bar = fill * filled_length + '-' * (length - filled_length)
+    print('\r{prefix} |{bar}| {percent}% {suffix}'.format(
+        prefix=prefix,
+        bar=bar,
+        percent=percent,
+        suffix=suffix
+    ), end='\r')
+    # Print New Line on Complete
+    if iteration == total:
+        print()
+
+
+def progress_time(
+        total_time,
+        elapsed=0,
+        prefix='',
+        suffix='',
+        decimals=1,
+        length=100,
+        fill='█'):
+    """
+    Call in a loop to create terminal progress bar
+    @params:
+        iteration   - Required  : current iteration (Int)
+        total       - Required  : total iterations (Int)
+        prefix      - Optional  : prefix string (Str)
+        suffix      - Optional  : suffix string (Str)
+        decimals    - Optional  : positive number of decimals
+                                  in percent complete (Int)
+        length      - Optional  : character length of bar (Int)
+        fill        - Optional  : bar fill character (Str)
+    """
+
+    filled_length = int(length * elapsed // total_time)
+    bar = fill * filled_length + '-' * (length - filled_length)
+    print('\r{prefix} |{bar}| {left} {suffix}'.format(
+        prefix=round(elapsed),
+        bar=bar,
+        left=round(total_time-elapsed),
+        suffix=suffix
+    ), end='\r')
+
