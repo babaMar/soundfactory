@@ -128,10 +128,11 @@ def sharp_up(ref_label, ref_freq):
         note_label = chr(ord(ref_note) + 1)
         label = note_label + octave
     else:
-        # handle case Bi-1 -> Ci
-        if ref_note == 'B':
-            octave = str(int(octave) + 1)
+        # handle cases Bi-1 -> Ci, Ei -> Fi
+        if ref_note in ('B', 'E'):
             note_label = chr(ord(ref_note) + 1)
+            if ref_note == 'B':
+                octave = str(int(octave) + 1)
             label = note_label + octave
         else:
             label = ref_note + octave + SHARP_SYMBOL
