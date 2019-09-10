@@ -151,3 +151,19 @@ def sharp_up(ref_label, ref_freq):
     return label, freq
 
 
+def next_2_tones_in_scale(scale):
+    ref_label = list(scale.keys())[-1]
+    ref_frequency = list(scale.values())[-1]
+    for func in (half_sharp_up, sharp_up):
+        _l, _f = func(ref_label, ref_frequency)
+        scale[_l] = _f
+    return scale
+
+
+def calculate_24_tet_scale(scale_init):
+    scale = deepcopy(scale_init)
+    n = 0
+    while n < 130:
+        scale = next_2_tones_in_scale(scale)
+        n += 1
+    return scale
