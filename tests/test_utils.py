@@ -70,44 +70,6 @@ def test_build_fft(signals):
         _test_case(signal, samplerate)
 
 
-def test_tone_frequency_transposers():
-    ref_label = list(_24_TET_SCALE_INIT.keys())[-1]
-    ref_frequency = list(_24_TET_SCALE_INIT.values())[-1]
-
-    quarter_tone_up_label, quarter_tone_up_freq = \
-        half_sharp_up(ref_label, ref_frequency)
-    assert quarter_tone_up_label == 'A-1𝄲'
-    assert abs(quarter_tone_up_freq - (A_SUB_SUB_CONTRA_FREQ * pow(2, 50 / 1200))) < 1e-2
-
-    semitone_tone_up_label, semitone_tone_up_freq = \
-        sharp_up(ref_label, ref_frequency)
-    assert semitone_tone_up_label == 'A-1#'
-    assert abs(semitone_tone_up_freq - (A_SUB_SUB_CONTRA_FREQ * pow(2, 100 / 1200))) < 1e-2
-
-    three_quarter_tone_up_label, three_quarter_tone_up_freq = \
-        half_sharp_up(*sharp_up(ref_label, ref_frequency))
-    assert three_quarter_tone_up_label == 'B-1𝄳'
-    assert abs(three_quarter_tone_up_freq - (A_SUB_SUB_CONTRA_FREQ * pow(2, 150 / 1200))) < 1e-2
-
-    tone_up_label, tone_up_freq = \
-        sharp_up(*sharp_up(ref_label, ref_frequency))
-    assert tone_up_label == 'B-1'
-    assert abs(tone_up_freq - (A_SUB_SUB_CONTRA_FREQ * pow(2, 200 / 1200))) < 1e-2
-
-    c0_label, c0_frequency = \
-        sharp_up(*sharp_up(*sharp_up(ref_label, ref_frequency)))
-    assert c0_label == 'C0'
-    assert abs(c0_frequency - TONE_FREQ_MAP['C0']) < 1e-2
-
-    f0_label, f0_frequency = sharp_up(
-        *sharp_up(
-            *sharp_up(
-                *sharp_up(
-                    *sharp_up(c0_label, c0_frequency)))))
-    assert f0_label == 'F0'
-    assert abs(f0_frequency - TONE_FREQ_MAP['F0']) < 1e-2
-
-
 def test_24_scale_builder():
 
     def repeat(foo, n, x):
