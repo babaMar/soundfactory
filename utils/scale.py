@@ -56,7 +56,7 @@ def next_freq(freq):
 
 
 def build_24_tet_scale(init_label, init_freq, max_octave=10):
-    label, freq = init_freq, init_label
+    label, freq = init_label, init_freq
     scale = [(label, freq)]
     last_label = "G" + str(max_octave)
     while label != last_label:
@@ -66,7 +66,7 @@ def build_24_tet_scale(init_label, init_freq, max_octave=10):
 
 
 def build_24_tet_scale_by_sequence(init_label, init_freq, max_octave=10):
-    label, freq = init_freq, init_label
+    label, freq = init_label, init_freq
     scale = [(label, freq)]
     last_label = "G" + str(max_octave)
     while label != last_label:
