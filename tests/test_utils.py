@@ -13,7 +13,9 @@ from constants import (
 )
 from settings.plot import TONE_FREQ_MAP
 from utils.signal import freq_indexes, build_fft
-from utils.scale import next_label, next_freq
+from utils.scale import (
+    next_label, next_freq, build_24_tet_scale, build_24_tet_scale_by_sequence
+)
 
 
 def test_cents_from_freq_ratio():
@@ -162,3 +164,11 @@ def test_24_scale_builder():
     assert f0_label == 'F0'
     assert abs(f0_frequency - TONE_FREQ_MAP['F0']) < 1e-2
 
+
+def test_24_scale_builder_by_sequence():
+    ref_label = list(_24_TET_SCALE_INIT.keys())[-1]
+    ref_frequency = list(_24_TET_SCALE_INIT.values())[-1]
+    scale_24 = build_24_tet_scale(ref_label, ref_frequency)
+    scale_24_by_sequence = build_24_tet_scale_by_sequence(
+        ref_label, ref_frequency)
+    assert scale_24 == scale_24_by_sequence
