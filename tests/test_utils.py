@@ -13,6 +13,7 @@ from constants import (
 )
 from settings.plot import TONE_FREQ_MAP
 from utils.signal import freq_indexes, build_fft
+from utils.scale import next_label, next_freq
 
 
 def test_cents_from_freq_ratio():
@@ -103,3 +104,61 @@ def test_tone_frequency_transposers():
                     *sharp_up(c0_label, c0_frequency)))))
     assert f0_label == 'F0'
     assert abs(f0_frequency - TONE_FREQ_MAP['F0']) < 1e-2
+
+
+def test_24_scale_builder():
+
+    def repeat(foo, n, x):
+        for _ in range(n):
+            x = foo(x)
+        return x
+
+    ref_label = list(_24_TET_SCALE_INIT.keys())[-1]
+    ref_frequency = list(_24_TET_SCALE_INIT.values())[-1]
+    quarter_tone_up_label, quarter_tone_up_freq = (
+         next_label(ref_label), next_freq(ref_frequency)
+        )
+    diff = abs(
+        quarter_tone_up_freq - (A_SUB_SUB_CONTRA_FREQ * pow(2, 50 / 1200)))
+    assert quarter_tone_up_label == 'A-1𝄲'
+    assert diff < 1e-2
+    
+    semitone_tone_up_label, semitone_tone_up_freq = (
+        next_label(quarter_tone_up_label), next_freq(quarter_tone_up_freq)
+    )
+    diff = abs(
+        semitone_tone_up_freq - (A_SUB_SUB_CONTRA_FREQ * pow(2, 100 / 1200)))
+    assert semitone_tone_up_label == 'A-1#'
+    assert diff < 1e-2
+
+    three_quarter_tone_up_label, three_quarter_tone_up_freq = (
+        next_label(semitone_tone_up_label), next_freq(semitone_tone_up_freq)
+    )
+    diff = abs(
+        three_quarter_tone_up_freq -
+        (A_SUB_SUB_CONTRA_FREQ * pow(2, 150 / 1200)))
+    assert three_quarter_tone_up_label == 'B-1𝄳'
+    assert diff < 1e-2
+
+    tone_up_label, tone_up_freq = (
+        next_label(three_quarter_tone_up_label),
+        next_freq(three_quarter_tone_up_freq)
+    )
+    diff = abs(tone_up_freq - (A_SUB_SUB_CONTRA_FREQ * pow(2, 200 / 1200)))
+    assert tone_up_label == 'B-1'
+    assert diff < 1e-2
+
+    c0_label, c0_frequency = (
+        repeat(next_label, 2, tone_up_label),
+        repeat(next_freq, 2, tone_up_freq)
+        )
+    assert c0_label == 'C0'
+    assert abs(c0_frequency - TONE_FREQ_MAP['C0']) < 1e-2
+
+    f0_label, f0_frequency = (
+        repeat(next_label, 10, c0_label),
+        repeat(next_freq, 10, c0_frequency)
+    )
+    assert f0_label == 'F0'
+    assert abs(f0_frequency - TONE_FREQ_MAP['F0']) < 1e-2
+
