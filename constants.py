@@ -25,5 +25,7 @@ SEQUENCE_24 = (
     'A𝄳', 'A', 'A𝄲', 'A#',
     'B𝄳', 'B', 'B𝄲'
 )
-
 SYMBOLS_24 = ('', '𝄲', '#', '𝄳')
+
+MAX_16_BIT_VALUE = 2**15 - 1
+BYTE_PER_16_BIT = 2
