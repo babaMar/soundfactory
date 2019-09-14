@@ -1,13 +1,36 @@
 import matplotlib.pyplot as plt
 from itertools import cycle
+import matplotlib.font_manager as mfm
+from constants import QUARTER_TONE_FLAT_SYMBOL
+from fontTools.ttLib import TTFont
 
+FONT_INFO = [(f.fname, f.name) for f in mfm.fontManager.ttflist]
+
+
+def find_font_path_name(char):
+    def _char_in_font(unicode_char, font):
+        for cmap in font['cmap'].tables:
+            if cmap.isUnicode():
+                if ord(unicode_char) in cmap.cmap:
+                    return True
+        return False
+
+    for font in FONT_INFO:
+        if _char_in_font(char, TTFont(font[0])):
+            return font[0], font[1]
+
+
+FONT_PATH, FONT_NAME = find_font_path_name(QUARTER_TONE_FLAT_SYMBOL)
+FONT_PROP = mfm.FontProperties(size=24) if not FONT_PATH \
+    else mfm.FontProperties(size=24, fname=FONT_PATH)
 
 plt.rc('text', usetex=False)
 plt.rcParams['legend.numpoints'] = 1
-plt.rc('font', serif='Palatino')
 plt.rcParams['ytick.labelsize'] = 16
 plt.rcParams['xtick.labelsize'] = 16
 plt.rcParams['font.size'] = 22
+plt.rcParams['axes.labelsize'] = 20
+plt.rcParams['font.family'] = 'serif'
 
 figure_size_single = (12., 7.)
 figure_size_double = (12., 12.)
