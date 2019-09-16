@@ -1,7 +1,7 @@
 import numpy as np
 from math import log
 from copy import deepcopy
-
+from bisect import bisect_left
 from constants import (
     CENTS_PER_OCTAVE,
     BASE,
@@ -167,3 +167,18 @@ def calculate_24_tet_scale(scale_init):
         scale = next_2_tones_in_scale(scale)
         n += 1
     return scale
+
+
+def find_closest(sorted_list, x):
+    pos = bisect_left(sorted_list, x)
+    if pos == 0:
+        return sorted_list[0]
+    if pos == len(sorted_list):
+        return sorted_list[-1]
+    before = sorted_list[pos - 1]
+    after = sorted_list[pos]
+    if after - x < x - before:
+        closest = after
+    else:
+        closest = before
+    return closest
