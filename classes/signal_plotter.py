@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.ticker as ticker
 from utils.helpers import above_thr_mask, spectrum
 from settings.plot import (
     plt,
@@ -7,7 +6,6 @@ from settings.plot import (
     figure_size_double,
     figure_generator,
     colors,
-    TONE_FREQ_MAP,
     FONT_PROP,
     AMP_THRESHOLD,
     FREQ_MAX_MARGIN,
