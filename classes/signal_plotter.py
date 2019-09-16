@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.ticker as ticker
 from utils.helpers import above_thr_mask, spectrum
 from settings.plot import (
     plt,
@@ -7,7 +6,7 @@ from settings.plot import (
     figure_size_double,
     figure_generator,
     colors,
-    TONE_FREQ_MAP,
+    FONT_PROP,
     AMP_THRESHOLD,
     FREQ_MAX_MARGIN,
     FREQ_MIN_MARGIN
@@ -66,8 +65,9 @@ class SignalPlotter(object):
         for ax, channel, c in zip(axes, self.channels, axcolors):
             freqs, pws = spectrum(channel, self.sampling_rate)
             ax.plot(freqs, pws, c + "-")
-            ax.set_xlabel("Frequency [Hz]")
+            ax.set_xlabel("Frequency [Hz]", fontproperties=FONT_PROP)
             ax.set_xscale("log")
+            ax.set_ylabel("Power(f)", fontproperties=FONT_PROP)
             # ax.set_yscale('log')
 
     def _plot_signal(
@@ -82,8 +82,8 @@ class SignalPlotter(object):
                 ax.plot(
                     self.time_range, self.envelopes[self.i_env], 'k-', lw=0.1)
                 self.i_env += 1
-            ax.set_ylabel(self.y_label)
-            ax.set_xlabel(self.x_label)
+            ax.set_ylabel(self.y_label, fontproperties=FONT_PROP)
+            ax.set_xlabel(self.x_label, fontproperties=FONT_PROP)
             self.y_label = self.y_label.replace('Left', 'Right')
 
     def _plot_spectrogram(self, axes, wmsec=0.005):
@@ -95,8 +95,8 @@ class SignalPlotter(object):
             Pxx, freqs, bins, im = ax.specgram(
                 channel, NFFT=npoints, Fs=self.sampling_rate,
                 noverlap=overlap, cmap=plt.cm.jet)
-            ax.set_xlabel(self.x_label)
-            ax.set_ylabel("Frequency [Hz]")
+            ax.set_xlabel(self.x_label, fontproperties=FONT_PROP)
+            ax.set_ylabel("Frequency [Hz]", fontproperties=FONT_PROP)
             ax.set_ylim(20., 20000.)
             ax.set_yscale('log')
             """
