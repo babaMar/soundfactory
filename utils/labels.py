@@ -47,13 +47,13 @@ def log_khz_formatter(hz, pos):
     return '{:g}'.format(hz / 1000)
 
 
-def above_thr_indexes(freqs, amps, thr=0.1):
-    freqs, amps = np.array(freqs), np.array(amps)
+def above_thr_indexes(amps, thr=0.1):
+    amps = np.array(amps)
     return np.where(amps > thr * amps.max())[0]
 
 
 def sparse_major_freqs(freqs, amps, thr=0.1):
-    idx = above_thr_indexes(freqs, amps, thr=thr)
+    idx = above_thr_indexes(amps, thr=thr)
     freqs, amps = freqs[idx], amps[idx]
     
     idx = np.argsort(-amps)
