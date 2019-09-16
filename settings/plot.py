@@ -4,7 +4,9 @@ import matplotlib.font_manager as mfm
 from constants import QUARTER_TONE_FLAT_SYMBOL
 from fontTools.ttLib import TTFont
 
-FONT_INFO = [(f.fname, f.name) for f in mfm.fontManager.ttflist]
+FONT_INFO = [
+    (f.fname, f.name) for f in mfm.fontManager.ttflist
+    if 'Symbol' not in f.name]
 
 
 def find_font_path_name(char):
