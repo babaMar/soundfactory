@@ -3,6 +3,9 @@ from itertools import cycle
 import matplotlib.font_manager as mfm
 from constants import QUARTER_TONE_FLAT_SYMBOL
 from fontTools.ttLib import TTFont
+from matplotlib.ticker import FuncFormatter
+from utils.labels import log_khz_formatter
+
 
 FONT_INFO = [
     (f.fname, f.name) for f in mfm.fontManager.ttflist
@@ -155,6 +158,7 @@ TONE_FREQ_MAP = {"C0": 16.35,
 AMP_THRESHOLD = .05  # percentage on max amplitude threshold
 FREQ_MIN_MARGIN = 40
 FREQ_MAX_MARGIN = 80
+LOG_KHZ_FORMATTER = FuncFormatter(log_khz_formatter)
 
 
 def figure_generator(size=figure_size_double):
