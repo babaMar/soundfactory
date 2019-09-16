@@ -1,9 +1,12 @@
 from utils.scale import build_24_tet_scale_by_sequence
 import numpy as np
 from bisect import bisect_left
+from constants import _24_TET_SCALE_INIT
 
-
-note_hz_24_tet = build_24_tet_scale_by_sequence("A-1", 13.75)
+note_hz_24_tet = build_24_tet_scale_by_sequence(
+    list(_24_TET_SCALE_INIT.keys())[-1],
+    list(_24_TET_SCALE_INIT.values())[-1]
+)
 hz_note_24_tet = {v: k for k, v in note_hz_24_tet.items()}
 
 
