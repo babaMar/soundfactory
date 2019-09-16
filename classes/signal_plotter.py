@@ -1,4 +1,5 @@
 import numpy as np
+from matplotlib.ticker import NullFormatter
 from utils.helpers import above_thr_mask, spectrum
 from settings.plot import (
     plt,
@@ -9,8 +10,11 @@ from settings.plot import (
     FONT_PROP,
     AMP_THRESHOLD,
     FREQ_MAX_MARGIN,
-    FREQ_MIN_MARGIN
+    FREQ_MIN_MARGIN,
+    LOG_KHZ_FORMATTER
 )
+from utils.labels import sparse_major_freqs, hz_to_note
+from constants import SEQUENCE_24
 
 
 class SignalPlotter(object):
@@ -65,10 +69,8 @@ class SignalPlotter(object):
         for ax, channel, c in zip(axes, self.channels, axcolors):
             freqs, pws = spectrum(channel, self.sampling_rate)
             ax.plot(freqs, pws, c + "-")
-            ax.set_xlabel("Frequency [Hz]", fontproperties=FONT_PROP)
-            ax.set_xscale("log")
+            ax.set_xlabel("Frequency [kHz]", fontproperties=FONT_PROP)
             ax.set_ylabel("Power(f)", fontproperties=FONT_PROP)
-            # ax.set_yscale('log')
 
     def _plot_signal(
             self,
@@ -106,6 +108,19 @@ class SignalPlotter(object):
             # Calculate FFT and pass find dominant frequencies
             # ax.set_yticks(tone_freqs)
             # ax.set_yticklabels(tone_names)
+    def _pws_labels(self, ax):
+        data = ax.lines[0].get_data()
+        freqs, pws = data
+        ax.set_xscale("log")
+        ax2 = ax.twiny()
+        x_ticks = sparse_major_freqs(freqs, pws)
+        x_labels = [hz_to_note(x) for x in x_ticks]
+        ax.xaxis.set_major_formatter(LOG_KHZ_FORMATTER)
+        ax2.set_xlim(ax.get_xlim())
+        ax2.set_xscale("log")
+        ax2.set_xticks(x_ticks)
+        ax2.set_xticklabels(x_labels, rotation=45, fontproperties=FONT_PROP)
+        ax2.xaxis.set_minor_formatter(NullFormatter())
 
     @staticmethod
     def _set_xlim(axes, left=None, right=None):
@@ -146,10 +161,14 @@ class SignalPlotter(object):
         if any([min_freq, max_freq]):
             self._set_ylim(spec_axes, min_freq, max_freq)
             self._set_xlim(fft_axes, min_freq, max_freq)
+            for ax in fft_axes:
+                self._pws_labels(ax)
         else:
             for ax in fft_axes:
                 min_freq, max_freq = self._lims_above_thr(
                     ax, threshold=threshold)
                 ax.set_xlim(
                     min_freq - FREQ_MIN_MARGIN, max_freq + FREQ_MAX_MARGIN)
+                self._pws_labels(ax)
+        
         plt.show()
