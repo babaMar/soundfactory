@@ -1,5 +1,5 @@
 import numpy as np
-from matplotlib.ticker import NullFormatter
+from matplotlib.ticker import NullFormatter, LogLocator
 from utils.helpers import above_thr_mask, spectrum
 from settings.plot import (
     plt,
@@ -10,11 +10,9 @@ from settings.plot import (
     FONT_PROP,
     AMP_THRESHOLD,
     FREQ_MAX_MARGIN,
-    FREQ_MIN_MARGIN,
-    LOG_KHZ_FORMATTER
+    FREQ_MIN_MARGIN
 )
-from utils.labels import sparse_major_freqs, hz_to_note
-from constants import SEQUENCE_24
+from utils.labels import sparse_major_freqs, hz_to_note, log_khz_formatter
 
 
 class SignalPlotter(object):
@@ -98,9 +96,10 @@ class SignalPlotter(object):
                 channel, NFFT=npoints, Fs=self.sampling_rate,
                 noverlap=overlap, cmap=plt.cm.jet)
             ax.set_xlabel(self.x_label, fontproperties=FONT_PROP)
-            ax.set_ylabel("Frequency [Hz]", fontproperties=FONT_PROP)
+            ax.set_ylabel("Frequency [kHz]", fontproperties=FONT_PROP)
             ax.set_ylim(20., 20000.)
             ax.set_yscale('log')
+            self._setup_log_decimals_labels(ax.yaxis, subs=[.2, .4])
             """
             TODO only label ticks for values that are present
             in the spectrum, not readable otherwise
@@ -108,20 +107,27 @@ class SignalPlotter(object):
             # Calculate FFT and pass find dominant frequencies
             # ax.set_yticks(tone_freqs)
             # ax.set_yticklabels(tone_names)
-    def _pws_labels(self, ax):
+            
+    def _pws_labels(self, ax, thr=0.1):
         data = ax.lines[0].get_data()
         freqs, pws = data
         ax.set_xscale("log")
         ax2 = ax.twiny()
-        x_ticks = sparse_major_freqs(freqs, pws)
+        x_ticks = sparse_major_freqs(freqs, pws, thr=thr)
         x_labels = [hz_to_note(x) for x in x_ticks]
-        ax.xaxis.set_major_formatter(LOG_KHZ_FORMATTER)
         ax2.set_xlim(ax.get_xlim())
+        self._setup_log_decimals_labels(ax.xaxis)
         ax2.set_xscale("log")
         ax2.set_xticks(x_ticks)
         ax2.set_xticklabels(x_labels, rotation=45, fontproperties=FONT_PROP)
         ax2.xaxis.set_minor_formatter(NullFormatter())
 
+    def _setup_log_decimals_labels(
+            self, axis, subs=np.linspace(0, 1, 5, endpoint=False)):
+        axis.set_major_formatter(log_khz_formatter)
+        axis.set_minor_locator(LogLocator(subs=subs))
+        axis.set_minor_formatter(log_khz_formatter)
+        
     @staticmethod
     def _set_xlim(axes, left=None, right=None):
         for ax in axes:
@@ -169,6 +175,6 @@ class SignalPlotter(object):
                     ax, threshold=threshold)
                 ax.set_xlim(
                     min_freq - FREQ_MIN_MARGIN, max_freq + FREQ_MAX_MARGIN)
-                self._pws_labels(ax)
+                self._pws_labels(ax, thr=threshold)
         
         plt.show()
