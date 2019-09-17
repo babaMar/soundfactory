@@ -2,6 +2,8 @@ from utils.scale import build_24_tet_scale_by_sequence
 import numpy as np
 from bisect import bisect_left
 from constants import _24_TET_SCALE_INIT
+from matplotlib import ticker
+
 
 note_hz_24_tet = build_24_tet_scale_by_sequence(
     list(_24_TET_SCALE_INIT.keys())[-1],
@@ -43,6 +45,7 @@ def hz_to_note(x):
     ]
 
 
+@ticker.FuncFormatter
 def log_khz_formatter(hz, pos):
     return '{:g}'.format(hz / 1000)
 
