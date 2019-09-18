@@ -2,9 +2,7 @@ import numpy as np
 from utils.helpers import (
     cents_from_freq_ratio,
     freq_at_n_semitones,
-    freq_at_n_quartertones,
-    half_sharp_up,
-    sharp_up
+    freq_at_n_quartertones
 )
 from constants import (
     _24_TET_SCALE_INIT,
@@ -143,3 +141,4 @@ def test_remove_too_close():
         855.03746878
     ]
     assert remove_too_close(freqs) == [freqs[0], freqs[3]]
+
