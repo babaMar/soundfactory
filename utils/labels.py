@@ -55,13 +55,13 @@ def above_thr_indexes(amps, thr=0.1):
     return np.where(amps > thr * amps.max())[0]
 
 
-def sparse_major_freqs(freqs, amps, thr=0.1):
+def sparse_major_freqs(freqs, amps, thr=0.1, close_thr=0.1):
     idx = above_thr_indexes(amps, thr=thr)
     freqs, amps = freqs[idx], amps[idx]
     
     idx = np.argsort(-amps)
     freqs, amps = freqs[idx], amps[idx]
-    return remove_too_close(freqs)
+    return remove_too_close(freqs, thr=close_thr)
 
 
 

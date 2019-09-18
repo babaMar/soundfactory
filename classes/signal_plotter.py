@@ -10,7 +10,8 @@ from settings.plot import (
     FONT_PROP,
     AMP_THRESHOLD,
     FREQ_MAX_MARGIN,
-    FREQ_MIN_MARGIN
+    FREQ_MIN_MARGIN,
+    CLOSE_LOG_LABEL_THRESHOLD
 )
 from utils.labels import sparse_major_freqs, hz_to_note, log_khz_formatter
 
@@ -108,12 +109,12 @@ class SignalPlotter(object):
             # ax.set_yticks(tone_freqs)
             # ax.set_yticklabels(tone_names)
             
-    def _pws_labels(self, ax, thr=0.1):
+    def _pws_labels(self, ax, thr=0.1, close_thr=0.1):
         data = ax.lines[0].get_data()
         freqs, pws = data
         ax.set_xscale("log")
         ax2 = ax.twiny()
-        x_ticks = sparse_major_freqs(freqs, pws, thr=thr)
+        x_ticks = sparse_major_freqs(freqs, pws, thr=thr, close_thr=close_thr)
         x_labels = [hz_to_note(x) for x in x_ticks]
         ax2.set_xlim(ax.get_xlim())
         self._setup_log_decimals_labels(ax.xaxis)
@@ -143,6 +144,7 @@ class SignalPlotter(object):
             start=None, end=None,
             min_freq=None, max_freq=None,
             threshold=AMP_THRESHOLD,
+            close_threshold=CLOSE_LOG_LABEL_THRESHOLD,
             mode="separate"):
         if mode == "separate":
             spec_figs = self._create_figures(size=figure_size_double)
@@ -168,13 +170,13 @@ class SignalPlotter(object):
             self._set_ylim(spec_axes, min_freq, max_freq)
             self._set_xlim(fft_axes, min_freq, max_freq)
             for ax in fft_axes:
-                self._pws_labels(ax)
+                self._pws_labels(ax, thr=threshold, close_thr=close_threshold)
         else:
             for ax in fft_axes:
                 min_freq, max_freq = self._lims_above_thr(
                     ax, threshold=threshold)
                 ax.set_xlim(
                     min_freq - FREQ_MIN_MARGIN, max_freq + FREQ_MAX_MARGIN)
-                self._pws_labels(ax, thr=threshold)
+                self._pws_labels(ax, thr=threshold, close_thr=close_threshold)
         
         plt.show()
