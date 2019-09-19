@@ -33,10 +33,11 @@ from classes.signal_plotter import SignalPlotter
     type=click.FLOAT,
     default=AMP_THRESHOLD,
     help="amplitude percentage threshold")
+@click.option("--log-pws", flag_value="log_pws", default=False)
 def main(
         input_file, calculate_envelope,
         msec_window, start, end, mode,
-        min_freq, max_freq, threshold
+        min_freq, max_freq, threshold, log_pws
 ):
 
     """
@@ -71,7 +72,7 @@ def main(
         start=start, end=end,
         min_freq=min_freq, max_freq=max_freq,
         threshold=threshold,
-        mode=mode)
+        mode=mode, log_pws=log_pws)
 
 
 if __name__ == '__main__':
