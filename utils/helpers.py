@@ -31,7 +31,7 @@ def above_thr_mask(a, threshold=.1):
 
 def indexes_above_threshold(a, threshold=0.1):
     a = np.array(a)
-    return np.where(a > threshold * a.max())[0]
+    return np.where(above_thr_mask(a, threshold=threshold))[0]
 
 
 def spectrum(signal, samplerate):
