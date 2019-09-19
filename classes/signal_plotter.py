@@ -1,5 +1,5 @@
 import numpy as np
-from matplotlib.ticker import NullFormatter, LogLocator
+from matplotlib.ticker import NullFormatter, LogLocator, NullLocator
 from utils.helpers import above_thr_mask, spectrum
 from settings.plot import (
     plt,
@@ -11,7 +11,7 @@ from settings.plot import (
     AMP_THRESHOLD,
     FREQ_MAX_MARGIN,
     FREQ_MIN_MARGIN,
-    CLOSE_LOG_LABEL_THRESHOLD
+    CLOSE_LOG_LABEL_TOLERANCE
 )
 from utils.labels import sparse_major_freqs, hz_to_note, log_khz_formatter
 
@@ -109,18 +109,21 @@ class SignalPlotter(object):
             # ax.set_yticks(tone_freqs)
             # ax.set_yticklabels(tone_names)
             
-    def _pws_labels(self, ax, thr=0.1, close_thr=0.1):
+    def _pws_labels(self, ax, threshold=0.1, close_tolerance=0.1, log_y=False):
         data = ax.lines[0].get_data()
         freqs, pws = data
         ax.set_xscale("log")
+        ax.set_yscale("{}".format("log" if log_y else "linear"))
         ax2 = ax.twiny()
-        x_ticks = sparse_major_freqs(freqs, pws, thr=thr, close_thr=close_thr)
+        x_ticks = sparse_major_freqs(
+            freqs, pws, threshold=threshold, close_tolerance=close_tolerance)
         x_labels = [hz_to_note(x) for x in x_ticks]
         ax2.set_xlim(ax.get_xlim())
         self._setup_log_decimals_labels(ax.xaxis)
         ax2.set_xscale("log")
         ax2.set_xticks(x_ticks)
         ax2.set_xticklabels(x_labels, rotation=45, fontproperties=FONT_PROP)
+        ax2.xaxis.set_minor_locator(NullLocator())
         ax2.xaxis.set_minor_formatter(NullFormatter())
 
     def _setup_log_decimals_labels(
@@ -144,8 +147,9 @@ class SignalPlotter(object):
             start=None, end=None,
             min_freq=None, max_freq=None,
             threshold=AMP_THRESHOLD,
-            close_threshold=CLOSE_LOG_LABEL_THRESHOLD,
-            mode="separate"):
+            close_tolerance=CLOSE_LOG_LABEL_TOLERANCE,
+            mode="separate",
+            log_pws=False):
         if mode == "separate":
             spec_figs = self._create_figures(size=figure_size_double)
             spec_axes = [f.add_subplot(111) for f in spec_figs]
@@ -170,13 +174,21 @@ class SignalPlotter(object):
             self._set_ylim(spec_axes, min_freq, max_freq)
             self._set_xlim(fft_axes, min_freq, max_freq)
             for ax in fft_axes:
-                self._pws_labels(ax, thr=threshold, close_thr=close_threshold)
+                self._pws_labels(
+                    ax,
+                    threshold=threshold,
+                    close_tolerance=close_tolerance,
+                    log_y=log_pws)
         else:
             for ax in fft_axes:
                 min_freq, max_freq = self._lims_above_thr(
                     ax, threshold=threshold)
                 ax.set_xlim(
                     min_freq - FREQ_MIN_MARGIN, max_freq + FREQ_MAX_MARGIN)
-                self._pws_labels(ax, thr=threshold, close_thr=close_threshold)
+                self._pws_labels(
+                    ax,
+                    threshold=threshold,
+                    close_tolerance=close_tolerance,
+                    log_y=log_pws)
         
         plt.show()

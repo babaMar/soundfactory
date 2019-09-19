@@ -3,7 +3,7 @@ import numpy as np
 from bisect import bisect_left
 from constants import _24_TET_SCALE_INIT
 from matplotlib import ticker
-
+from utils.helpers import indexes_above_threshold
 
 note_hz_24_tet = build_24_tet_scale_by_sequence(
     list(_24_TET_SCALE_INIT.keys())[-1],
@@ -27,13 +27,26 @@ def find_closest(sorted_list, x):
     return closest
 
 
-def remove_too_close(values, thr=0.1):
-    """ remove close elements in values following their position in values"""
+def remove_close_values_on_log_scale(values, tolerance=0.1):
+    """
+    Params
+    ------
+    values -- array-like of floats
+    tolerance (float) -- for a given x remove all y:
+                         x - tolerance*x < y < x + tolerance*x
+
+
+    Example
+    -------
+    tolerance = 0.1
+    [1, 1.01, 15, 14, 1.11] -> [1, 15, 1.11]
+
+    """
     values = list(values)
     for i, x in enumerate(values):
-        d = thr * x
-        left_values = list(values[i+1:])
-        for y in left_values:
+        d = abs(tolerance * x)
+        remaining_values = values[i + 1:]
+        for y in remaining_values:
             if abs(x - y) < d:
                 values.remove(y)
     return values
@@ -50,18 +63,13 @@ def log_khz_formatter(hz, pos):
     return '{:g}'.format(hz / 1000)
 
 
-def above_thr_indexes(amps, thr=0.1):
-    amps = np.array(amps)
-    return np.where(amps > thr * amps.max())[0]
-
-
-def sparse_major_freqs(freqs, amps, thr=0.1, close_thr=0.1):
-    idx = above_thr_indexes(amps, thr=thr)
+def sparse_major_freqs(freqs, amps, threshold=0.1, close_tolerance=0.1):
+    idx = indexes_above_threshold(amps, threshold=threshold)
     freqs, amps = freqs[idx], amps[idx]
     
     idx = np.argsort(-amps)
     freqs, amps = freqs[idx], amps[idx]
-    return remove_too_close(freqs, thr=close_thr)
+    return remove_close_values_on_log_scale(freqs, tolerance=close_tolerance)
 
 
 
