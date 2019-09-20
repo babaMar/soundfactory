@@ -90,8 +90,6 @@ class SignalPlotter:
     def _plot_spectrogram(self, axes, wmsec=0.005):
         npoints = int(self.sampling_rate * wmsec)
         overlap = int(self.sampling_rate * wmsec / 2.)
-        # tone_freqs = [v for v in TONE_FREQ_MAP.values()]
-        # tone_names = [k for k in TONE_FREQ_MAP.keys()]
         for ax, channel, in zip(axes, self.channels):
             Pxx, freqs, bins, im = ax.specgram(
                 channel, NFFT=npoints, Fs=self.sampling_rate,
@@ -126,8 +124,9 @@ class SignalPlotter:
         ax2.xaxis.set_minor_locator(NullLocator())
         ax2.xaxis.set_minor_formatter(NullFormatter())
 
+    @staticmethod
     def _setup_log_decimals_labels(
-            self, axis, subs=np.linspace(0, 1, 5, endpoint=False)):
+            axis, subs=np.linspace(0, 1, 5, endpoint=False)):
         axis.set_major_formatter(log_khz_formatter)
         axis.set_minor_locator(LogLocator(subs=subs))
         axis.set_minor_formatter(log_khz_formatter)
