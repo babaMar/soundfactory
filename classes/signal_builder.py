@@ -39,7 +39,7 @@ class ProvidedInputError(SignalBuilderError):
         return self.message
 
 
-class SignalBuilder(object):
+class SignalBuilder:
     """ Create a Signal from Fourier Series """
     def __init__(
             self,

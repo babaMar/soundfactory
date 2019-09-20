@@ -16,7 +16,7 @@ from settings.plot import (
 from utils.labels import sparse_major_freqs, hz_to_note, log_khz_formatter
 
 
-class SignalPlotter(object):
+class SignalPlotter:
 
     def __init__(self, l_signal,
                  l_signal_envelope=(),
