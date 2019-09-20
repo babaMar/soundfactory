@@ -1,11 +1,8 @@
 import numpy as np
-
 from utils.helpers import (
     cents_from_freq_ratio,
     freq_at_n_semitones,
-    freq_at_n_quartertones,
-    half_sharp_up,
-    sharp_up
+    freq_at_n_quartertones
 )
 from constants import (
     _24_TET_SCALE_INIT,
@@ -16,6 +13,7 @@ from utils.signal import freq_indexes, build_fft
 from utils.scale import (
     next_label, next_freq, build_24_tet_scale, build_24_tet_scale_by_sequence
 )
+from utils.labels import remove_too_close
 
 
 def test_cents_from_freq_ratio():
@@ -134,3 +132,13 @@ def test_24_scale_builder_by_sequence():
     scale_24_by_sequence = build_24_tet_scale_by_sequence(
         ref_label, ref_frequency)
     assert scale_24 == scale_24_by_sequence
+
+
+def test_remove_too_close():
+    freqs = [
+        687.17735221, 692.42298085,
+        681.93172356, 860.28309742,
+        855.03746878
+    ]
+    assert remove_too_close(freqs) == [freqs[0], freqs[3]]
+

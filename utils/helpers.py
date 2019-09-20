@@ -1,16 +1,10 @@
 import numpy as np
 from math import log
-from copy import deepcopy
-
 from constants import (
     CENTS_PER_OCTAVE,
     BASE,
     SEMITONE_CENTS,
     QUARTERTONE_CENTS,
-    QUARTER_TONE_FLAT_SYMBOL,
-    SHARP_SYMBOL,
-    QUARTER_TONE_SHARP_SYMBOL,
-    TONE_LABELS
 )
 
 
@@ -33,6 +27,11 @@ def above_thr_mask(a, threshold=.1):
     """a is a numpy.array"""
     peak_threshold = threshold * a.max()
     return a >= peak_threshold
+
+
+def indexes_above_threshold(a, threshold=0.1):
+    a = np.array(a)
+    return np.where(above_thr_mask(a, threshold=threshold))[0]
 
 
 def spectrum(signal, samplerate):
@@ -108,62 +107,3 @@ def progress_time(
         left=round(total_time-elapsed),
         suffix=suffix
     ), end='\r')
-
-
-def get_octave(ref_label):
-    part = ref_label.strip(ref_label[0])
-    if any(x in ref_label for x in [QUARTER_TONE_SHARP_SYMBOL,
-                                    SHARP_SYMBOL,
-                                    QUARTER_TONE_FLAT_SYMBOL]):
-        return part.strip(part[-1])
-    return part
-
-
-def half_sharp_up(ref_label, ref_freq):
-    octave = get_octave(ref_label)
-    if SHARP_SYMBOL in ref_label:
-        note_label = next(TONE_LABELS)  # chr(ord(ref_note) + 1)
-        label = note_label + octave + QUARTER_TONE_FLAT_SYMBOL
-    else:
-        label = ref_label + QUARTER_TONE_SHARP_SYMBOL
-
-    freq = freq_at_n_quartertones(ref_freq, 1)
-    return label, freq
-
-
-def sharp_up(ref_label, ref_freq):
-    ref_note = ref_label[0]
-    octave = get_octave(ref_label)
-    if SHARP_SYMBOL in ref_label:
-        note_label = next(TONE_LABELS)  # chr(ord(ref_note) + 1)
-        label = note_label + octave
-    else:
-        # handle cases Bi-1 -> Ci, Ei -> Fi
-        if ref_note in ('B', 'E'):
-            note_label = next(TONE_LABELS)  # chr(ord(ref_note) + 1)
-            if ref_note == 'B':
-                octave = str(int(octave) + 1)
-            label = note_label + octave
-        else:
-            label = ref_note + octave + SHARP_SYMBOL
-
-    freq = freq_at_n_quartertones(ref_freq, 2)
-    return label, freq
-
-
-def next_2_tones_in_scale(scale):
-    ref_label = list(scale.keys())[-1]
-    ref_frequency = list(scale.values())[-1]
-    for func in (half_sharp_up, sharp_up):
-        _l, _f = func(ref_label, ref_frequency)
-        scale[_l] = _f
-    return scale
-
-
-def calculate_24_tet_scale(scale_init):
-    scale = deepcopy(scale_init)
-    n = 0
-    while n < 130:
-        scale = next_2_tones_in_scale(scale)
-        n += 1
-    return scale
