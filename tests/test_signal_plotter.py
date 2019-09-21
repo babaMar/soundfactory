@@ -1,14 +1,15 @@
-from unittest import mock
-from classes.signal_plotter import SignalPlotter
 import numpy as np
 
+import matplotlib.pyplot as plt
+from classes.signal_plotter import SignalPlotter
 
-@mock.patch('classes.signal_plotter.SignalPlotter.show')
-def test_show_plot(mock_plt):
-    ch1, ch2 = np.array([1, 2, 3]), np.array([4, 5, 3])
+
+def test_show_plot(mocker):
+    plotting_interface = mocker.MagicMock()
+    plotting_interface.cm.jet = plt.cm.jet
     plotter = SignalPlotter(
-        ch1,
-        r_signal=ch2
+        plotting_interface,
+        np.ones(10),
     )
     plotter.show()
-    mock_plt.plot.assert_called_once_with(ch1, r_signal=ch2)
+    plotting_interface.show.assert_called_once()
