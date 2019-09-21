@@ -1,8 +1,11 @@
 import numpy as np
-from matplotlib.ticker import NullFormatter, LogLocator, NullLocator
-from utils.helpers import above_thr_mask, spectrum
+from matplotlib.ticker import (NullFormatter,
+                               LogLocator,
+                               NullLocator)
+
+from utils.helpers import (above_thr_mask,
+                           spectrum)
 from settings.plot import (
-    plt,
     figure_size_single,
     figure_size_double,
     figure_generator,
@@ -13,12 +16,16 @@ from settings.plot import (
     FREQ_MIN_MARGIN,
     CLOSE_LOG_LABEL_TOLERANCE
 )
-from utils.labels import sparse_major_freqs, hz_to_note, log_khz_formatter
+from utils.labels import (sparse_major_freqs,
+                          hz_to_note,
+                          log_khz_formatter)
 
 
 class SignalPlotter:
 
-    def __init__(self, l_signal,
+    def __init__(self,
+                 plotting_interface,
+                 l_signal,
                  l_signal_envelope=(),
                  r_signal=(),
                  r_signal_envelope=(),
@@ -30,6 +37,7 @@ class SignalPlotter:
         self.plot_envelope = plot_envelope
         self.y_label = "Mono Channel (t)"
         self.x_label = "t [sec]"
+        self.plt = plotting_interface
 
         if any(l_signal_envelope):
             self.left_envelope = l_signal_envelope
@@ -56,11 +64,29 @@ class SignalPlotter:
     def _create_figures(self, size=figure_size_single):
         return [next(figure_generator(size=size)) for _ in range(self.n_figures)]
 
-    def _lims_above_thr(self, ax, threshold=.1):
+    @staticmethod
+    def _lims_above_thr(ax, threshold=.1):
         x, y = ax.lines[0].get_xdata(), ax.lines[0].get_ydata()
         mask = above_thr_mask(y, threshold=threshold)
         mask_idx = np.where(mask)[0]
         return x[mask_idx[0]], x[mask_idx[-1]]
+
+    @staticmethod
+    def _setup_log_decimals_labels(
+            axis, subs=np.linspace(0, 1, 5, endpoint=False)):
+        axis.set_major_formatter(log_khz_formatter)
+        axis.set_minor_locator(LogLocator(subs=subs))
+        axis.set_minor_formatter(log_khz_formatter)
+
+    @staticmethod
+    def _set_xlim(axes, left=None, right=None):
+        for ax in axes:
+            ax.set_xlim(left, right)
+
+    @staticmethod
+    def _set_ylim(axes, bottom=None, top=None):
+        for ax in axes:
+            ax.set_ylim(bottom, top)
 
     def _plot_fft(self, axes, axcolors=None):
         if not axcolors:
@@ -93,19 +119,12 @@ class SignalPlotter:
         for ax, channel, in zip(axes, self.channels):
             Pxx, freqs, bins, im = ax.specgram(
                 channel, NFFT=npoints, Fs=self.sampling_rate,
-                noverlap=overlap, cmap=plt.cm.jet)
+                noverlap=overlap, cmap=self.plt.cm.jet)
             ax.set_xlabel(self.x_label, fontproperties=FONT_PROP)
             ax.set_ylabel("Frequency [kHz]", fontproperties=FONT_PROP)
             ax.set_ylim(20., 20000.)
             ax.set_yscale('log')
             self._setup_log_decimals_labels(ax.yaxis, subs=[.2, .4])
-            """
-            TODO only label ticks for values that are present
-            in the spectrum, not readable otherwise
-            """
-            # Calculate FFT and pass find dominant frequencies
-            # ax.set_yticks(tone_freqs)
-            # ax.set_yticklabels(tone_names)
             
     def _pws_labels(self, ax, threshold=0.1, close_tolerance=0.1, log_y=False):
         data = ax.lines[0].get_data()
@@ -124,23 +143,6 @@ class SignalPlotter:
         ax2.xaxis.set_minor_locator(NullLocator())
         ax2.xaxis.set_minor_formatter(NullFormatter())
 
-    @staticmethod
-    def _setup_log_decimals_labels(
-            axis, subs=np.linspace(0, 1, 5, endpoint=False)):
-        axis.set_major_formatter(log_khz_formatter)
-        axis.set_minor_locator(LogLocator(subs=subs))
-        axis.set_minor_formatter(log_khz_formatter)
-        
-    @staticmethod
-    def _set_xlim(axes, left=None, right=None):
-        for ax in axes:
-            ax.set_xlim(left, right)
-
-    @staticmethod
-    def _set_ylim(axes, bottom=None, top=None):
-        for ax in axes:
-            ax.set_ylim(bottom, top)
-
     def show(
             self, wmsec=1,
             start=None, end=None,
@@ -158,11 +160,13 @@ class SignalPlotter:
             fft_axes = [f.add_subplot(111) for f in fft_figs]
         elif mode == "single":
             nrows, ncols = 3, self.n_figures
-            fig = plt.figure(constrained_layout=True)
+            fig = self.plt.figure(constrained_layout=True)
             spec = fig.add_gridspec(ncols=ncols, nrows=nrows)
             signal_axes = [fig.add_subplot(spec[0, c]) for c in range(ncols)]
             fft_axes = [fig.add_subplot(spec[1, c]) for c in range(ncols)]
             spec_axes = [fig.add_subplot(spec[2, c]) for c in range(ncols)]
+        else:
+            raise NotImplementedError('mode {} not recognized'.format(mode))
         axcolors = [next(colors) for _ in range(self.n_figures)]
         self._plot_signal(signal_axes, axcolors=axcolors)
         self._plot_fft(fft_axes, axcolors=axcolors)
@@ -190,4 +194,4 @@ class SignalPlotter:
                     close_tolerance=close_tolerance,
                     log_y=log_pws)
         
-        plt.show()
+        self.plt.show()

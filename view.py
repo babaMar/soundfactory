@@ -2,7 +2,7 @@
 
 import click
 from settings.input_validators import ExistentWav
-from settings.plot import AMP_THRESHOLD
+from settings.plot import plt, AMP_THRESHOLD
 from utils.signal import get_envelope, load_audio
 from classes.signal_plotter import SignalPlotter
 
@@ -61,6 +61,7 @@ def main(
         ch1_envelope, ch2_envelope = get_envelope(ch1), get_envelope(ch2)
         show_envelope = True
     plotter = SignalPlotter(
+        plt,
         ch1,
         l_signal_envelope=ch1_envelope,
         r_signal=ch2,
