@@ -45,48 +45,52 @@ class SignalBuilder:
             self,
             frequencies,
             amplitudes,
+            wave_types,
             phases=None,
             n_max=1000,
-            wave_type='sine',
             t_resolution=10000):
         self.frequencies = frequencies
         self.amplitudes = amplitudes
-        self.phases = None
         self.set_phases(phases)
+        self.wave_types = wave_types
         self.check_input()
         self.nterms = n_max
-        supported_wave_shapes = list(B_N_COEFF_MAP.keys())
-        if wave_type not in supported_wave_shapes:
-            raise NotSupportedWaveShape(wave_type, supported_wave_shapes)
+        # supported_wave_shapes = list(B_N_COEFF_MAP.keys())
+        # if wave_type not in supported_wave_shapes:
+        #     raise NotSupportedWaveShape(wave_type, supported_wave_shapes)
 
         self.time_resolution = t_resolution
         self.time_space = np.linspace(
             0., 1., self.time_resolution, endpoint=False)
-        self.coefficients = B_N_COEFF_MAP[wave_type]   # array
+        # self.coefficients = B_N_COEFF_MAP[wave_type]   # array
         self.a0 = 0
         self.signal = self.build_signal()
 
     def get_time_space(self):
         return self.time_space
 
-    def _fourier_series(self, x, freq):
+    def _fourier_series(self, x, freq, shape):
         # Return the sum of all terms for a single point in time
         partial_sums = self.a0
         n = np.arange(1, self.nterms + 1)
-        partial_sums += np.sum(self.coefficients(n) * np.sin(wn(n, freq) * x))
+        coefficients = B_N_COEFF_MAP[shape]
+        partial_sums += np.sum(coefficients(n) * np.sin(wn(n, freq) * x))
         return partial_sums
 
-    def _single_component(self, amplitude, freq):
+    def _single_component(self, amplitude, freq, shape):
         res = [
-            amplitude * self._fourier_series(_t, freq)
+            amplitude * self._fourier_series(_t, freq, shape)
             for _t in self.time_space
         ]
         return np.asarray(res, dtype=np.float32)
 
     def build_signal(self):
         signal = np.zeros(self.time_resolution)
-        for amp, freq in zip(self.amplitudes, self.frequencies):
-            signal += self._single_component(amp, freq)
+        for freq, amp, shape in zip(
+                self.frequencies,
+                self.amplitudes,
+                self.wave_types):
+            signal += self._single_component(amp, freq, shape)
         return signal
 
     def export(self, filename, bit_depth=16, samplerate=44100):
@@ -107,3 +111,5 @@ class SignalBuilder:
             self.phases = [0] * len(self.frequencies)
         else:
             self.phases = phases
+
+            
