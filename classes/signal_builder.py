@@ -55,14 +55,9 @@ class SignalBuilder:
         self.wave_types = wave_types
         self.check_input()
         self.nterms = n_max
-        # supported_wave_shapes = list(B_N_COEFF_MAP.keys())
-        # if wave_type not in supported_wave_shapes:
-        #     raise NotSupportedWaveShape(wave_type, supported_wave_shapes)
-
         self.time_resolution = t_resolution
         self.time_space = np.linspace(
             0., 1., self.time_resolution, endpoint=False)
-        # self.coefficients = B_N_COEFF_MAP[wave_type]   # array
         self.a0 = 0
         self.signal = self.build_signal()
 
@@ -90,6 +85,10 @@ class SignalBuilder:
                 self.frequencies,
                 self.amplitudes,
                 self.wave_types):
+            createlog.info(
+                "Adding components from {s} wave of {f} hz frequency".format(
+                    s=shape, f=freq
+                ))
             signal += self._single_component(amp, freq, shape)
         return signal
 
