@@ -35,8 +35,8 @@ def test_signal_approximation():
             signal_builder = SignalBuilder(
                 [freq],
                 [1.],
+                [wave_shape],
                 n_max=200,
-                wave_type=wave_shape,
                 t_resolution=TIME_RANGE.size)
             rec_sig = signal_builder.signal
             diff = rec_sig - sig
@@ -49,7 +49,8 @@ def test_export():
     f = [432]
     a = [1]
     f, a = np.array(f), np.array(a)
-    s = SignalBuilder(f, a, wave_type="sine", t_resolution=samplerate)
+    wave_types = ["sine"]
+    s = SignalBuilder(f, a, wave_types, t_resolution=samplerate)
     s.export(filename, samplerate=samplerate)
 
     signal, samplerate = load_audio(filename)
