@@ -1,6 +1,7 @@
 import pytest
 import numpy as np
 import scipy.signal as signal
+from settings.input_validators import DEFAULT_WAVE_TYPE
 
 SAMPLES = 44100
 
@@ -47,3 +48,16 @@ def signals():
            3.4 * np.sin(_x(1, 202)),
            2 * np.sin(_x(10, 80000)) + _x(1, 80000) + np.exp(_x(1, 80000)),
            [0] * 44101)
+
+
+@pytest.fixture
+def bad_wavecomponents():
+    yield (
+        "",
+        "1", DEFAULT_WAVE_TYPE, "1,1"
+        "1 " + DEFAULT_WAVE_TYPE, " ".join([DEFAULT_WAVE_TYPE]*2), "1,1 1",
+        "1 1 sin",
+        "1 2 {} 2".format(DEFAULT_WAVE_TYPE),
+        "1 1 " + " ".join([DEFAULT_WAVE_TYPE]*2),
+        "1 2 4 si",
+    )
