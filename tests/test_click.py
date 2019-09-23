@@ -1,7 +1,8 @@
 import click
 from click.testing import CliRunner
-from settings.input_validators import ArbitraryNArgs, WaveComponent
-from settings.input_validators import DEFAULT_PHASE, DEFAULT_WAVE_TYPE
+from settings.input_validators import (
+    ArbitraryNArgs, WaveComponent, DEFAULT_PHASE, DEFAULT_WAVE_TYPE
+)
 
 
 def test_wavecomponent(bad_wavecomponents):
