@@ -90,3 +90,9 @@ def build_fft(freqs, amps, phases, period=1, samplerate=44100):
 def build_signal(freqs, amps, phases, period=1, samplerate=44100):
     fft = build_fft(freqs, amps, phases, period=period, samplerate=samplerate)
     return np.fft.ifft(fft)
+
+
+def write(signal, filename, bit_depth=16, samplerate=44100):
+    subtype = find_soundfile_subtype(bit_depth)
+    sf.write(filename, signal, samplerate, subtype=subtype)
+
