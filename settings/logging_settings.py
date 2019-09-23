@@ -15,5 +15,12 @@ def get_logger(name):
 
 viewlog = get_logger(name="view")
 viewlog.setLevel(logging.INFO)
+
 createlog = get_logger(name="create")
 createlog.setLevel(logging.INFO)
+
+plotterlog = get_logger(name="plotter")
+plotterlog.setLevel(logging.INFO)
+
+playlog = get_logger(name="play")
+playlog.setLevel(logging.INFO)
