@@ -3,7 +3,7 @@ import numpy as np
 import soundfile as sf
 
 from settings.signal import B_N_COEFF_MAP
-from utils.signal import wn, find_soundfile_subtype
+from utils.signal import wn, find_soundfile_subtype, write
 from settings.logging_settings import createlog
 
 
@@ -92,9 +92,8 @@ class SignalBuilder:
             signal += self._single_component(amp, freq, shape)
         return signal
 
-    def export(self, filename, bit_depth=16, samplerate=44100):
-        subtype = find_soundfile_subtype(bit_depth)
-        sf.write(filename, self.signal, samplerate, subtype=subtype)
+    def export(self, path, bit_depth=16, samplerate=44100):
+        write(self.signal, path, samplerate=samplerate, bit_depth=bit_depth)
 
     def check_input(self):
         f, a, p = self.frequencies, self.amplitudes, self.phases

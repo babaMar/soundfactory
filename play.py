@@ -10,15 +10,9 @@ from utils.helpers import progress_time
 from constants import MAX_16_BIT_VALUE, BYTE_PER_16_BIT
 
 
-@click.command()
-@click.option(
-    "--input-file", "-i",
-    metavar="INPUT",
-    required=True,
-    type=ExistentWav())
-def main(input_file):
-    with sf.SoundFile(input_file) as f:
-        playlog.info("Loading audio from {}".format(input_file))
+def play(path):
+    with sf.SoundFile(path) as f:
+        playlog.info("Loading audio from {}".format(path))
         channels, samplerate = f.channels, f.samplerate
         total_seconds = len(f) / samplerate
         audio = f.read(dtype="float32")
@@ -35,6 +29,16 @@ def main(input_file):
             progress_time(total_seconds, time.time() - start_time)
         print("\n")
 
-        
+
+@click.command()
+@click.option(
+    "--input-file", "-i",
+    metavar="INPUT",
+    required=True,
+    type=ExistentWav())
+def main(input_file):
+    play(input_file)
+
+    
 if __name__ == "__main__":
     main()
