@@ -23,11 +23,12 @@ def find_font_path_name(char):
     for font in FONT_INFO:
         if _char_in_font(char, TTFont(font[0])):
             return font[0], font[1]
+    return None, None
 
 
 FONT_PATH, FONT_NAME = find_font_path_name(QUARTER_TONE_FLAT_SYMBOL)
-FONT_PROP = mfm.FontProperties(size=24) if not FONT_PATH \
-    else mfm.FontProperties(size=24, fname=FONT_PATH)
+FONT_PROP = mfm.FontProperties(size=20) if not FONT_PATH \
+    else mfm.FontProperties(size=20, fname=FONT_PATH)
 
 plt.rc('text', usetex=False)
 plt.rcParams['legend.numpoints'] = 1
