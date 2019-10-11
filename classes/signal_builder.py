@@ -39,8 +39,6 @@ class ProvidedInputError(SignalBuilderError):
         return self.message
 
 
-DEFAULT_SAMPLERATE = 44100
-
 class SignalBuilder:
     """ Create a Signal from Fourier Series """
     def __init__(
@@ -50,7 +48,6 @@ class SignalBuilder:
             wave_types,
             phases=None,
             n_max=1000,
-            t_resolution=10000,
             duration=1.,
             samplerate=DEFAULT_SAMPLERATE
     ):
@@ -63,7 +60,6 @@ class SignalBuilder:
         self.n_terms = np.arange(1, n_max + 1)
         self.duration = duration
         self.samplerate = samplerate
-        self.time_resolution = t_resolution
         self.n_samples = int(self.duration * self.samplerate)
         self.time_space = np.linspace(
             0., self.duration, self.n_samples, endpoint=False
@@ -82,7 +78,7 @@ class SignalBuilder:
         partial_sums += np.sum(
             coefficients(n) * np.sin(
                 wn(n, freq) * x
-                # + n*np.radians(ph)
+                + n * np.radians(ph)
             ))
         return partial_sums
 
@@ -136,23 +132,7 @@ class SignalBuilder:
     @staticmethod
     def index_at_first_period(freq, rate, duration):
         return int(round((rate*duration) / freq))
-        
-    def time_shift(self, t, freq):
-        i0 = self.index_at_time_shift(t, self.duration, self.time_resolution)
-        period_pos = self.index_at_first_period(
-            freq, self.time_resolution, self.duration)
-        decimal_freq_pos = int(round((freq - int(freq)) * period_pos))
-        shifted = np.concatenate((
-            self.signal[i0:period_pos],
-            np.tile(self.signal[:period_pos], int(freq - 1)),
-            self.signal[:i0 + decimal_freq_pos]
-        ))[:len(self.time_space)]
-        return shifted
-        
-    def phase_shift(self, ph, freq):
-        delt = self.deg2time(ph, freq) % (1/freq)
-        return self.time_shift(delt, freq)
-    
+
     def _single_component_from_period(self, a, f, ph, shape):
         period = [
             a * self._fourier_series(_t, 1, ph, shape)
@@ -167,4 +147,3 @@ class SignalBuilder:
         write(
             self.signal, path, samplerate=self.samplerate, bit_depth=bit_depth
         )
-
