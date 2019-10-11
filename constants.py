@@ -24,3 +24,5 @@ SYMBOLS_24 = ('', '𝄲', '#', '𝄳')
 
 MAX_16_BIT_VALUE = 2**15 - 1
 BYTE_PER_16_BIT = 2
+
+DEFAULT_SAMPLERATE = 44100
