@@ -1,23 +1,21 @@
-from random import choice
 import numpy as np
 from utils.signal import load_audio
 from classes.signal_builder import SignalBuilder
 from tests.conftest import (
     sine_wave, square_wave, time_range, sawtooth_wave, triangle_wave
     )
-import matplotlib.pyplot as plt
+from constants import DEFAULT_SAMPLERATE
 
 
 TIME_RANGE = time_range()
 TEST_FREQUENCIES = [
-    27.0, 54.0, 108.0, 216.0, 432.0, 864.0,
-    1728.0, 3456.0, 6912.0, 13824.0, 27648.0
+    832.2, 30.1, 1.9, 1, 432
 ]
 APPROXIMATION_TOLERANCE = 0.01
 WAVE_ANALYTICS = [sine_wave, square_wave, sawtooth_wave, triangle_wave]
 WAVE_LABELS = ['sine', 'square', 'sawtooth', 'triangle']
-WAVE_TOLERANCES = [1e-12, 1e-3, 1e-3, 1e-12]
-WAVES = zip(WAVE_ANALYTICS, WAVE_LABELS, WAVE_TOLERANCES)
+WAVE_TOLERANCES = [1e-2, 1e-2, 1e-2, 1e-2]
+WAVES = list(zip(WAVE_ANALYTICS, WAVE_LABELS, WAVE_TOLERANCES))
 
 
 class ApproximationDifferences:
@@ -29,17 +27,18 @@ class ApproximationDifferences:
 
 # Y: Diff (for each wave form) X: Freq
 def test_signal_approximation():
+    samplerate = DEFAULT_SAMPLERATE
     for freq in TEST_FREQUENCIES:
         for analytic_sig, wave_shape, tolerance in WAVES:
-            sig = analytic_sig(freq)
+            sig = analytic_sig(freq, samplerate)
             signal_builder = SignalBuilder(
                 [freq],
                 [1.],
                 [wave_shape],
-                n_max=200,
-                t_resolution=TIME_RANGE.size)
+                n_max=1000,
+                samplerate=samplerate)
             rec_sig = signal_builder.signal
-            diff = rec_sig - sig
+            diff = np.abs(rec_sig - sig)
             assert diff.mean() < tolerance
 
 
@@ -60,3 +59,42 @@ def test_export():
     idx = np.where((amps > 1e-4) & (freqs >= 0))[0]
     assert (freqs[idx] - f < 1e-5).all()
     assert (amps[idx] - a < 1e-5).all()
+
+
+def test_time_shift():
+    freq, amp = 2.3, 4
+    for shape in WAVE_LABELS:
+        s0 = SignalBuilder([freq], [amp], [shape], phases=[0])
+        np.testing.assert_almost_equal(s0.time_shift(1, freq), s0.signal)
+        np.testing.assert_almost_equal(s0.time_shift(13, freq), s0.signal)
+
+
+def test_phase_shift():
+    freq, amp = 2.3, 1
+    for shape in WAVE_LABELS:
+        s0 = SignalBuilder([freq], [amp], [shape], phases=[0])
+        np.testing.assert_almost_equal(s0.phase_shift(360, freq), s0.signal)
+        np.testing.assert_almost_equal(s0.phase_shift(720, freq), s0.signal)
+
+
+def test_initial_phase():
+    tolerance = 1e-5
+    shift_tolerance = 6e-1
+    freq, amp = 2.3, 4
+    for shape in WAVE_LABELS:
+        s0 = SignalBuilder(
+            [freq], [amp], [shape], phases=[0])
+        for ph in [360, 720]:
+            builder = SignalBuilder([freq], [amp], [shape], phases=[ph])
+            assert (np.abs(s0.signal - builder.signal) < tolerance).all()
+            
+        s0 = SignalBuilder(
+            [freq], [amp], [shape], phases=[0], t_resolution=96000)
+
+        for ph in [45, 90, 180]:
+            builder = SignalBuilder(
+                [freq], [amp], [shape], phases=[ph], t_resolution=96000)
+            shifted = s0.phase_shift(ph, freq)
+            assert (
+                np.abs(shifted - builder.signal[:len(shifted)])
+                < shift_tolerance).all()
