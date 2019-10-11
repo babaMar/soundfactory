@@ -9,28 +9,31 @@ def time_range(start=0., end=1., samples=DEFAULT_SAMPLERATE):
     return np.linspace(start, end, samples, endpoint=False)
 
 
-def sine_wave(freq, samples=DEFAULT_SAMPLERATE):
+def sine_wave(freq, phase=0, samples=DEFAULT_SAMPLERATE):
     t = time_range(samples=samples)
-    sig = np.sin(2 * np.pi * freq * t)
+    sig = np.sin(2 * np.pi * freq * t + np.radians(phase))
     return sig
 
 
-def square_wave(freq, samples=DEFAULT_SAMPLERATE):
+def square_wave(freq, phase=0, samples=DEFAULT_SAMPLERATE):
     t = time_range(samples=samples)
-    sig = signal.square(2 * np.pi * freq * t)
+    sig = signal.square(2 * np.pi * freq * t + np.radians(phase))
     return sig
 
 
-def sawtooth_wave(freq, samples=DEFAULT_SAMPLERATE):
+def sawtooth_wave(freq, phase=0, samples=DEFAULT_SAMPLERATE):
     t = time_range(samples=samples)
-    sig = signal.sawtooth(2 * np.pi * freq * t)
+    sig = signal.sawtooth(2 * np.pi * freq * t + np.radians(phase))
     return sig
 
 
-def triangle_wave(freq, samples=DEFAULT_SAMPLERATE):
+def triangle_wave(freq, phase=0, samples=DEFAULT_SAMPLERATE):
     t = time_range(samples=samples)
     phase_shift = np.pi / 2.  # a phase shift of 90° is needed to have signal=0. at t=0.
-    sig = signal.sawtooth(2 * np.pi * freq * t + phase_shift, width=0.5)
+    sig = signal.sawtooth(
+        2 * np.pi * freq * t + phase_shift
+        + np.radians(phase),
+        width=0.5)
     return sig
 
 
