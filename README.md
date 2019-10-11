@@ -1,4 +1,5 @@
 # soundfactory
+[![Build Status](https://travis-ci.org/babaMar/soundfactory.svg?branch=development)](https://travis-ci.org/babaMar/soundfactory)
 
 A simple python cli to play, visualize, and create every kind of signal.
 
