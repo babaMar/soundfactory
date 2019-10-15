@@ -5,6 +5,7 @@ from settings.input_validators import ExistentWav
 from settings.plot import plt, AMP_THRESHOLD
 from utils.signal import get_envelope, load_audio
 from classes.signal_plotter import SignalPlotter
+from settings.logging_settings import viewlog
 
 
 @click.command()
@@ -43,9 +44,8 @@ def main(
     """
     Visualize the signal in an INPUT wav file
     """
-    # TODO Logging!
 
-    # Load signal and sampling rate
+    viewlog.info("Loading audio from {}".format(input_file))
     signal, samplerate = load_audio(input_file)
 
     # Mono signal
@@ -53,13 +53,17 @@ def main(
     # Check if stereo signal
     if len(signal.shape) == 2:
         ch1, ch2 = signal[:, 0], signal[:, 1]
-
+    viewlog.info("Loaded {t:.2f} seconds from {c} audio".format(
+        t=len(ch1)/samplerate, c="stereo" if len(signal.shape) == 2 else "mono"
+    ))
     show_envelope = False
     ch1_envelope, ch2_envelope = (), ()
     if calculate_envelope:
+        viewlog.info("Calculating envelope")
         # Volume envelopes
         ch1_envelope, ch2_envelope = get_envelope(ch1), get_envelope(ch2)
         show_envelope = True
+    viewlog.info("Creating plots")
     plotter = SignalPlotter(
         plt,
         ch1,

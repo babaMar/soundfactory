@@ -13,7 +13,7 @@ from utils.signal import freq_indexes, build_fft
 from utils.scale import (
     next_label, next_freq, build_24_tet_scale, build_24_tet_scale_by_sequence
 )
-from utils.labels import remove_too_close
+from utils.labels import remove_close_values_on_log_scale
 
 
 def test_cents_from_freq_ratio():
@@ -134,11 +134,11 @@ def test_24_scale_builder_by_sequence():
     assert scale_24 == scale_24_by_sequence
 
 
-def test_remove_too_close():
+def test_remove_close_values_on_log_scale():
     freqs = [
         687.17735221, 692.42298085,
         681.93172356, 860.28309742,
         855.03746878
     ]
-    assert remove_too_close(freqs) == [freqs[0], freqs[3]]
+    assert remove_close_values_on_log_scale(freqs) == [freqs[0], freqs[3]]
 

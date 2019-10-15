@@ -1,23 +1,21 @@
-from random import choice
 import numpy as np
 from utils.signal import load_audio
 from classes.signal_builder import SignalBuilder
 from tests.conftest import (
     sine_wave, square_wave, time_range, sawtooth_wave, triangle_wave
     )
-import matplotlib.pyplot as plt
+from constants import DEFAULT_SAMPLERATE
 
 
 TIME_RANGE = time_range()
 TEST_FREQUENCIES = [
-    27.0, 54.0, 108.0, 216.0, 432.0, 864.0,
-    1728.0, 3456.0, 6912.0, 13824.0, 27648.0
+    832.2, 30.1, 1.9, 1, 432
 ]
 APPROXIMATION_TOLERANCE = 0.01
 WAVE_ANALYTICS = [sine_wave, square_wave, sawtooth_wave, triangle_wave]
 WAVE_LABELS = ['sine', 'square', 'sawtooth', 'triangle']
-WAVE_TOLERANCES = [1e-12, 1e-3, 1e-3, 1e-12]
-WAVES = zip(WAVE_ANALYTICS, WAVE_LABELS, WAVE_TOLERANCES)
+WAVE_TOLERANCES = [1e-2, 1e-2, 1e-2, 1e-2]
+WAVES = list(zip(WAVE_ANALYTICS, WAVE_LABELS, WAVE_TOLERANCES))
 
 
 class ApproximationDifferences:
@@ -29,17 +27,19 @@ class ApproximationDifferences:
 
 # Y: Diff (for each wave form) X: Freq
 def test_signal_approximation():
+    samplerate = DEFAULT_SAMPLERATE
     for freq in TEST_FREQUENCIES:
         for analytic_sig, wave_shape, tolerance in WAVES:
-            sig = analytic_sig(freq)
+            sig = analytic_sig(freq, samples=samplerate)
             signal_builder = SignalBuilder(
                 [freq],
                 [1.],
-                n_max=200,
-                wave_type=wave_shape,
-                t_resolution=TIME_RANGE.size)
+                [wave_shape],
+                n_max=1000,
+                samplerate=samplerate
+            )
             rec_sig = signal_builder.signal
-            diff = rec_sig - sig
+            diff = np.abs(rec_sig - sig)
             assert diff.mean() < tolerance
 
 
@@ -49,8 +49,9 @@ def test_export():
     f = [432]
     a = [1]
     f, a = np.array(f), np.array(a)
-    s = SignalBuilder(f, a, wave_type="sine", t_resolution=samplerate)
-    s.export(filename, samplerate=samplerate)
+    wave_types = ["sine"]
+    s = SignalBuilder(f, a, wave_types, samplerate=samplerate)
+    s.export(filename)
 
     signal, samplerate = load_audio(filename)
     fft = np.fft.fft(signal)
@@ -59,3 +60,14 @@ def test_export():
     idx = np.where((amps > 1e-4) & (freqs >= 0))[0]
     assert (freqs[idx] - f < 1e-5).all()
     assert (amps[idx] - a < 1e-5).all()
+
+
+def test_phase_shift():
+    freq, amp = 2.3, 1
+    for analytic, shape, tolerance in WAVES:
+        for phase in [0, 180, 45.7]:
+            builder = SignalBuilder(
+                [freq], [amp], [shape], phases=[phase])
+            analytic_sig = amp * analytic(freq, phase=phase)
+            diff = builder.signal - analytic_sig
+            assert abs(diff).mean() < tolerance

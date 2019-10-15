@@ -16,6 +16,7 @@ from settings.plot import (
     FREQ_MIN_MARGIN,
     CLOSE_LOG_LABEL_TOLERANCE
 )
+from settings.logging_settings import plotterlog
 from utils.labels import (sparse_major_freqs,
                           hz_to_note,
                           log_khz_formatter)
@@ -152,6 +153,7 @@ class SignalPlotter:
             mode="separate",
             log_pws=False):
         if mode == "separate":
+            plotterlog.info("Creating separate figures")
             spec_figs = self._create_figures(size=figure_size_double)
             spec_axes = [f.add_subplot(111) for f in spec_figs]
             signal_figs = self._create_figures()
@@ -159,6 +161,7 @@ class SignalPlotter:
             fft_figs = self._create_figures()
             fft_axes = [f.add_subplot(111) for f in fft_figs]
         elif mode == "single":
+            plotterlog.info("Creating single figure")
             nrows, ncols = 3, self.n_figures
             fig = self.plt.figure(constrained_layout=True)
             spec = fig.add_gridspec(ncols=ncols, nrows=nrows)
@@ -168,9 +171,14 @@ class SignalPlotter:
         else:
             raise NotImplementedError('mode {} not recognized'.format(mode))
         axcolors = [next(colors) for _ in range(self.n_figures)]
+        plotterlog.info("Plotting signal")
         self._plot_signal(signal_axes, axcolors=axcolors)
+        plotterlog.info("Plotting power spectrum")
         self._plot_fft(fft_axes, axcolors=axcolors)
+        plotterlog.info("Plotting spectrogram")
         self._plot_spectrogram(spec_axes, wmsec=wmsec)
+
+        plotterlog.info("Setting view ranges and labels")
         if any([start, end]):
             self._set_xlim(spec_axes + signal_axes, start, end)
         if any([min_freq, max_freq]):

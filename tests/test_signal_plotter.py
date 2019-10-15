@@ -12,4 +12,4 @@ def test_show_plot(mocker):
         np.ones(10),
     )
     plotter.show()
-    plotting_interface.show.assert_called_once()
+    plotting_interface.show.assert_called_once_with()
