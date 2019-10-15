@@ -10,7 +10,10 @@ Welcome to soundfactory's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-
+   installation
+   create
+   play
+   view
 
 Indices and tables
 ==================

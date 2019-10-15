@@ -92,7 +92,12 @@ html_theme = 'alabaster'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {
+    'logo': 'TSAK-logo-black-nobckg.png',
+    'description': 'A simple cli tool to create, play, and visualize audio signals',
+    'github_user': 'babaMar',
+    'github_repo': 'soundfactory',
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -106,6 +111,8 @@ html_static_path = ['_static']
 # refs: http://alabaster.readthedocs.io/en/latest/installation.html#sidebars
 html_sidebars = {
     '**': [
+        'about.html',
+        'navigation.html',
         'relations.html',  # needs 'show_related': True theme option to display
         'searchbox.html',
     ]
