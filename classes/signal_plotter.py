@@ -47,6 +47,7 @@ class SignalPlotter:
             self.i_env = 0
 
         self.n_figures = 1
+        self.figures = dict()
         self.channels = [self.left_raw]
         if any(r_signal):
             self.right_raw = r_signal
@@ -153,15 +154,22 @@ class SignalPlotter:
             threshold=AMP_THRESHOLD,
             close_tolerance=CLOSE_LOG_LABEL_TOLERANCE,
             mode="separate",
-            log_pws=False):
+            log_pws=False,
+            savefigures=False):
         if mode == "separate":
             plotterlog.info("Creating separate figures")
             spec_figs = self._create_figures(size=figure_size_double)
             spec_axes = [f.add_subplot(111) for f in spec_figs]
+            self.figures.update(
+                {'spectrogram_%d' % i: f for i, f in enumerate(spec_figs)})
             signal_figs = self._create_figures()
             signal_axes = [f.add_subplot(111) for f in signal_figs]
+            self.figures.update(
+                {'signal_%d' % i: f for i, f in enumerate(signal_figs)})
             fft_figs = self._create_figures()
             fft_axes = [f.add_subplot(111) for f in fft_figs]
+            self.figures.update(
+                {'fft_%d' % i: f for i, f in enumerate(fft_figs)})
         elif mode == "single":
             plotterlog.info("Creating single figure")
             nrows, ncols = 3, self.n_figures
@@ -205,4 +213,12 @@ class SignalPlotter:
                     log_y=log_pws)
 
         self.plt.tight_layout()
-        self.plt.show()
+        if not savefigures:
+            self.plt.show()
+        else:
+            if mode == 'single':
+                self.plt.savefig('./view.png', bbox_inches='tight')
+            if mode == 'separate':
+                for name, figure in self.figures.items():
+                    fname = 'view_' + name + '.png'
+                    figure.savefig(fname, bbox_inches='tight')

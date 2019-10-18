@@ -35,10 +35,12 @@ from settings.logging_settings import viewlog
     default=AMP_THRESHOLD,
     help="amplitude percentage threshold")
 @click.option("--log-pws", flag_value="log_pws", default=False)
+@click.option('--save-fig', is_flag=True)
 def main(
         input_file, calculate_envelope,
         msec_window, start, end, mode,
-        min_freq, max_freq, threshold, log_pws
+        min_freq, max_freq,
+        threshold, log_pws, save_fig
 ):
 
     """
@@ -77,7 +79,8 @@ def main(
         start=start, end=end,
         min_freq=min_freq, max_freq=max_freq,
         threshold=threshold,
-        mode=mode, log_pws=log_pws)
+        mode=mode, log_pws=log_pws,
+        savefigures=save_fig)
 
 
 if __name__ == '__main__':
