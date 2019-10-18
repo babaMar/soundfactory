@@ -45,10 +45,16 @@ def get_inches(p_width, p_height, dpi=100):
 
 
 # Screen sizes
-window = plt.get_current_fig_manager().window
-screen_y = window.winfo_screenheight()  # pixels
-screen_x = window.winfo_screenwidth()
-plt.close()
+try:
+    window = plt.get_current_fig_manager().window
+except AttributeError:
+    # travis runs with 'headless' framework, which is non-interactive
+    screen_y = 400
+    screen_x = 600
+else:
+    screen_y = window.winfo_screenheight()  # pixels
+    screen_x = window.winfo_screenwidth()
+    plt.close()
 
 figure_size_single = (12., 7.)
 figure_size_double = (12., 12.)
