@@ -1,3 +1,4 @@
+import os
 import pytest
 import numpy as np
 import scipy.signal as signal
@@ -63,3 +64,10 @@ def bad_wavecomponents():
         "1 1 " + " ".join([DEFAULT_WAVE_TYPE]*2),
         "1 2 4 si",
     )
+
+
+@pytest.fixture
+def testfile_path():
+    path = '/tmp/export_test.wav'
+    yield path
+    os.remove(path)

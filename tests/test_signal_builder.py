@@ -43,8 +43,8 @@ def test_signal_approximation():
             assert diff.mean() < tolerance
 
 
-def test_export():
-    filename = "export_test.wav"
+def test_export(testfile_path):
+    filename = testfile_path
     samplerate = 44100
     f = [432]
     a = [1]
