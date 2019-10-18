@@ -38,8 +38,21 @@ plt.rcParams['font.size'] = 22
 plt.rcParams['axes.labelsize'] = 20
 plt.rcParams['font.family'] = 'serif'
 
+
+def get_inches(p_width, p_height, dpi=100):
+    x, y = p_width / dpi, p_height / dpi
+    return round(x, 1), round(y, 1)
+
+
+# Screen sizes
+window = plt.get_current_fig_manager().window
+screen_y = window.winfo_screenheight()  # pixels
+screen_x = window.winfo_screenwidth()
+plt.close()
+
 figure_size_single = (12., 7.)
 figure_size_double = (12., 12.)
+figure_size_full = get_inches(screen_x, screen_y)
 
 
 colors = cycle(['b', 'r', 'g', 'c', 'm'])

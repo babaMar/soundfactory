@@ -8,6 +8,7 @@ from utils.helpers import (above_thr_mask,
 from settings.plot import (
     figure_size_single,
     figure_size_double,
+    figure_size_full,
     figure_generator,
     colors,
     FONT_PROP,
@@ -163,7 +164,7 @@ class SignalPlotter:
         elif mode == "single":
             plotterlog.info("Creating single figure")
             nrows, ncols = 3, self.n_figures
-            fig = self.plt.figure(constrained_layout=True)
+            fig = self.plt.figure(figsize=figure_size_full)
             spec = fig.add_gridspec(ncols=ncols, nrows=nrows)
             signal_axes = [fig.add_subplot(spec[0, c]) for c in range(ncols)]
             fft_axes = [fig.add_subplot(spec[1, c]) for c in range(ncols)]
@@ -201,5 +202,6 @@ class SignalPlotter:
                     threshold=threshold,
                     close_tolerance=close_tolerance,
                     log_y=log_pws)
-        
+
+        self.plt.tight_layout()
         self.plt.show()
