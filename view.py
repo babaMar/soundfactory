@@ -19,7 +19,7 @@ from settings.logging_settings import viewlog
     help="Whether to show the signal envelope")
 @click.option(
     "--msec-window", "-w",
-    default=1,
+    default=0.005,
     type=click.FLOAT,
     metavar="MSECWINDOW",
     help="Time window for sliding FFT in Specgram Plot")

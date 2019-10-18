@@ -145,7 +145,7 @@ class SignalPlotter:
         ax2.xaxis.set_minor_formatter(NullFormatter())
 
     def show(
-            self, wmsec=1,
+            self, wmsec=0.005,
             start=None, end=None,
             min_freq=None, max_freq=None,
             threshold=AMP_THRESHOLD,
