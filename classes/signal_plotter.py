@@ -111,6 +111,7 @@ class SignalPlotter:
                 ax.plot(
                     self.time_range, self.envelopes[self.i_env], 'k-', lw=0.1)
                 self.i_env += 1
+            ax.set_xlim(self.time_range[0], self.time_range[-1])
             ax.set_ylabel(self.y_label, fontproperties=FONT_PROP)
             ax.set_xlabel(self.x_label, fontproperties=FONT_PROP)
             self.y_label = self.y_label.replace('Left', 'Right')
