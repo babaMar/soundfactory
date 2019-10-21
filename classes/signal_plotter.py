@@ -161,8 +161,9 @@ class SignalPlotter:
     def _set_ymargins(self, ax, margin, freqs_interval, log=False):
         lim = freqs_interval
         if log:
-            a = lim[0] * (1 - margin)
-            b = lim[1] * (1 + margin)
+            margin = 1 + margin
+            a = lim[0] / margin
+            b = lim[1] * margin
         else:
             delta = np.diff(lim) * margin
             a = lim[0] - delta
