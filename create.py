@@ -34,9 +34,9 @@ def main(wave_component, out, samplerate):
     createlog.info("Building signal")
     s = SignalBuilder(
         freqs, amps, wave_types,
-        phases=phases, t_resolution=samplerate)
+        phases=phases, samplerate=samplerate)
     createlog.info("Exporting signal")
-    s.export(out, samplerate=samplerate)
+    s.export(out)
     createlog.info("Saved audio on {}".format(out))
 
 
