@@ -13,8 +13,7 @@ from settings.plot import (
     colors,
     FONT_PROP,
     AMP_THRESHOLD,
-    FREQ_MAX_MARGIN,
-    FREQ_MIN_MARGIN,
+    PLOT_MARGIN,
     CLOSE_LOG_LABEL_TOLERANCE
 )
 from settings.logging_settings import plotterlog
@@ -147,6 +146,29 @@ class SignalPlotter:
         ax2.xaxis.set_minor_locator(NullLocator())
         ax2.xaxis.set_minor_formatter(NullFormatter())
 
+    def _set_xmargins(self, ax, margin, freqs_interval, log=False):
+        lim = freqs_interval
+        if log:
+            margin = 1 + margin
+            a = lim[0] / margin
+            b = lim[1] * margin
+        else:
+            delta = np.diff(lim) * margin
+            a = lim[0] - delta
+            b = lim[1] + delta
+        ax.set_xlim(a, b)
+
+    def _set_ymargins(self, ax, margin, freqs_interval, log=False):
+        lim = freqs_interval
+        if log:
+            a = lim[0] * (1 - margin)
+            b = lim[1] * (1 + margin)
+        else:
+            delta = np.diff(lim) * margin
+            a = lim[0] - delta
+            b = lim[1] + delta
+        ax.set_ylim(a, b)
+
     def show(
             self, wmsec=0.005,
             start=None, end=None,
@@ -204,8 +226,8 @@ class SignalPlotter:
             for ax in fft_axes:
                 min_freq, max_freq = self._lims_above_thr(
                     ax, threshold=threshold)
-                ax.set_xlim(
-                    min_freq - FREQ_MIN_MARGIN, max_freq + FREQ_MAX_MARGIN)
+                self._set_xmargins(
+                    ax, PLOT_MARGIN, (min_freq, max_freq), log=True)
                 self._pws_labels(
                     ax,
                     threshold=threshold,
