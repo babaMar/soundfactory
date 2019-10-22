@@ -7,21 +7,7 @@ from settings.input_validators import Wav, ArbitraryNArgs, WaveComponent
 from settings.logging_settings import createlog
 
 
-@click.command()
-@click.option(
-    '--wave-component', "-wc", required=True,
-    cls=ArbitraryNArgs,
-    type=WaveComponent(),
-    multiple=True)
-@click.option(
-    "--out", "-o",
-    metavar="OUTFILE",
-    default="out.wav",
-    type=Wav())
-@click.option(
-    "--samplerate", "-s", default=44100,
-    metavar="SAMPLERATE", type=click.INT)
-def main(wave_component, out, samplerate):
+def create(wave_component, out, samplerate):
     """
     Create a signal from given frequencies and amplitudes and
     save it on an out file
@@ -38,6 +24,24 @@ def main(wave_component, out, samplerate):
     createlog.info("Exporting signal")
     s.export(out)
     createlog.info("Saved audio on {}".format(out))
+
+
+@click.command()
+@click.option(
+    '--wave-component', "-wc", required=True,
+    cls=ArbitraryNArgs,
+    type=WaveComponent(),
+    multiple=True)
+@click.option(
+    "--out", "-o",
+    metavar="OUTFILE",
+    default="out.wav",
+    type=Wav())
+@click.option(
+    "--samplerate", "-s", default=44100,
+    metavar="SAMPLERATE", type=click.INT)
+def main(wave_component, out, samplerate):
+    create(wave_component, out, samplerate)
 
 
 if __name__ == "__main__":
