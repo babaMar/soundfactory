@@ -40,7 +40,7 @@ def main():
     default=AMP_THRESHOLD,
     help="amplitude percentage threshold")
 @click.option("--log-pws", flag_value="log_pws", default=False)
-@click.option('--save-fig', is_flag=True)
+@click.option("--save-fig", is_flag=True)
 def view(
         input_file, calculate_envelope,
         msec_window, start, end, mode,
@@ -58,7 +58,9 @@ def view(
 
 @main.command()
 @click.option(
-    '--wave-component', "-wc", required=True,
+    "--wave-component", "-wc",
+    metavar="FREQ AMP [PHASE] [SHAPE]",
+    required=True,
     cls=ArbitraryNArgs,
     type=WaveComponent(),
     multiple=True)
