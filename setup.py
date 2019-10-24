@@ -14,7 +14,7 @@ setup(
     version="0.1.0",
     author="TSAK",
     author_email="tsakians@gmail.com",
-    description="CLI tools for audio-signal manipulations",
+    description="simple tools for audio-signal manipulations",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://gitlab.com/babaMar/soundfactory",
@@ -24,7 +24,7 @@ setup(
     install_requires=requirements,
     entry_points={
         'console_scripts': [
-            'soundfactory = soundfactory:main',
+            'soundfactory = soundfactory.soundfactory:main',
         ]
     },
     classifiers=[

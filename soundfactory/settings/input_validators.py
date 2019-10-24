@@ -1,7 +1,6 @@
 import os
 import click
-import numbers
-from settings.signal import B_N_COEFF_MAP
+from soundfactory.settings.signal import B_N_COEFF_MAP
 
 DEFAULT_PHASE = 0
 DEFAULT_WAVE_TYPE = "sine"

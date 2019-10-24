@@ -1,7 +1,7 @@
 import numpy as np
 
 import matplotlib.pyplot as plt
-from classes.signal_plotter import SignalPlotter
+from soundfactory.signal_plotter import SignalPlotter
 
 
 def test_show_plot(mocker):

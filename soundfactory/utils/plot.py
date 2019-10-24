@@ -1,4 +1,4 @@
-from settings.plot import plt, figure_size_single
+from soundfactory.settings.plot import plt, figure_size_single
 
 
 def time_domain_signal(time_array, signal_arrays, tmin=0., tmax=1.):

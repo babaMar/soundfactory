@@ -3,9 +3,9 @@ from matplotlib.ticker import (NullFormatter,
                                LogLocator,
                                NullLocator)
 
-from utils.helpers import (above_thr_mask,
-                           spectrum)
-from settings.plot import (
+from soundfactory.utils.helpers import (above_thr_mask,
+                                        spectrum)
+from soundfactory.settings.plot import (
     figure_size_single,
     figure_size_double,
     figure_size_full,
@@ -16,10 +16,10 @@ from settings.plot import (
     PLOT_MARGIN,
     CLOSE_LOG_LABEL_TOLERANCE
 )
-from settings.logging_settings import plotterlog
-from utils.labels import (sparse_major_freqs,
-                          hz_to_note,
-                          log_khz_formatter)
+from soundfactory.settings.logging_settings import plotterlog
+from soundfactory.utils.labels import (sparse_major_freqs,
+                                       hz_to_note,
+                                       log_khz_formatter)
 
 
 class SignalPlotter:

@@ -1,10 +1,10 @@
 import numpy as np
-from utils.signal import load_audio
-from classes.signal_builder import SignalBuilder
+from soundfactory.utils.signal import load_audio
+from soundfactory.signal_builder import SignalBuilder
 from tests.conftest import (
     sine_wave, square_wave, time_range, sawtooth_wave, triangle_wave
     )
-from constants import DEFAULT_SAMPLERATE
+from soundfactory.constants import DEFAULT_SAMPLERATE
 
 
 TIME_RANGE = time_range()

@@ -1,10 +1,10 @@
 import numbers
 import numpy as np
 
-from constants import DEFAULT_SAMPLERATE
-from settings.signal import B_N_COEFF_MAP
-from utils.signal import wn, write
-from settings.logging_settings import createlog
+from soundfactory.constants import DEFAULT_SAMPLERATE
+from soundfactory.settings.signal import B_N_COEFF_MAP
+from soundfactory.utils.signal import wn, write
+from soundfactory.settings.logging_settings import createlog
 
 
 class SignalBuilderError(Exception):

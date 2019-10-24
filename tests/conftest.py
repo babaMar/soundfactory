@@ -2,8 +2,8 @@ import os
 import pytest
 import numpy as np
 import scipy.signal as signal
-from settings.input_validators import DEFAULT_WAVE_TYPE
-from constants import DEFAULT_SAMPLERATE
+from soundfactory.settings.input_validators import DEFAULT_WAVE_TYPE
+from soundfactory.constants import DEFAULT_SAMPLERATE
 
 
 def time_range(start=0., end=1., samples=DEFAULT_SAMPLERATE):

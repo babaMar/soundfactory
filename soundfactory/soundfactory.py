@@ -1,11 +1,11 @@
 import click
-from view import view as vv
-from create import create as cc
-from play import play as pp
-from settings.input_validators import (
+from soundfactory.view import view as vv
+from soundfactory.create import create as cc
+from soundfactory.play import play as pp
+from soundfactory.settings.input_validators import (
     ExistentWav, Wav, ArbitraryNArgs, WaveComponent
 )
-from settings.plot import AMP_THRESHOLD
+from soundfactory.settings.plot import AMP_THRESHOLD
 
 
 @click.group()

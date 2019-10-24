@@ -1,11 +1,8 @@
 import matplotlib.pyplot as plt
 from itertools import cycle
 import matplotlib.font_manager as mfm
-from constants import QUARTER_TONE_FLAT_SYMBOL
+from soundfactory.constants import QUARTER_TONE_FLAT_SYMBOL
 from fontTools.ttLib import TTFont
-from matplotlib.ticker import FuncFormatter
-from utils.labels import log_khz_formatter
-
 
 FONT_INFO = [
     (f.fname, f.name) for f in mfm.fontManager.ttflist
