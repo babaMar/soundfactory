@@ -28,14 +28,16 @@ class ApproximationDifferences:
 # Y: Diff (for each wave form) X: Freq
 def test_signal_approximation():
     samplerate = DEFAULT_SAMPLERATE
+    duration = 1.
     for freq in TEST_FREQUENCIES:
         for analytic_sig, wave_shape, tolerance in WAVES:
-            sig = analytic_sig(freq, samples=samplerate)
+            sig = analytic_sig(freq, end=duration, samples=samplerate)
             signal_builder = SignalBuilder(
                 [freq],
                 [1.],
                 [wave_shape],
                 n_max=1000,
+                duration=duration,
                 samplerate=samplerate
             )
             rec_sig = signal_builder.signal
