@@ -102,12 +102,13 @@ class SignalBuilder:
 
     def _single_component(self, a, f, ph, shape):
         period = [
-            a * self._fourier_series(_t, 1, ph, shape)
+            a * self._fourier_series(_t, 1/self.duration, ph, shape)
             for _t in self.time_space
         ]
         period = np.asarray(period, dtype=np.float32)
         N = self.n_samples
-        idxs = (np.round((np.arange(0, N) * f)) % N).astype(int)
+        cycles = f * self.duration
+        idxs = (np.round((np.arange(0, N) * cycles)) % N).astype(int)
         return period[idxs]
 
     def build_signal(self):
