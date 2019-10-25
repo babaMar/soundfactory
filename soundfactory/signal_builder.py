@@ -82,27 +82,6 @@ class SignalBuilder:
             ))
         return partial_sums
 
-    def _single_component(self, amplitude, freq, ph, shape):
-        res = [
-            amplitude * self._fourier_series(_t, freq, ph, shape)
-            for _t in self.time_space
-        ]
-        return np.asarray(res, dtype=np.float32)
-
-    def build_signal(self):
-        signal = np.zeros(self.n_samples)
-        for freq, amp, ph, shape in zip(
-                self.frequencies,
-                self.amplitudes,
-                self.phases,
-                self.wave_types):
-            createlog.info(
-                "Adding components from {s} wave of {f} hz frequency".format(
-                    s=shape, f=freq
-                ))
-            signal += self._single_component_from_period(amp, freq, ph, shape)
-        return signal
-
     def check_input(self):
         f, a, p = self.frequencies, self.amplitudes, self.phases
         if not len(set(f)) == len(f):
@@ -121,19 +100,7 @@ class SignalBuilder:
         else:
             self.phases = phases
 
-    @staticmethod
-    def deg2time(deg, freq):
-        return (deg/360) * (1/freq)
-
-    @staticmethod
-    def index_at_time_shift(t, duration, rate):
-        return int(round(((t % duration) * rate)))
-
-    @staticmethod
-    def index_at_first_period(freq, rate, duration):
-        return int(round((rate*duration) / freq))
-
-    def _single_component_from_period(self, a, f, ph, shape):
+    def _single_component(self, a, f, ph, shape):
         period = [
             a * self._fourier_series(_t, 1, ph, shape)
             for _t in self.time_space
@@ -142,6 +109,20 @@ class SignalBuilder:
         N = self.n_samples
         idxs = (np.round((np.arange(0, N) * f)) % N).astype(int)
         return period[idxs]
+
+    def build_signal(self):
+        signal = np.zeros(self.n_samples)
+        for freq, amp, ph, shape in zip(
+                self.frequencies,
+                self.amplitudes,
+                self.phases,
+                self.wave_types):
+            createlog.info(
+                "Adding components from {s} wave of {f} hz frequency".format(
+                    s=shape, f=freq
+                ))
+            signal += self._single_component(amp, freq, ph, shape)
+        return signal
 
     def export(self, path, bit_depth=16):
         write(
