@@ -7,7 +7,7 @@ from soundfactory.settings.input_validators import Wav, ArbitraryNArgs, WaveComp
 from soundfactory.settings.logging_settings import createlog
 
 
-def create(wave_component, out, samplerate):
+def create(wave_component, out, samplerate, duration):
     """
     Create a signal from given frequencies and amplitudes and
     save it on an out file
@@ -20,7 +20,10 @@ def create(wave_component, out, samplerate):
     createlog.info("Building signal")
     s = SignalBuilder(
         freqs, amps, wave_types,
-        phases=phases, samplerate=samplerate)
+        phases=phases,
+        samplerate=samplerate,
+        duration=duration
+    )
     createlog.info("Exporting signal")
     s.export(out)
     createlog.info("Saved audio on {}".format(out))

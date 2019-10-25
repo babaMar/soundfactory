@@ -72,8 +72,12 @@ def view(
 @click.option(
     "--samplerate", "-s", default=44100,
     metavar="SAMPLERATE", type=click.INT)
-def create(wave_component, out, samplerate):
-    cc(wave_component, out, samplerate)
+@click.option(
+    "--duration", "-dur", default=1.,
+    metavar="DURATION", type=click.FLOAT
+)
+def create(wave_component, out, samplerate, duration):
+    cc(wave_component, out, samplerate, duration)
 
 
 @main.command()
