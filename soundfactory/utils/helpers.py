@@ -1,6 +1,6 @@
 import numpy as np
 from math import log
-from constants import (
+from soundfactory.constants import (
     CENTS_PER_OCTAVE,
     BASE,
     SEMITONE_CENTS,

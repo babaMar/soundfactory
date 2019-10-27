@@ -1,9 +1,9 @@
-from utils.scale import build_24_tet_scale_by_sequence
+from soundfactory.utils.scale import build_24_tet_scale_by_sequence
 import numpy as np
 from bisect import bisect_left
-from constants import _24_TET_SCALE_INIT
+from soundfactory.constants import _24_TET_SCALE_INIT
 from matplotlib import ticker
-from utils.helpers import indexes_above_threshold
+from soundfactory.utils.helpers import indexes_above_threshold
 
 note_hz_24_tet = build_24_tet_scale_by_sequence(
     list(_24_TET_SCALE_INIT.keys())[-1],

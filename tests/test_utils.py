@@ -1,19 +1,19 @@
 import numpy as np
-from utils.helpers import (
+from soundfactory.utils.helpers import (
     cents_from_freq_ratio,
     freq_at_n_semitones,
     freq_at_n_quartertones
 )
-from constants import (
+from soundfactory.constants import (
     _24_TET_SCALE_INIT,
     A_SUB_SUB_CONTRA_FREQ
 )
-from settings.plot import TONE_FREQ_MAP
-from utils.signal import freq_indexes, build_fft
-from utils.scale import (
+from soundfactory.settings.plot import TONE_FREQ_MAP
+from soundfactory.utils.signal import freq_indexes, build_fft
+from soundfactory.utils.scale import (
     next_label, next_freq, build_24_tet_scale, build_24_tet_scale_by_sequence
 )
-from utils.labels import remove_close_values_on_log_scale
+from soundfactory.utils.labels import remove_close_values_on_log_scale
 
 
 def test_cents_from_freq_ratio():

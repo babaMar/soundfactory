@@ -1,6 +1,6 @@
 import re
-from utils.helpers import freq_at_n_quartertones
-from constants import SEQUENCE_24, SYMBOLS_24
+from soundfactory.utils.helpers import freq_at_n_quartertones
+from soundfactory.constants import SEQUENCE_24, SYMBOLS_24
 
 
 def next_tone(tone):

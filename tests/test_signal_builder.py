@@ -1,10 +1,10 @@
 import numpy as np
-from utils.signal import load_audio
-from classes.signal_builder import SignalBuilder
+from soundfactory.utils.signal import load_audio
+from soundfactory.signal_builder import SignalBuilder
 from tests.conftest import (
     sine_wave, square_wave, time_range, sawtooth_wave, triangle_wave
     )
-from constants import DEFAULT_SAMPLERATE
+from soundfactory.constants import DEFAULT_SAMPLERATE
 
 
 TIME_RANGE = time_range()
@@ -28,14 +28,17 @@ class ApproximationDifferences:
 # Y: Diff (for each wave form) X: Freq
 def test_signal_approximation():
     samplerate = DEFAULT_SAMPLERATE
+    duration = 2.4
     for freq in TEST_FREQUENCIES:
         for analytic_sig, wave_shape, tolerance in WAVES:
-            sig = analytic_sig(freq, samples=samplerate)
+            sig = analytic_sig(
+                freq, end=duration, samples=samplerate*duration)
             signal_builder = SignalBuilder(
                 [freq],
                 [1.],
                 [wave_shape],
                 n_max=1000,
+                duration=duration,
                 samplerate=samplerate
             )
             rec_sig = signal_builder.signal

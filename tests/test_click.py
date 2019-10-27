@@ -1,6 +1,6 @@
 import click
 from click.testing import CliRunner
-from settings.input_validators import (
+from soundfactory.settings.input_validators import (
     ArbitraryNArgs, WaveComponent, DEFAULT_PHASE, DEFAULT_WAVE_TYPE
 )
 
