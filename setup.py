@@ -33,7 +33,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'soundfactory = soundfactory.soundfactory:main',
+            'soundfactory = soundfactory.cli:main',
         ]
     },
     classifiers=[

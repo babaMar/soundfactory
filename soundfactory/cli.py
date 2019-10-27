@@ -32,8 +32,8 @@ def main():
 @click.option("--end", type=click.FLOAT, help="seconds to end to")
 @click.option("--min-freq", type=click.FLOAT, help="min frequency to show")
 @click.option("--max-freq", type=click.FLOAT, help="max frequency to show")
-@click.option("--single", "mode", flag_value="single")
-@click.option("--separate", "mode", flag_value="separate", default=True)
+@click.option("--single", "mode", flag_value="single", default=True)
+@click.option("--separate", "mode", flag_value="separate")
 @click.option(
     "--thr", "threshold",
     type=click.FLOAT,
