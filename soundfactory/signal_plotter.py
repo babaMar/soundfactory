@@ -31,7 +31,8 @@ class SignalPlotter:
                  r_signal=(),
                  r_signal_envelope=(),
                  sampling_rate=44100,
-                 plot_envelope=False):
+                 plot_envelope=False,
+                 fname='view'):
 
         # Mono signal is treated as left only
         self.left_raw = l_signal
@@ -39,6 +40,7 @@ class SignalPlotter:
         self.y_label = "Mono Channel (t)"
         self.x_label = "t [sec]"
         self.plt = plotting_interface
+        self.fname = fname
 
         if any(l_signal_envelope):
             self.left_envelope = l_signal_envelope
@@ -240,8 +242,8 @@ class SignalPlotter:
             self.plt.show()
         else:
             if mode == 'single':
-                self.plt.savefig('./view.png', bbox_inches='tight')
+                self.plt.savefig('./' + self.fname + '.png', bbox_inches='tight')
             if mode == 'separate':
                 for name, figure in self.figures.items():
-                    fname = 'view_' + name + '.png'
+                    fname = self.fname + '_' + name + '.png'
                     figure.savefig(fname, bbox_inches='tight')

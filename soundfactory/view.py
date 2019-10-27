@@ -18,7 +18,7 @@ def view(
     """
     Visualize the signal in an INPUT wav file
     """
-
+    filename_no_ext = str(input_file).replace('.wav', '')
     viewlog.info("Loading audio from {}".format(input_file))
     signal, samplerate = load_audio(input_file)
 
@@ -45,7 +45,8 @@ def view(
         r_signal=ch2,
         r_signal_envelope=ch2_envelope,
         sampling_rate=samplerate,
-        plot_envelope=show_envelope)
+        plot_envelope=show_envelope,
+        fname=filename_no_ext)
     plotter.show(
         wmsec=float(msec_window),
         start=start, end=end,
@@ -94,7 +95,6 @@ def main(
         msec_window, start, end, mode,
         min_freq, max_freq,
         threshold, log_pws, save_fig
-
     )
 
 
