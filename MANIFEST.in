@@ -1,3 +1,4 @@
 include README.md LICENSE
 recursive-include tests *.py
 recursive-include docs *
+recursive-include samples *.wav
