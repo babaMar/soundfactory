@@ -2,3 +2,4 @@ include README.md LICENSE
 recursive-include tests *.py
 recursive-include docs *
 recursive-include samples *.wav
+include soundfactory/settings/fonts/FreeSerif.otf

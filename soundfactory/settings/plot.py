@@ -1,31 +1,12 @@
+from pathlib import Path
 import matplotlib.pyplot as plt
 from itertools import cycle
 import matplotlib.font_manager as mfm
-from soundfactory.constants import QUARTER_TONE_FLAT_SYMBOL
-from fontTools.ttLib import TTFont
 
-FONT_INFO = [
-    (f.fname, f.name) for f in mfm.fontManager.ttflist
-    if 'Symbol' not in f.name]
-
-
-def find_font_path_name(char):
-    def _char_in_font(unicode_char, font):
-        for cmap in font['cmap'].tables:
-            if cmap.isUnicode():
-                if ord(unicode_char) in cmap.cmap:
-                    return True
-        return False
-
-    for font in FONT_INFO:
-        if _char_in_font(char, TTFont(font[0])):
-            return font[0], font[1]
-    return None, None
-
-
-FONT_PATH, FONT_NAME = find_font_path_name(QUARTER_TONE_FLAT_SYMBOL)
-FONT_PROP = mfm.FontProperties(size=20) if not FONT_PATH \
-    else mfm.FontProperties(size=20, fname=FONT_PATH)
+FONT_PROP = mfm.FontProperties(
+    size=20,
+    fname=str(Path(__file__).parent / 'fonts' / 'FreeSerif.otf')
+)
 
 plt.rc('text', usetex=False)
 plt.rcParams['legend.numpoints'] = 1
