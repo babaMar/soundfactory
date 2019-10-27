@@ -76,8 +76,12 @@ def view(
     "--duration", "-dur", default=1.,
     metavar="DURATION", type=click.FLOAT
 )
-def create(wave_component, out, samplerate, duration):
-    cc(wave_component, out, samplerate, duration)
+@click.option(
+    "--fourierterms", "-n", default=100,
+    metavar="N", type=click.INT
+)
+def create(wave_component, out, samplerate, duration, fourierterms):
+    cc(wave_component, out, samplerate, duration, fourierterms)
 
 
 @main.command()

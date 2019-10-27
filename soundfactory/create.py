@@ -7,7 +7,7 @@ from soundfactory.settings.input_validators import Wav, ArbitraryNArgs, WaveComp
 from soundfactory.settings.logging_settings import createlog
 
 
-def create(wave_component, out, samplerate, duration):
+def create(wave_component, out, samplerate, duration, n_max):
     """
     Create a signal from given frequencies and amplitudes and
     save it on an out file
@@ -21,6 +21,7 @@ def create(wave_component, out, samplerate, duration):
     s = SignalBuilder(
         freqs, amps, wave_types,
         phases=phases,
+        n_max=n_max,
         samplerate=samplerate,
         duration=duration
     )
@@ -43,8 +44,16 @@ def create(wave_component, out, samplerate, duration):
 @click.option(
     "--samplerate", "-s", default=44100,
     metavar="SAMPLERATE", type=click.INT)
-def main(wave_component, out, samplerate):
-    create(wave_component, out, samplerate)
+@click.option(
+    "--duration", "-dur", default=1.,
+    metavar="DURATION", type=click.FLOAT
+)
+@click.option(
+    "--fourierterms", "-n", default=100,
+    metavar="N", type=click.INT
+)
+def main(wave_component, out, samplerate, duration, fourierterms):
+    create(wave_component, out, samplerate, duration, fourierterms)
 
 
 if __name__ == "__main__":
