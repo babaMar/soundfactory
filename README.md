@@ -1,24 +1,19 @@
 # soundfactory
 [![Build Status](https://travis-ci.org/babaMar/soundfactory.svg?branch=development)](https://travis-ci.org/babaMar/soundfactory)
+[![codecov](https://codecov.io/gl/babaMar/soundfactory/branch/development/graph/badge.svg)](https://codecov.io/gl/babaMar/soundfactory)
+[![Documentation Status](https://readthedocs.org/projects/soundfactory/badge/?version=latest)](https://soundfactory.readthedocs.io/en/latest/?badge=latest)
 
-A simple python cli to play, visualize, and create every kind of signal.
+`soundfactory` is a simple tool to play and be creative with audio taking a data-oriented approach.
+It comes from some scripts I have been writing a few years back and thought about
+having few reusable core modules and a command-line tool interfacing the audio world.
+And I wanted to be able to develop it in my Jupyter Notebook of course!
 
-Packages required on host OS: `portaudio19-dev`, `texlive-full`
+Documentation https://soundfactory.readthedocs.io
 
-### Pre-Requirements
-```
-sudo apt-get install portaudio19-dev python-pyaudio python3-pyaudio
-```
 
-At the moment only visualization working examples are available.
-Run the mono example with:
+---
+**WARNING**
 
-```
-./view.py -i mono_bell.wav -w 0.9
-```
+Before installing check the [pre-requirements](https://soundfactory.readthedocs.io/en/latest/installation.html#prerequisites)
 
-And the stereo one with
-
-```
-./view.py -i A-Calib440.wav
-```
+---
