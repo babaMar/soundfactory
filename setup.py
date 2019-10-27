@@ -1,5 +1,10 @@
 from setuptools import setup
 
+tests_require = [
+        'pytest',
+        'pytest-mock',
+        'pytest-cov'
+        ]
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -22,6 +27,10 @@ setup(
     include_package_data=True,
     python_requires='>=3.5',
     install_requires=requirements,
+    tests_require=[tests_require],
+    extras_require={
+        'tests': tests_require
+    },
     entry_points={
         'console_scripts': [
             'soundfactory = soundfactory.soundfactory:main',
