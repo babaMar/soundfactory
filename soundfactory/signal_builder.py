@@ -66,6 +66,7 @@ class SignalBuilder:
         )
         self.a0 = 0
         self.signal = self.build_signal()
+        self.scaled_signal = self.signal
 
     def get_time_space(self):
         return self.time_space
@@ -105,14 +106,14 @@ class SignalBuilder:
             a * self._fourier_series(_t, 1/self.duration, ph, shape)
             for _t in self.time_space
         ]
-        period = np.asarray(period, dtype=np.float32)
+        period = np.asarray(period, dtype=np.float64)
         N = self.n_samples
         cycles = f * self.duration
         idxs = (np.round((np.arange(0, N) * cycles)) % N).astype(int)
         return period[idxs]
 
     def build_signal(self):
-        signal = np.zeros(self.n_samples)
+        signal = np.zeros(self.n_samples, dtype='float64')
         for freq, amp, ph, shape in zip(
                 self.frequencies,
                 self.amplitudes,
@@ -126,6 +127,7 @@ class SignalBuilder:
         return signal
 
     def export(self, path, bit_depth=16):
+        self.scaled_signal /= np.max(np.abs(self.signal), axis=0)
         write(
-            self.signal, path, samplerate=self.samplerate, bit_depth=bit_depth
+            self.scaled_signal, path, samplerate=self.samplerate, bit_depth=bit_depth
         )

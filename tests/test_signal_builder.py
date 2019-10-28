@@ -1,4 +1,6 @@
 import numpy as np
+from random import random
+
 from soundfactory.utils.signal import load_audio
 from soundfactory.signal_builder import SignalBuilder
 from tests.conftest import (
@@ -28,22 +30,24 @@ class ApproximationDifferences:
 # Y: Diff (for each wave form) X: Freq
 def test_signal_approximation():
     samplerate = DEFAULT_SAMPLERATE
-    duration = 2.4
+    duration = 1.1
+    amplitudes = (2.5 * random() for _ in range(3))
     for freq in TEST_FREQUENCIES:
         for analytic_sig, wave_shape, tolerance in WAVES:
-            sig = analytic_sig(
-                freq, end=duration, samples=samplerate*duration)
-            signal_builder = SignalBuilder(
-                [freq],
-                [1.],
-                [wave_shape],
-                n_max=1000,
-                duration=duration,
-                samplerate=samplerate
-            )
-            rec_sig = signal_builder.signal
-            diff = np.abs(rec_sig - sig)
-            assert diff.mean() < tolerance
+            for amplitude in amplitudes:
+                sig = amplitude * analytic_sig(
+                    freq, end=duration, samples=samplerate*duration)
+                signal_builder = SignalBuilder(
+                    [freq],
+                    [amplitude],
+                    [wave_shape],
+                    n_max=1000,
+                    duration=duration,
+                    samplerate=samplerate
+                )
+                rec_sig = signal_builder.signal
+                diff = np.abs(rec_sig - sig)
+                assert diff.mean() < tolerance, 'at %s for %s' % (freq, wave_shape)
 
 
 def test_export(testfile_path):
