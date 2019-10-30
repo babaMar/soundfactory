@@ -24,3 +24,6 @@ plotterlog.setLevel(logging.INFO)
 
 playlog = get_logger(name="play")
 playlog.setLevel(logging.INFO)
+
+signal_log = get_logger(name="signal")
+signal_log.setLevel(logging.DEBUG)
