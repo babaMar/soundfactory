@@ -73,7 +73,7 @@ def view(
     "--samplerate", "-s", default=44100,
     metavar="SAMPLERATE", type=click.INT)
 @click.option(
-    "--duration", "-dur", default=1.,
+    "--duration", "-dur", default=2.,
     metavar="DURATION", type=click.FLOAT
 )
 @click.option(
