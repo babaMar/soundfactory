@@ -5,16 +5,17 @@ from soundfactory.settings.logging_settings import signal_log
 
 
 class Signal:
-    MONO = False
-    CALCULATE_ENVELOPE = None
     ENVELOPE_SUFFIX = '_envelope'
     FFT_SUFFIX = '_fft'
     CHANNELS = dict()
-    ENVELOPES = dict()
     SPECTRA = dict()
 
     def __init__(self, input_file, with_envelope=False):
+        self.MONO = False
         self.CALCULATE_ENVELOPE = with_envelope
+        self.ENVELOPES = dict()
+        self.CHANNELS = dict()
+        self.SPECTRA = dict()
         self.signal = None
         self.sampling_rate = None
         self.duration = 0
@@ -34,7 +35,7 @@ class Signal:
             self.CHANNELS.update({'ch1': self.signal})
         else:
             self.CHANNELS.update(
-                {'ch' + str(i): self.signal[:, i]
+                {'ch' + str(i + 1): self.signal[:, i]
                  for i in range(len(self.signal.shape))
                  }
             )

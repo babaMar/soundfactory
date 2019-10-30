@@ -2,6 +2,8 @@ import os
 import pytest
 import numpy as np
 import scipy.signal as signal
+from pathlib import Path
+
 from soundfactory.settings.input_validators import DEFAULT_WAVE_TYPE
 from soundfactory.constants import DEFAULT_SAMPLERATE
 
@@ -71,3 +73,13 @@ def testfile_path():
     path = '/tmp/export_test.wav'
     yield path
     os.remove(path)
+
+
+@pytest.fixture
+def mono_audio_file():
+    return str(Path(__file__).parent.parent / 'samples' / 'mono_bell.wav')
+
+
+@pytest.fixture
+def stereo_audio_file():
+    return str(Path(__file__).parent.parent / 'samples' / 'A3-Calib-220.wav')
