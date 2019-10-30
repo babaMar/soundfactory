@@ -64,7 +64,7 @@ class SignalPlotter:
         self.samples = self.left_raw.shape[0]
         self.time_length = self.samples / self.sampling_rate  # in seconds
         self.time_range = np.linspace(0., self.time_length, self.samples)
-
+        
     def _create_figures(self, size=figure_size_single):
         return [next(figure_generator(size=size)) for _ in range(self.n_figures)]
 
@@ -130,16 +130,24 @@ class SignalPlotter:
             ax.set_ylim(20., 20000.)
             ax.set_yscale('log')
             self._setup_log_decimals_labels(ax.yaxis, subs=[.2, .4])
-            
-    def _pws_labels(self, ax, threshold=0.1, close_tolerance=0.1, log_y=False):
+
+    def _get_ticks_labels(self, ax, threshold=0.1, close_tolerance=0.1):
         data = ax.lines[0].get_data()
         freqs, pws = data
+        major_freqs = sparse_major_freqs(
+            freqs, pws, threshold=threshold, close_tolerance=close_tolerance)
+        major_labels = {hz_to_note(x): x for x in major_freqs[::-1]}
+        x_labels = list(major_labels.keys())
+        x_ticks = list(major_labels.values())
+        return x_ticks, x_labels
+
+    def _pws_labels(
+            self, ax, x_ticks, x_labels,
+            threshold=0.1, close_tolerance=0.1, log_y=False):
         ax.set_xscale("log")
         ax.set_yscale("{}".format("log" if log_y else "linear"))
         ax2 = ax.twiny()
-        x_ticks = sparse_major_freqs(
-            freqs, pws, threshold=threshold, close_tolerance=close_tolerance)
-        x_labels = [hz_to_note(x) for x in x_ticks]
+
         ax2.set_xlim(ax.get_xlim())
         self._setup_log_decimals_labels(ax.xaxis)
         ax2.set_xscale("log")
@@ -150,6 +158,7 @@ class SignalPlotter:
 
     def _set_xmargins(self, ax, margin, freqs_interval, log=False):
         lim = freqs_interval
+
         if log:
             margin = 1 + margin
             a = lim[0] / margin
@@ -220,19 +229,27 @@ class SignalPlotter:
             self._set_ylim(spec_axes, min_freq, max_freq)
             self._set_xlim(fft_axes, min_freq, max_freq)
             for ax in fft_axes:
-                self._pws_labels(
+                x_ticks, x_labels = self._get_ticks_labels(
                     ax,
+                    threshold=threshold,
+                    close_tolerance=close_tolerance
+                )
+                self._pws_labels(
+                    ax, x_ticks, x_labels,
                     threshold=threshold,
                     close_tolerance=close_tolerance,
                     log_y=log_pws)
         else:
             for ax in fft_axes:
-                min_freq, max_freq = self._lims_above_thr(
-                    ax, threshold=threshold)
-                self._set_xmargins(
-                    ax, PLOT_MARGIN, (min_freq, max_freq), log=True)
-                self._pws_labels(
+                x_ticks, x_labels = self._get_ticks_labels(
                     ax,
+                    threshold=threshold,
+                    close_tolerance=close_tolerance
+                )
+                self._set_xmargins(
+                    ax, PLOT_MARGIN, (min(x_ticks), max(x_ticks)), log=True)
+                self._pws_labels(
+                    ax, x_ticks, x_labels,
                     threshold=threshold,
                     close_tolerance=close_tolerance,
                     log_y=log_pws)
