@@ -27,8 +27,9 @@ def view(
     # Check if stereo signal
     if len(signal.shape) == 2:
         ch1, ch2 = signal[:, 0], signal[:, 1]
+    duration = len(ch1)/samplerate
     viewlog.info("Loaded {t:.2f} seconds from {c} audio".format(
-        t=len(ch1)/samplerate, c="stereo" if len(signal.shape) == 2 else "mono"
+        t=duration, c="stereo" if len(signal.shape) == 2 else "mono"
     ))
     show_envelope = False
     ch1_envelope, ch2_envelope = (), ()
@@ -38,6 +39,7 @@ def view(
         ch1_envelope, ch2_envelope = get_envelope(ch1), get_envelope(ch2)
         show_envelope = True
     viewlog.info("Creating plots")
+    viewlog.info("Frequency resolution: {} Hz".format(round(1./duration, 2)))
     plotter = SignalPlotter(
         plt,
         ch1,
