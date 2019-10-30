@@ -155,7 +155,7 @@ TONE_FREQ_MAP = {"C0": 16.35,
 
 AMP_THRESHOLD = .05  # percentage on max amplitude threshold
 CLOSE_LOG_LABEL_TOLERANCE = 0.1  # if x = 100 -> y < 90 and y > 110 are kept
-PLOT_MARGIN = 0.1
+PLOT_MARGIN = 10
 
 
 def figure_generator(size=figure_size_double):
