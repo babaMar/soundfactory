@@ -92,6 +92,26 @@ class SignalPlotter:
         for ax in axes:
             ax.set_ylim(bottom, top)
 
+    @staticmethod
+    def _margins(left, right, padding, log=False):
+        if log:
+            padding = 1 + padding
+            a = left / padding
+            b = right * padding
+        else:
+            delta = np.diff([left, right]) * padding
+            a = left - delta
+            b = right + delta
+        return a, b
+
+    def _set_xmargins(self, ax, interval, padding, log=False):
+        a, b = self._margins(*interval, padding, log=log)
+        ax.set_xlim(a, b)
+        
+    def _set_ymargins(self, ax, interval, padding, log=False):
+        a, b = self._margins(*interval, padding, log=log)
+        ax.set_ylim(a, b)
+        
     def _plot_fft(self, axes, axcolors=None):
         if not axcolors:
             axcolors = [next(colors) for _ in range(len(axes))]
@@ -147,7 +167,7 @@ class SignalPlotter:
         ax.set_xscale("log")
         ax.set_yscale("{}".format("log" if log_y else "linear"))
         ax2 = ax.twiny()
-
+        
         ax2.set_xlim(ax.get_xlim())
         self._setup_log_decimals_labels(ax.xaxis)
         ax2.set_xscale("log")
@@ -155,31 +175,6 @@ class SignalPlotter:
         ax2.set_xticklabels(x_labels, rotation=45, fontproperties=FONT_PROP)
         ax2.xaxis.set_minor_locator(NullLocator())
         ax2.xaxis.set_minor_formatter(NullFormatter())
-
-    def _set_xmargins(self, ax, margin, freqs_interval, log=False):
-        lim = freqs_interval
-
-        if log:
-            margin = 1 + margin
-            a = lim[0] / margin
-            b = lim[1] * margin
-        else:
-            delta = np.diff(lim) * margin
-            a = lim[0] - delta
-            b = lim[1] + delta
-        ax.set_xlim(a, b)
-
-    def _set_ymargins(self, ax, margin, freqs_interval, log=False):
-        lim = freqs_interval
-        if log:
-            margin = 1 + margin
-            a = lim[0] / margin
-            b = lim[1] * margin
-        else:
-            delta = np.diff(lim) * margin
-            a = lim[0] - delta
-            b = lim[1] + delta
-        ax.set_ylim(a, b)
 
     def show(
             self, wmsec=0.005,
@@ -247,7 +242,7 @@ class SignalPlotter:
                     close_tolerance=close_tolerance
                 )
                 self._set_xmargins(
-                    ax, PLOT_MARGIN, (min(x_ticks), max(x_ticks)), log=True)
+                    ax, (min(x_ticks), max(x_ticks)), PLOT_MARGIN, log=True)
                 self._pws_labels(
                     ax, x_ticks, x_labels,
                     threshold=threshold,
