@@ -5,15 +5,15 @@
 
 `soundfactory` is a simple tool to play and be creative with audio taking a data-oriented approach.
 It comes from some scripts I have been writing a few years back and thought about
-having few reusable core modules and a command-line tool interfacing the audio world.
-And I wanted to be able to develop it in my Jupyter Notebook of course!
+having few reusable core modules and a command-line tool for researching new sounds.
+And I wanted to be able to develop it and have fun with it in my Jupyter Notebook of course!
 
-Documentation https://soundfactory.readthedocs.io
+You can find the documentation at https://soundfactory.readthedocs.io
 
 
 ---
 **WARNING**
 
-Before installing check the [pre-requirements](https://soundfactory.readthedocs.io/en/latest/installation.html#prerequisites)
+Before installing with `pip` check the [pre-requirements](https://soundfactory.readthedocs.io/en/latest/installation.html#prerequisites)
 
 ---
