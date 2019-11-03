@@ -5,7 +5,12 @@ from soundfactory.settings.logging_settings import signal_log
 
 
 class Signal:
+    CH = 'ch'
+    CH1 = 'ch1'
+    CH2 = 'ch2'
     ENVELOPE_SUFFIX = '_envelope'
+    FREQUENCIES = 'freqs'
+    POWERS = 'pws'
     FFT_SUFFIX = '_fft'
     CHANNELS = dict()
     SPECTRA = dict()
@@ -32,15 +37,15 @@ class Signal:
 
         if self._is_mono(self.signal):
             self.MONO = True
-            self.CHANNELS.update({'ch1': self.signal})
+            self.CHANNELS.update({self.CH1: self.signal})
         else:
             self.CHANNELS.update(
-                {'ch' + str(i + 1): self.signal[:, i]
+                {self.CH + str(i + 1): self.signal[:, i]
                  for i in range(len(self.signal.shape))
                  }
             )
 
-        self.duration = len(self.CHANNELS['ch1']) / self.sampling_rate
+        self.duration = len(self.CHANNELS[self.CH1]) / self.sampling_rate
         signal_log.info("Loaded {t:.2f} seconds from {c} audio".format(
             t=self.duration, c="mono" if self.MONO else "stereo"
         ))
@@ -59,5 +64,6 @@ class Signal:
     def _calculate_fft(self):
         for ch, sig in self.CHANNELS.items():
             res = dict()
-            res['freqs'], res['pws'] = spectrum(sig, self.sampling_rate)
+            res[self.FREQUENCIES], res[self.POWERS] = \
+                spectrum(sig, self.sampling_rate)
             self.SPECTRA.update({ch + self.FFT_SUFFIX: res})
