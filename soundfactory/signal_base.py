@@ -1,7 +1,7 @@
-from .utils.signal import (get_envelope,
-                           load_audio)
-from .utils.helpers import spectrum
-from .settings.logging_settings import signal_log
+from soundfactory.utils.signal import (get_envelope,
+                                       load_audio)
+from soundfactory.utils.helpers import spectrum
+from soundfactory.settings.logging_settings import signal_log
 
 
 class Signal:
@@ -24,6 +24,7 @@ class Signal:
         self.signal = None
         self.sampling_rate = None
         self.duration = 0
+        self.samples = 0
         self._load_audio(input_file)
         self._calculate_envelope()
         self._calculate_fft()
@@ -45,7 +46,9 @@ class Signal:
                  }
             )
 
-        self.duration = len(self.CHANNELS[self.CH1]) / self.sampling_rate
+        self.samples = self.CHANNELS[self.CH1].shape[0]
+
+        self.duration = self.samples / self.sampling_rate
         signal_log.info("Loaded {t:.2f} seconds from {c} audio".format(
             t=self.duration, c="mono" if self.MONO else "stereo"
         ))
