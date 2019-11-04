@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
 import click
-from soundfactory.settings.input_validators import ExistentWav
-from soundfactory.settings.plot import plt, AMP_THRESHOLD
-from soundfactory.utils.signal import get_envelope, load_audio
-from soundfactory.signal_plotter import SignalPlotter
-from soundfactory.settings.logging_settings import viewlog
+from .settings.input_validators import ExistentWav
+from .settings.plot import plt, AMP_THRESHOLD
+from .utils.signal import get_envelope, load_audio
+from .signal_plotter import SignalPlotter
+from .settings.logging_settings import viewlog
 
 
 def view(

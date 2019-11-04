@@ -1,7 +1,7 @@
-from soundfactory.utils.signal import (get_envelope,
-                                       load_audio)
-from soundfactory.utils.helpers import spectrum
-from soundfactory.settings.logging_settings import signal_log
+from .utils.signal import (get_envelope,
+                           load_audio)
+from .utils.helpers import spectrum
+from .settings.logging_settings import signal_log
 
 
 class Signal:
