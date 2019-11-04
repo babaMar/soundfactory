@@ -55,12 +55,3 @@ as input the audio file path.
     :type plot_envelope: bool
     :param fname: prefix for the image files
     :type fname: string
-
-                 plotting_interface,
-                 l_signal,
-                 l_signal_envelope=(),
-                 r_signal=(),
-                 r_signal_envelope=(),
-                 sampling_rate=44100,
-                 plot_envelope=False,
-                 fname='view'):
