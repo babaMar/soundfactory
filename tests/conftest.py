@@ -9,7 +9,7 @@ from soundfactory.constants import DEFAULT_SAMPLERATE
 
 
 def time_range(start=0., end=1., samples=DEFAULT_SAMPLERATE):
-    return np.linspace(start, end, samples, endpoint=False)
+    return np.linspace(start, end, int(samples), endpoint=False)
 
 
 def sine_wave(freq, phase=0, end=1., samples=DEFAULT_SAMPLERATE):

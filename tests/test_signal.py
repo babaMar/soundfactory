@@ -1,5 +1,5 @@
 import numpy as np
-from soundfactory.signal import Signal
+from soundfactory.signal_base import Signal
 
 
 def test_mono_input(mono_audio_file):

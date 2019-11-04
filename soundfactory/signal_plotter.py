@@ -3,8 +3,8 @@ from matplotlib.ticker import (NullFormatter,
                                LogLocator,
                                NullLocator)
 
-from .utils.helpers import (above_thr_mask,
-                            spectrum)
+from .signal_base import Signal
+from .utils.helpers import above_thr_mask
 from .settings.plot import (
     figure_size_single,
     figure_size_double,
@@ -22,51 +22,28 @@ from .utils.labels import (sparse_major_freqs,
                            log_khz_formatter)
 
 
-class SignalPlotter:
+class SignalPlotter(Signal):
 
     def __init__(self,
                  plotting_interface,
-                 l_signal,
-                 l_signal_envelope=(),
-                 r_signal=(),
-                 r_signal_envelope=(),
-                 sampling_rate=44100,
-                 plot_envelope=False,
+                 input_file,
+                 with_envelope=False,
                  fname='view'):
+        super().__init__(input_file, with_envelope)
 
-        # Mono signal is treated as left only
-        self.left_raw = l_signal
-        self.plot_envelope = plot_envelope
-        self.y_label = "Mono Channel (t)"
+        self.y_label = "{} Channel (t)".format("Mono" if self.MONO else "Left")
         self.x_label = "t [sec]"
         self.plt = plotting_interface
-        self.fname = fname
-
-        if any(l_signal_envelope):
-            self.left_envelope = l_signal_envelope
-            self.envelopes = [self.left_envelope]
-            self.i_env = 0
-
-        self.n_figures = 1
+        self.plot_envelope = with_envelope
+        self.save_img_prefix = fname
+        self.n_figures = 1 if self.MONO else 2
         self.figures = dict()
-        self.channels = [self.left_raw]
-        if any(r_signal):
-            self.right_raw = r_signal
-            self.y_label = self.y_label.replace('Mono', 'Left')
-            self.n_figures += 1
-            self.channels.append(self.right_raw)
-            if any(r_signal_envelope):
-                self.right_envelope = r_signal_envelope
-                self.envelopes.append(self.right_envelope)
+        self.time_range = np.linspace(0., self.duration, self.samples)
 
-        self.sampling_rate = float(sampling_rate)
-        # Time domain information
-        self.samples = self.left_raw.shape[0]
-        self.time_length = self.samples / self.sampling_rate  # in seconds
-        self.time_range = np.linspace(0., self.time_length, self.samples)
-        
-    def _create_figures(self, size=figure_size_single):
-        return [next(figure_generator(size=size)) for _ in range(self.n_figures)]
+    def _create_figures(self, size=figure_size_single, n_figures=None):
+        number_of_figures = self.n_figures if not n_figures else n_figures
+        return [next(figure_generator(size=size)) for _ in
+                range(number_of_figures)]
 
     @staticmethod
     def _lims_above_thr(ax, threshold=.1):
@@ -107,41 +84,37 @@ class SignalPlotter:
     def _set_xmargins(self, ax, interval, padding, log=False):
         a, b = self._margins(*interval, padding, log=log)
         ax.set_xlim(a, b)
-        
+
     def _set_ymargins(self, ax, interval, padding, log=False):
         a, b = self._margins(*interval, padding, log=log)
         ax.set_ylim(a, b)
-        
-    def _plot_fft(self, axes, axcolors=None):
-        if not axcolors:
-            axcolors = [next(colors) for _ in range(len(axes))]
-        for ax, channel, c in zip(axes, self.channels, axcolors):
-            freqs, pws = spectrum(channel, self.sampling_rate)
-            ax.plot(freqs, pws, c + "-")
-            ax.set_xlabel("Frequency [kHz]", fontproperties=FONT_PROP)
-            ax.set_ylabel("Power(f)", fontproperties=FONT_PROP)
 
-    def _plot_signal(
-            self,
-            axes,
-            axcolors=None):
+    def _plot_signal(self, axes, axcolors=None):
         if not axcolors:
             axcolors = [next(colors) for _ in range(self.n_figures)]
-        for ax, channel, c in zip(axes, self.channels, axcolors):
-            ax.plot(self.time_range, channel, c + '--', lw=0.1)
+        for ax, channel_id, c in zip(axes, self.CHANNELS.keys(), axcolors):
+            ax.plot(self.time_range, self.CHANNELS[channel_id], c + '--', lw=0.1)
             if self.plot_envelope:
+                envelope_id = channel_id + self.ENVELOPE_SUFFIX
                 ax.plot(
-                    self.time_range, self.envelopes[self.i_env], 'k-', lw=0.1)
-                self.i_env += 1
+                    self.time_range, self.ENVELOPES[envelope_id], 'k-', lw=0.1)
             ax.set_xlim(self.time_range[0], self.time_range[-1])
             ax.set_ylabel(self.y_label, fontproperties=FONT_PROP)
             ax.set_xlabel(self.x_label, fontproperties=FONT_PROP)
             self.y_label = self.y_label.replace('Left', 'Right')
 
+    def _plot_fft(self, axes, axcolors=None):
+        if not axcolors:
+            axcolors = [next(colors) for _ in range(len(axes))]
+        for ax, fft_info, c in zip(axes, self.SPECTRA.values(), axcolors):
+            ax.plot(fft_info[self.FREQUENCIES], fft_info[self.POWERS], c + "-")
+            ax.set_xlabel("Frequency [kHz]", fontproperties=FONT_PROP)
+            ax.set_ylabel("Power(f)", fontproperties=FONT_PROP)
+
     def _plot_spectrogram(self, axes, wmsec=0.005):
         npoints = int(self.sampling_rate * wmsec)
         overlap = int(self.sampling_rate * wmsec / 2.)
-        for ax, channel, in zip(axes, self.channels):
+        for ax, channel, in zip(axes, self.CHANNELS.values()):
             Pxx, freqs, bins, im = ax.specgram(
                 channel, NFFT=npoints, Fs=self.sampling_rate,
                 noverlap=overlap, cmap=self.plt.cm.jet)
@@ -162,12 +135,11 @@ class SignalPlotter:
         return x_ticks, x_labels
 
     def _pws_labels(
-            self, ax, x_ticks, x_labels,
-            threshold=0.1, close_tolerance=0.1, log_y=False):
+            self, ax, x_ticks, x_labels, log_y=False):
         ax.set_xscale("log")
         ax.set_yscale("{}".format("log" if log_y else "linear"))
         ax2 = ax.twiny()
-        
+
         ax2.set_xlim(ax.get_xlim())
         self._setup_log_decimals_labels(ax.xaxis)
         ax2.set_xscale("log")
@@ -202,7 +174,7 @@ class SignalPlotter:
         elif mode == "single":
             plotterlog.info("Creating single figure")
             nrows, ncols = 3, self.n_figures
-            fig = self.plt.figure(figsize=figure_size_full)
+            fig = self._create_figures(size=figure_size_full, n_figures=1)[0]
             spec = fig.add_gridspec(ncols=ncols, nrows=nrows)
             signal_axes = [fig.add_subplot(spec[0, c]) for c in range(ncols)]
             fft_axes = [fig.add_subplot(spec[1, c]) for c in range(ncols)]
@@ -231,8 +203,6 @@ class SignalPlotter:
                 )
                 self._pws_labels(
                     ax, x_ticks, x_labels,
-                    threshold=threshold,
-                    close_tolerance=close_tolerance,
                     log_y=log_pws)
         else:
             for ax in fft_axes:
@@ -245,8 +215,6 @@ class SignalPlotter:
                     ax, (min(x_ticks), max(x_ticks)), PLOT_MARGIN, log=True)
                 self._pws_labels(
                     ax, x_ticks, x_labels,
-                    threshold=threshold,
-                    close_tolerance=close_tolerance,
                     log_y=log_pws)
 
         self.plt.tight_layout()
@@ -254,8 +222,9 @@ class SignalPlotter:
             self.plt.show()
         else:
             if mode == 'single':
-                self.plt.savefig('./' + self.fname + '.png', bbox_inches='tight')
+                img_file_name = './' + self.save_img_prefix + '.png'
+                self.plt.savefig(img_file_name, bbox_inches='tight')
             if mode == 'separate':
                 for name, figure in self.figures.items():
-                    fname = self.fname + '_' + name + '.png'
-                    figure.savefig(fname, bbox_inches='tight')
+                    img_file_name = './' + self.save_img_prefix + '_' + name + '.png'
+                    figure.savefig(img_file_name, bbox_inches='tight')
