@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
 import click
-from .settings.input_validators import ExistentWav
-from .settings.plot import plt, AMP_THRESHOLD
-from .utils.signal import get_envelope, load_audio
-from .signal_plotter import SignalPlotter
-from .settings.logging_settings import viewlog
+from soundfactory.settings.input_validators import ExistentWav
+from soundfactory.settings.plot import plt, AMP_THRESHOLD
+from soundfactory.signal_plotter import SignalPlotter
+from soundfactory.settings.logging_settings import viewlog
 
 
 def view(
@@ -20,35 +19,15 @@ def view(
     """
     filename_no_ext = str(input_file).replace('.wav', '')
     viewlog.info("Loading audio from {}".format(input_file))
-    signal, samplerate = load_audio(input_file)
-
-    # Mono signal
-    ch1, ch2 = signal, ()
-    # Check if stereo signal
-    if len(signal.shape) == 2:
-        ch1, ch2 = signal[:, 0], signal[:, 1]
-    duration = len(ch1)/samplerate
-    viewlog.info("Loaded {t:.2f} seconds from {c} audio".format(
-        t=duration, c="stereo" if len(signal.shape) == 2 else "mono"
-    ))
-    show_envelope = False
-    ch1_envelope, ch2_envelope = (), ()
-    if calculate_envelope:
-        viewlog.info("Calculating envelope")
-        # Volume envelopes
-        ch1_envelope, ch2_envelope = get_envelope(ch1), get_envelope(ch2)
-        show_envelope = True
-    viewlog.info("Creating plots")
-    viewlog.info("Frequency resolution: {} Hz".format(round(1./duration, 2)))
     plotter = SignalPlotter(
         plt,
-        ch1,
-        l_signal_envelope=ch1_envelope,
-        r_signal=ch2,
-        r_signal_envelope=ch2_envelope,
-        sampling_rate=samplerate,
-        plot_envelope=show_envelope,
+        input_file,
+        with_envelope=calculate_envelope,
         fname=filename_no_ext)
+    viewlog.info("Frequency resolution: {} Hz"
+                 .format(round(1. / plotter.duration, 2))
+                 )
+    viewlog.info("Creating plots")
     plotter.show(
         wmsec=float(msec_window),
         start=start, end=end,

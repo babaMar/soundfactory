@@ -2,11 +2,11 @@
 
 import click
 import numpy as np
-from . import SignalBuilder
-from .settings.input_validators import (Wav,
-                                        ArbitraryNArgs,
-                                        WaveComponent)
-from .settings.logging_settings import createlog
+from soundfactory import SignalBuilder
+from soundfactory.settings.input_validators import (Wav,
+                                                    ArbitraryNArgs,
+                                                    WaveComponent)
+from soundfactory.settings.logging_settings import createlog
 
 
 def create(wave_component, out, samplerate, duration, n_max):

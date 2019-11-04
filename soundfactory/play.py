@@ -5,10 +5,10 @@ import click
 import simpleaudio as sa
 import soundfile as sf
 
-from .settings.input_validators import ExistentWav
-from .settings.logging_settings import playlog
-from .utils.helpers import progress_time
-from .constants import MAX_16_BIT_VALUE, BYTE_PER_16_BIT
+from soundfactory.settings.input_validators import ExistentWav
+from soundfactory.settings.logging_settings import playlog
+from soundfactory.utils.helpers import progress_time
+from soundfactory.constants import MAX_16_BIT_VALUE, BYTE_PER_16_BIT
 
 
 def play(path):
