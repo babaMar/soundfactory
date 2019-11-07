@@ -1,0 +1,10 @@
+__pycache__/
+build/
+.coverage
+.idea/
+.pytest_cache/
+.ipynb_checkpoints/
+*.py[cod]
+*.ipynb
+tests/__pycache__
+*.patch
