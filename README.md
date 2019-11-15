@@ -12,8 +12,8 @@ The peculiarity about `soundfactory` is the adoption of fourier-series approxima
 when `square`, `sawtooth`, or `triangle` wave shapes are chosen. In fact, being 
 approximated the single-oscillator signals will contain upper harmonics with respect
 to the analytical signal (with the same amplitude, frequency, and wave shape), 
-that can be obtained by `scipy` (see tests). The result will be a warmer sound
-that in a way can be 
+that can be obtained by `scipy` (see tests). The result will be a warmer and 
+unexpectedly coloured sound.
  
 It comes from some scripts I have been writing a few years back and thought about
 having few reusable core modules and a command-line tool for researching new sounds.
