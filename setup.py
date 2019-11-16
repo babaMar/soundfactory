@@ -16,6 +16,7 @@ with open('requirements.txt') as f:
     
 setup(
     name="soundfactory",
+    packages=["soundfactory"],
     version="0.1.0",
     author="TSAK",
     author_email="tsakians@gmail.com",
