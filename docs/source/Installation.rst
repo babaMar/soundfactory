@@ -10,14 +10,14 @@ Prerequisites
 `soundfactory` is a cli tool that uses PortAudio as audio I/O library underneath.
 Despite PortAudio being cross-platform so far `soundfactory` was never tested on Windows OSs.
 
-Before you proceed with the installation the ``python3-tkinter``,
+Before you proceed with the installation the ``libffi-dev``, ``python3-tk``,
 ``libasound2-dev``, ``portaudio19-dev``, ``python-pyaudio``, ``python3-pyaudio`` packages need to be installed
 on your machine. On Ubuntu/Debian this can be achieved by:
 
 .. code-block:: bash
 
   sudo apt-get update
-  sudo apt-get install -y python3-tkinter libasound2-dev portaudio19-dev python-pyaudio python3-pyaudio
+  sudo apt-get install -y libffi-dev python3-tk libasound2-dev portaudio19-dev python-pyaudio python3-pyaudio
 
 If you like LaTex formatting for the plt labels install  `texlive-full` as well
 
