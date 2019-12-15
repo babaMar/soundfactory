@@ -1,5 +1,6 @@
+import numpy as np
 import matplotlib.pyplot as plt
-from numpy import ndarray
+
 from soundfactory.signal_plotter import SignalPlotter
 
 
@@ -16,7 +17,7 @@ def test_show_plot(mocker,
     assert plotter.x_label == "t [sec]"
     assert not plotter.plot_envelope
     assert plotter.n_figures == 1
-    assert isinstance(plotter.time_range, ndarray)
+    assert isinstance(plotter.time_range, np.ndarray)
 
     plotter.show()
     plotting_interface.show.assert_called_once_with()
@@ -31,7 +32,7 @@ def test_show_plot(mocker,
     assert plotter.x_label == "t [sec]"
     assert plotter.plot_envelope
     assert plotter.n_figures == 2
-    assert isinstance(plotter.time_range, ndarray)
+    assert isinstance(plotter.time_range, np.ndarray)
 
     plotter.show(wmsec=0.1,
                  start=0.1, end=0.9,
