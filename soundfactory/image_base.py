@@ -3,17 +3,26 @@ from scipy import linalg
 import numpy as np
 
 
+class Channel:
+    def __init__(self, data, name):
+        self.data = np.asarray(data)
+        self.name = name
+        self._svd()
+        
+    def _svd(self):
+        M, N = self.data.shape
+        self.U, self.s, self.V = linalg.svd(self.data)
+        self.diagsvd = linalg.diagsvd(self.s, M, N)
+
+
 class SoundImage:
     def __init__(self, input_file, **kw):
         self.image = Image.open(input_file)
-        self.svd = self._svd()
+        self.channels = self._channels()
 
-    def _svd(self):
+    def _channels(self):
         bands, channels = self.image.getbands(), self.image.split()
-        out = {}
-        M, N = self.image.size
-        for band, channel in zip(bands, channels):
-            U, s, V = linalg.svd(np.asarray(channel))
-            diagsvd = linalg.diagsvd(s, M, N)
-            out[band] = (U, s, V, diagsvd)
-        return out
+        return [
+            Channel(channel, band)
+            for band, channel in zip(bands, channels)
+        ]
