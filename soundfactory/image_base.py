@@ -21,8 +21,7 @@ class SoundImage:
         self.channels = self._channels()
 
     def _channels(self):
-        bands, channels = self.image.getbands(), self.image.split()
         return [
-            Channel(channel, band)
-            for band, channel in zip(bands, channels)
+            Channel(self.image.getchannel(band), band)
+            for band in self.image.getbands()
         ]
