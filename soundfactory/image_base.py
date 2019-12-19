@@ -5,7 +5,8 @@ import numpy as np
 
 class SVD:
     def __init__(self, data):
-        M, N = np.asarray(data).shape
+        data = np.asarray(data)
+        M, N = data.shape
         self.U, self.s, self.V = linalg.svd(data)
         self.diagsvd = linalg.diagsvd(self.s, M, N)
 
