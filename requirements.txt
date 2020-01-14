@@ -3,7 +3,7 @@ Click==7.0
 complexaudio==1.0.4
 cycler==0.10.0
 getch==1.0
-lxml==4.2.5
+lxml==4.4.2
 matplotlib==3.0.3
 numpy==1.15.4
 PyAudio==0.2.11
