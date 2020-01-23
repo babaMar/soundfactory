@@ -142,6 +142,8 @@ class SignalPlotter(Signal):
 
         ax2.set_xlim(ax.get_xlim())
         self._setup_log_decimals_labels(ax.xaxis)
+        self.plt.setp(ax.get_xticklabels() +
+                      ax.xaxis.get_minorticklabels(), rotation=45)
         ax2.set_xscale("log")
         ax2.set_xticks(x_ticks)
         ax2.set_xticklabels(x_labels, rotation=45, fontproperties=FONT_PROP)
