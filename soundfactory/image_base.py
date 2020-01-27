@@ -103,12 +103,16 @@ class SoundImage:
             left = self.channels[c1].signal
             right = self.channels[c2].signal
             res[c1 + c2] = (left, right)
+        self.signals = res
         return res
 
-    def export_audio(self, path='./', bit_depth=16):
+    def export_audio(self, path='./', bit_depth=16, **kw):
+        if self.signals is None:
+            self.stereo_signals(**kw)
         for pair, channels in self.signals.items():
             left, right = channels
             signal = np.array([left.scaled_signal, right.scaled_signal]).T
             assert left.samplerate == right.samplerate
-            path = Path(path) / self.name / pair + '.wav'
-            write(signal, path, samplerate=left.samplerate, bit_depth=bit_depth)
+            outpath = Path(path) / self.name / "".join((pair, '.wav'))
+            outpath.parent.mkdir(parents=True, exist_ok=True)
+            write(signal, str(outpath), samplerate=left.samplerate, bit_depth=bit_depth)
