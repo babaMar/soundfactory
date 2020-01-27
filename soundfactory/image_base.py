@@ -1,73 +1,47 @@
 from PIL import Image
 from scipy import linalg
 import numpy as np
+from itertools import combinations
+from pathlib import Path
+
 from .utils.signal import write
 from .signal_builder import SignalBuilder
 
 COLORSPACE = {
     "RGB": {"range": (0, 255), "channels": ("R", "G", "B")},
     "RGBA": {"range": (0, 255), "channels": ("R", "G", "B", "A")},
-    "CMYK": {"range": (0, 100), "channels": ("C", "M", "Y", "K")}
+    "CMYK": {"range": (0, 100), "channels": ("C", "M", "Y", "K")},
 }
 
 
-def compress_image(img, k, mode="RGB"):
-    img = np.asarray(img)
-    n_channels = len(COLORSPACE[mode]["channels"])
-    mode_min, mode_max = COLORSPACE[mode]["range"]
-    rec_im = np.zeros(img.shape)
-    for i in range(n_channels):
-        layer = Channel.compress_svd(img[:, :, i], k)[0]
-        rec_im[:, :, i] = layer
-    return np.round(np.clip(rec_im, mode_min, mode_max)).astype(np.uint8)
-
-
-class SVD:
-    def __init__(self, data):
-        data = np.asarray(data)
-        M, N = data.shape
-        self.U, self.s, self.V = linalg.svd(data)
-        self.diagsvd = linalg.diagsvd(self.s, M, N)
-        self.separability_index = self.s[0]**2 / sum(self.s**2)
-
-
 class Channel:
-    def __init__(self, data, name, fudge=5, components=None):
+    def __init__(self, data, name, fudge=5, components=None, **kwargs):
         self.data = np.asarray(data)
         self.name = name
         self._svd()
-        self.fundamental = 2**fudge * self.svd.separability_index
+        self.fundamental = 2 ** fudge * self.separability_index
         self.intervals = self._intervals()
-        limit = min(self.data.shape) if not components else components
-        self.amplitudes = self.calculate_amplitudes(limit)
-        self.frequencies = self.fundamental * self.intervals
-        self.frequencies = self.frequencies[:limit]
-        
+        self.resolution = min(self.data.shape) if not components else components
+        self.amplitudes = self.calculate_amplitudes(self.resolution)
+        self.frequencies = self.fundamental * self.intervals[: self.resolution]
+        self.signal = None
+
     def _svd(self):
         M, N = self.data.shape
         self.U, self.s, self.V = linalg.svd(self.data)
         self.diagsvd = linalg.diagsvd(self.s, M, N)
-        self.separability_index = self.s[0]**2 / sum(self.s**2)
-            
-    @property
-    def svd(self):
-        return SVD(self.data)
+        self.separability_index = self.s[0] ** 2 / sum(self.s ** 2)
 
-    @classmethod
-    def compress_svd(self, image, k):
-        """
-        https://medium.com/@rameshputalapattu/
-        jupyter-python-image-compression-and-svd-an-interactive-exploration-703c953e44f6
+    def reconstruct(self, resolution):
+        reduced_mat = np.dot(
+            self.U[:, :resolution],
+            np.dot(np.diag(self.s[:resolution]), self.V[:resolution, :]),
+        )
+        return np.asarray(reduced_mat, dtype="uint8")
 
-        """
-        
-        U, s, V = linalg.svd(image, full_matrices=False)
-        reduced_mat = np.dot(U[:, :k], np.dot(np.diag(s[:k]), V[:k, :]))
-        return reduced_mat, s
-    
     def _intervals(self):
         return self.s[0] / self.s
-    
+
     def calculate_amplitudes(self, limit):
         amps = list()
         self.eigUvalues, self.eigUvectors = linalg.eig(self.U)
@@ -79,60 +53,62 @@ class Channel:
 
             sign = np.sign(np.angle(v_s + u_s)) * np.sign(np.angle(v_s - u_s,))
             amps.append(
-                1 / 2*np.sqrt(((v_s + u_s).real + sign*(v_s - u_s).real)**2)
+                1 / 2 * np.sqrt(((v_s + u_s).real + sign * (v_s - u_s).real) ** 2)
             )
         return amps
+
+    def audio_signal(self, **kw):
+        waves = kw.get("waves", ["sine" for _ in range(self.resolution)])
+        samplerate = kw.get("samplerate", 48000)
+        duration = kw.get("duration", 1)
+        s = SignalBuilder(
+            self.frequencies,
+            self.amplitudes,
+            waves,
+            samplerate=samplerate,
+            duration=duration,
+        )
+        return s
+
+    def export_audio(self, fname):
+        self.signal.export('_'.join([fname, self.name]) + '.wav')
 
 
 class SoundImage:
     def __init__(self, input_file, **kw):
+        self.name = str(input_file).split('/')[-1].split('.')[0]
         self.image = Image.open(input_file)
-        self.channels = self._channels()
-
-    def _channels(self):
-        return [
-            Channel(self.image.getchannel(band), band)
+        self.channels = self._channels(**kw)
+        self.signals = None
+        
+    def _channels(self, **kw):
+        return {
+            band: Channel(
+                self.image.getchannel(band), band, **kw)
             for band in self.image.getbands()
-        ]
+        }
 
-    def compressed_image(self, k):
-        return compress_image(self.image, k, self.image.mode)
+    def reconstructed(self, resolution):
+        rec_im = np.zeros(self.image.shape)
+        for i, channel in enumerate(self.channels.values()):
+            rec_im[:, :, i] = channel.reconstruct(resolution)
+        return Image.fromarray(rec_im)
 
-    def signal_from_channel(self, channel, **kw):
-        limit = kw.get("limit", min(channel.data.shape))
-        waves = kw.get("waves", ['sine' for i in range(limit)])
-        samplerate = kw.get("samplerate", 48000)
-        duration = kw.get("duration", 1)
-        return SignalBuilder(
-            channel.frequencies[:limit],
-            channel.amplitudes[:limit],
-            waves,
-            samplerate=samplerate,
-            duration=duration
-        )
- 
-    def stereo_signal(self, channels, **kw):
-        c1, c2 = channels
-        left = self.signal_from_channel(c1, **kw)
-        right = self.signal_from_channel(c2, **kw)
-        return left, right
-    
-    def export_audio(self, path, *signals, bit_depth=16):
-        if len(signals) == 1:
-            mono = signals[0]
-            mono.scaled_signal /= np.max(np.abs(mono.signal), axis=0)
-            signal = mono.scaled_signal
-        elif len(signals) == 2:
-            left, right = signals
-            left.scaled_signal /= np.max(np.abs(left.signal), axis=0)
-            right.scaled_signal /= np.max(np.abs(right.signal), axis=0)
+    def stereo_signals(self, **kw):
+        res = dict()
+        for band, channel in self.channels.items():
+            if channel.signal is None:
+                channel.signal = channel.audio_signal(**kw)
+        for c1, c2 in combinations(self.channels.keys(), 2):
+            left = self.channels[c1].signal
+            right = self.channels[c2].signal
+            res[c1 + c2] = (left, right)
+        return res
+
+    def export_audio(self, path='./', bit_depth=16):
+        for pair, channels in self.signals.items():
+            left, right = channels
             signal = np.array([left.scaled_signal, right.scaled_signal]).T
-        else:
-            return
-        write(
-            signal,
-            path,
-            samplerate=signals[0].samplerate,
-            bit_depth=bit_depth
-        )
-    
+            assert left.samplerate == right.samplerate
+            path = Path(path) / self.name / pair + '.wav'
+            write(signal, path, samplerate=left.samplerate, bit_depth=bit_depth)
