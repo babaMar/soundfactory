@@ -9,11 +9,14 @@ from soundfactory.constants import (
     A_SUB_SUB_CONTRA_FREQ
 )
 from soundfactory.settings.plot import TONE_FREQ_MAP
-from soundfactory.utils.signal import freq_indexes, build_fft
+from soundfactory.utils.signal import (
+    freq_indexes, build_fft, write_stereo, load_audio
+)
 from soundfactory.utils.scale import (
     next_label, next_freq, build_24_tet_scale, build_24_tet_scale_by_sequence
 )
 from soundfactory.utils.labels import remove_close_values_on_log_scale
+from pathlib import Path
 
 
 def test_cents_from_freq_ratio():
@@ -142,3 +145,17 @@ def test_remove_close_values_on_log_scale():
     ]
     assert remove_close_values_on_log_scale(freqs) == [freqs[0], freqs[3]]
 
+
+def test_write_stereo(mono8bit_audio_file, mono_audio_file):
+    c1_path = mono_audio_file
+    c2_path = mono_audio_file
+    left, l_samplerate = load_audio(c1_path)
+    right, r_samplerate = load_audio(c2_path)
+    assert l_samplerate == r_samplerate
+    out = "stereo_test.wav"
+    write_stereo(left, right, out, samplerate=l_samplerate)
+    stereo, samplerate = load_audio(out)
+    c1, c2 = stereo[:, 0], stereo[:, 1]
+    Path(out).unlink()
+    assert (c1 == left).all()
+    assert (c2 == right).all()
