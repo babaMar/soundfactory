@@ -4,7 +4,7 @@ import numpy as np
 from itertools import combinations
 from pathlib import Path
 
-from .utils.signal import write
+from .utils.signal import write, write_stereo
 from .signal_builder import SignalBuilder
 
 COLORSPACE = {
@@ -15,16 +15,12 @@ COLORSPACE = {
 
 
 class Channel:
-    def __init__(self, data, name, fudge=5, components=None, **kwargs):
+    def __init__(self, data, name, fudge=5, **kwargs):
         self.data = np.asarray(data)
         self.name = name
         self._svd()
-        self.fundamental = 2 ** fudge * self.separability_index
         self.intervals = self._intervals()
-        self.resolution = min(self.data.shape) if not components else components
-        self.amplitudes = self.calculate_amplitudes(self.resolution)
-        self.frequencies = self.fundamental * self.intervals[: self.resolution]
-        self.signal = None
+        self.builder = None
 
     def _svd(self):
         M, N = self.data.shape
@@ -57,13 +53,16 @@ class Channel:
             )
         return amps
 
-    def audio_signal(self, **kw):
-        waves = kw.get("waves", ["sine" for _ in range(self.resolution)])
+    def audio_signal(self, resolution, fudge, **kw):
+        fundamental = 2**fudge * self.separability_index
+        amplitudes = self.calculate_amplitudes(resolution)
+        frequencies = fundamental * self.intervals[: resolution]
+        waves = kw.get("waves", ["sine" for _ in range(resolution)])
         samplerate = kw.get("samplerate", 48000)
         duration = kw.get("duration", 1)
         s = SignalBuilder(
-            self.frequencies,
-            self.amplitudes,
+            frequencies,
+            amplitudes,
             waves,
             samplerate=samplerate,
             duration=duration,
@@ -71,7 +70,7 @@ class Channel:
         return s
 
     def export_audio(self, fname):
-        self.signal.export('_'.join([fname, self.name]) + '.wav')
+        self.builder.export('_'.join([fname, self.name]) + '.wav')
 
 
 class SoundImage:
@@ -79,7 +78,6 @@ class SoundImage:
         self.name = str(input_file).split('/')[-1].split('.')[0]
         self.image = Image.open(input_file)
         self.channels = self._channels(**kw)
-        self.signals = None
         
     def _channels(self, **kw):
         return {
@@ -93,26 +91,37 @@ class SoundImage:
         for i, channel in enumerate(self.channels.values()):
             rec_im[:, :, i] = channel.reconstruct(resolution)
         return Image.fromarray(rec_im)
-
-    def stereo_signals(self, **kw):
-        res = dict()
-        for band, channel in self.channels.items():
-            if channel.signal is None:
-                channel.signal = channel.audio_signal(**kw)
-        for c1, c2 in combinations(self.channels.keys(), 2):
-            left = self.channels[c1].signal
-            right = self.channels[c2].signal
-            res[c1 + c2] = (left, right)
-        self.signals = res
-        return res
-
-    def export_audio(self, path='./', bit_depth=16, **kw):
-        if self.signals is None:
-            self.stereo_signals(**kw)
-        for pair, channels in self.signals.items():
-            left, right = channels
-            signal = np.array([left.scaled_signal, right.scaled_signal]).T
-            assert left.samplerate == right.samplerate
-            outpath = Path(path) / self.name / "".join((pair, '.wav'))
-            outpath.parent.mkdir(parents=True, exist_ok=True)
-            write(signal, str(outpath), samplerate=left.samplerate, bit_depth=bit_depth)
+    
+    def export_audio(
+            self,
+            left_band, right_band=None,
+            resolution=10,
+            fudge=5,
+            path="./",
+            bit_depth=16,
+            **kw):
+        outpath = Path(path) / self.name / "".join(
+            (left_band, right_band or "", '.wav'))
+        outpath.parent.mkdir(parents=True, exist_ok=True)
+        for band in (left_band, right_band):
+            channel = self.channels.get(band)
+            if channel and channel.builder is None:
+                channel.builder = channel.audio_signal(resolution, fudge, **kw)
+        if right_band is None:
+            mono_builder = self.channels.get(left_band).builder
+            write(
+                mono_builder.signal,
+                str(outpath),
+                bit_depth=bit_depth,
+                samplerate=mono_builder.samplerate
+            )
+        else:
+            left_builder = self.channels.get(left_band).builder
+            right_builder = self.channels.get(right_band).builder
+            assert left_builder.samplerate == right_builder.samplerate
+            write_stereo(
+                left_builder.signal, right_builder.signal,
+                str(outpath),
+                bit_depth=bit_depth,
+                samplerate=left_builder.samplerate
+            )
