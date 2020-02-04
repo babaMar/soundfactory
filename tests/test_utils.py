@@ -146,7 +146,7 @@ def test_remove_close_values_on_log_scale():
     assert remove_close_values_on_log_scale(freqs) == [freqs[0], freqs[3]]
 
 
-def test_write_stereo(mono8bit_audio_file, mono_audio_file):
+def test_write_stereo(mono_audio_file):
     c1_path = mono_audio_file
     c2_path = mono_audio_file
     left, l_samplerate = load_audio(c1_path)
