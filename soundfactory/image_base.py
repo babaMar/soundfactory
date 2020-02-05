@@ -1,11 +1,16 @@
 from PIL import Image
 from scipy import linalg
 import numpy as np
-from itertools import combinations
 from pathlib import Path
+from os import getenv
 
 from .utils.signal import write, write_stereo
 from .signal_builder import SignalBuilder
+from .settings.logging_settings import get_logger
+
+
+logger = get_logger(__name__)
+logger.setLevel(getenv("APP_LOG_LEVEL", "DEBUG"))
 
 COLORSPACE = {
     "RGB": {"range": (0, 255), "channels": ("R", "G", "B")},
@@ -19,6 +24,16 @@ class Channel:
         self.data = np.asarray(data)
         self.name = name
         self._svd()
+        logger.debug(
+            '<{} band> Calculating eigenvalues and eigenvectors for U...'
+            .format(self.name)
+        )
+        self.eigUvalues, self.eigUvectors = linalg.eig(self.U)
+        logger.debug(
+            '<{} band> Calculating eigenvalues and eigenvectors for V...'
+            .format(self.name)
+        )
+        self.eigVvalues, self.eigVvectors = linalg.eig(self.V)
         self.intervals = self._intervals()
         self.builder = None
 
@@ -40,8 +55,6 @@ class Channel:
 
     def calculate_amplitudes(self, limit):
         amps = list()
-        self.eigUvalues, self.eigUvectors = linalg.eig(self.U)
-        self.eigVvalues, self.eigVvectors = linalg.eig(self.V)
         for row_idx in range(limit):
             v = self.eigVvalues * self.eigVvectors[row_idx]
             u = self.eigUvalues * self.eigUvectors[row_idx]
@@ -56,7 +69,7 @@ class Channel:
     def audio_signal(self, resolution, fudge, **kw):
         fundamental = 2**fudge * self.separability_index
         amplitudes = self.calculate_amplitudes(resolution)
-        frequencies = fundamental * self.intervals[: resolution]
+        frequencies = fundamental * self.intervals[:resolution]
         waves = kw.get("waves", ["sine" for _ in range(resolution)])
         samplerate = kw.get("samplerate", 48000)
         duration = kw.get("duration", 1)
@@ -70,15 +83,18 @@ class Channel:
         return s
 
     def export_audio(self, fname):
-        self.builder.export('_'.join([fname, self.name]) + '.wav')
+        path = fname if ".wav" in fname else '_'.join([fname, self.name]) + '.wav'
+        self.builder.export(path)
 
 
 class SoundImage:
     def __init__(self, input_file, **kw):
         self.name = str(input_file).split('/')[-1].split('.')[0]
         self.image = Image.open(input_file)
+        self.width, self.height = self.image.size
         self.channels = self._channels(**kw)
-        
+        self.bands = tuple(self.channels.keys())
+
     def _channels(self, **kw):
         return {
             band: Channel(
@@ -87,19 +103,15 @@ class SoundImage:
         }
 
     def reconstructed(self, resolution):
-        rec_im = np.zeros(self.image.shape)
+        rec_im = np.zeros(
+            (self.height, self.width, len(self.bands)), dtype="uint8"
+        )
         for i, channel in enumerate(self.channels.values()):
             rec_im[:, :, i] = channel.reconstruct(resolution)
         return Image.fromarray(rec_im)
-    
-    def export_audio(
-            self,
-            left_band, right_band=None,
-            resolution=10,
-            fudge=5,
-            path="./",
-            bit_depth=16,
-            **kw):
+
+    def export_audio(self, left_band, right_band=None, resolution=10,
+                     fudge=5, path="./", bit_depth=16, **kw):
         outpath = Path(path) / self.name / "".join(
             (left_band, right_band or "", '.wav'))
         outpath.parent.mkdir(parents=True, exist_ok=True)
@@ -108,13 +120,7 @@ class SoundImage:
             if channel and channel.builder is None:
                 channel.builder = channel.audio_signal(resolution, fudge, **kw)
         if right_band is None:
-            mono_builder = self.channels.get(left_band).builder
-            write(
-                mono_builder.signal,
-                str(outpath),
-                bit_depth=bit_depth,
-                samplerate=mono_builder.samplerate
-            )
+            self.channels.get(left_band).export_audio(str(outpath))
         else:
             left_builder = self.channels.get(left_band).builder
             right_builder = self.channels.get(right_band).builder
