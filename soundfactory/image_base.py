@@ -4,7 +4,7 @@ import numpy as np
 from pathlib import Path
 from os import getenv
 
-from .utils.signal import write, write_stereo
+from .utils.signal import write_stereo
 from .signal_builder import SignalBuilder
 from .settings.logging_settings import get_logger
 
@@ -126,7 +126,7 @@ class SoundImage:
             right_builder = self.channels.get(right_band).builder
             assert left_builder.samplerate == right_builder.samplerate
             write_stereo(
-                left_builder.signal, right_builder.signal,
+                left_builder.scaled_signal, right_builder.scaled_signal,
                 str(outpath),
                 bit_depth=bit_depth,
                 samplerate=left_builder.samplerate
