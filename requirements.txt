@@ -1,3 +1,4 @@
+cachetools==4.0.0
 cffi==1.11.2
 Click==7.0
 complexaudio==1.0.4

@@ -3,7 +3,8 @@ from scipy import linalg
 import numpy as np
 from pathlib import Path
 from os import getenv
-
+import cachetools
+from .utils.helpers import load_cache, builder_cache_key
 from .utils.signal import write_stereo
 from .signal_builder import SignalBuilder
 from .settings.logging_settings import get_logger
@@ -17,6 +18,7 @@ COLORSPACE = {
     "RGBA": {"range": (0, 255), "channels": ("R", "G", "B", "A")},
     "CMYK": {"range": (0, 100), "channels": ("C", "M", "Y", "K")},
 }
+BUILDER_CACHE = load_cache()
 
 
 class Channel:
@@ -35,7 +37,6 @@ class Channel:
         )
         self.eigVvalues, self.eigVvectors = linalg.eig(self.V)
         self.intervals = self._intervals()
-        self.builder = None
 
     def _svd(self):
         M, N = self.data.shape
@@ -70,21 +71,30 @@ class Channel:
         fundamental = 2**fudge * self.separability_index
         amplitudes = self.calculate_amplitudes(resolution)
         frequencies = fundamental * self.intervals[:resolution]
+        phases = kw.get("phases", None)
+        n_max = kw.get("n_max", 1000)
         waves = kw.get("waves", ["sine" for _ in range(resolution)])
         samplerate = kw.get("samplerate", 48000)
         duration = kw.get("duration", 1)
-        s = SignalBuilder(
+        s = self._cached_builder(
             frequencies,
             amplitudes,
             waves,
-            samplerate=samplerate,
-            duration=duration,
+            phases,
+            n_max,
+            samplerate,
+            duration,
         )
         return s
 
-    def export_audio(self, fname):
-        path = fname if ".wav" in fname else '_'.join([fname, self.name]) + '.wav'
-        self.builder.export(path)
+    @staticmethod
+    @cachetools.cached(BUILDER_CACHE, key=builder_cache_key)
+    def _cached_builder(
+            freqs, amps, waves, phases, n_max, samplerate, duration):
+        return SignalBuilder(
+            freqs, amps, waves, phases,
+            n_max, samplerate, duration
+        )
 
 
 class SoundImage:
@@ -94,7 +104,7 @@ class SoundImage:
         self.width, self.height = self.image.size
         self.channels = self._channels(**kw)
         self.bands = tuple(self.channels.keys())
-
+        
     def _channels(self, **kw):
         return {
             band: Channel(
@@ -115,15 +125,15 @@ class SoundImage:
         outpath = Path(path) / self.name / "".join(
             (left_band, right_band or "", '.wav'))
         outpath.parent.mkdir(parents=True, exist_ok=True)
-        for band in (left_band, right_band):
-            channel = self.channels.get(band)
-            if channel and channel.builder is None:
-                channel.builder = channel.audio_signal(resolution, fudge, **kw)
+        left_builder = self.channels.get(left_band).audio_signal(
+                resolution, fudge, **kw
+            )
         if right_band is None:
-            self.channels.get(left_band).export_audio(str(outpath))
+            left_builder.export(str(outpath), bit_depth=bit_depth)
         else:
-            left_builder = self.channels.get(left_band).builder
-            right_builder = self.channels.get(right_band).builder
+            right_builder = self.channels.get(right_band).audio_signal(
+                resolution, fudge, **kw
+            )
             assert left_builder.samplerate == right_builder.samplerate
             write_stereo(
                 left_builder.scaled_signal, right_builder.scaled_signal,
