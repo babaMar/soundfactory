@@ -56,7 +56,7 @@ class SignalBuilder:
     ):
         self.frequencies = frequencies
         self.amplitudes = amplitudes
-        self.phases = (phases,)
+        self.phases = None
         self.set_phases(phases)
         self.wave_types = wave_types
         self.check_input()
