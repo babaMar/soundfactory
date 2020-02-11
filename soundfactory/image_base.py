@@ -3,8 +3,7 @@ from scipy import linalg
 import numpy as np
 from pathlib import Path
 from os import getenv
-import cachetools
-from .utils.helpers import load_cache, builder_cache_key
+from .utils.helpers import load_cache, builder_cache_key, cache_it
 from .utils.signal import write_stereo
 from .signal_builder import SignalBuilder
 from .settings.logging_settings import get_logger
@@ -88,7 +87,7 @@ class Channel:
         return s
 
     @staticmethod
-    @cachetools.cached(BUILDER_CACHE, key=builder_cache_key)
+    @cache_it(BUILDER_CACHE, builder_cache_key)
     def _cached_builder(
             freqs, amps, waves, phases, n_max, samplerate, duration):
         return SignalBuilder(
