@@ -81,8 +81,8 @@ class Channel:
             waves,
             phases,
             n_max,
-            samplerate,
             duration,
+            samplerate
         )
         return s
 
