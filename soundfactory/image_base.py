@@ -21,7 +21,7 @@ BUILDER_CACHE = load_cache()
 
 
 class Channel:
-    def __init__(self, data, name, fudge=5, **kwargs):
+    def __init__(self, data, name):
         self.data = np.asarray(data)
         self.name = name
         self._svd()
@@ -97,17 +97,17 @@ class Channel:
 
 
 class SoundImage:
-    def __init__(self, input_file, **kw):
+    def __init__(self, input_file):
         self.name = str(input_file).split('/')[-1].split('.')[0]
         self.image = Image.open(input_file)
         self.width, self.height = self.image.size
-        self.channels = self._channels(**kw)
+        self.channels = self._channels()
         self.bands = tuple(self.channels.keys())
         
-    def _channels(self, **kw):
+    def _channels(self):
         return {
             band: Channel(
-                self.image.getchannel(band), band, **kw)
+                self.image.getchannel(band), band)
             for band in self.image.getbands()
         }
 

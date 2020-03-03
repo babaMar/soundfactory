@@ -136,7 +136,7 @@ def builder_cache_key(freqs, amps, waves, phases, n_max, samplerate, duration):
     key += [n_max, samplerate, duration]
     hash_object = hashlib.md5(repr(key).encode('utf-8'))
     return hash_object.hexdigest()
-    
+
 
 def cache_it(cache, key_encoder, path=BUILDER_CACHE_PATH):
     def decorator(func):
