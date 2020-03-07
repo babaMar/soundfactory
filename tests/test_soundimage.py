@@ -33,7 +33,7 @@ def test_class(rgb_file):
     channels = COLORSPACE["RGB"]["channels"]
     sim = SoundImage(rgb_file)
     assert isinstance(sim.channels, dict)
-    assert sim.bands == channels
+    assert sorted(sim.bands) == sorted(channels)
 
     for band in channels:
         assert band in sim.channels
