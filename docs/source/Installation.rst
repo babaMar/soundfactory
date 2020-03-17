@@ -19,7 +19,14 @@ on your machine. On Ubuntu/Debian this can be achieved by:
   sudo apt-get update
   sudo apt-get install -y libffi-dev python3-tk libasound2-dev portaudio19-dev python-pyaudio python3-pyaudio
 
-If you like LaTex formatting for the plt labels install  `texlive-full` as well
+On OS X (only 10.13.6 tested so far) you will need to install  ``portaudio`` (for example via ``brew``)
+
+.. code-block::bash
+
+  brew install portaudio
+
+
+If you like LaTex formatting for the plotting labels install  `texlive-full` as well
 
 .. code-block:: bash
 

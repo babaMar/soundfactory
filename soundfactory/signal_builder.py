@@ -56,7 +56,7 @@ class SignalBuilder:
     ):
         self.frequencies = frequencies
         self.amplitudes = amplitudes
-        self.phases = (phases,)
+        self.phases = None
         self.set_phases(phases)
         self.wave_types = wave_types
         self.check_input()
@@ -69,7 +69,7 @@ class SignalBuilder:
         )
         self.a0 = 0
         self.signal = self.build_signal()
-        self.scaled_signal = self.signal
+        self.scaled_signal = self.signal / np.max(np.abs(self.signal), axis=0)
 
     def get_time_space(self):
         return self.time_space
@@ -111,5 +111,4 @@ class SignalBuilder:
         return signal
 
     def export(self, path, bit_depth=16):
-        self.scaled_signal /= np.max(np.abs(self.signal), axis=0)
         write(self.scaled_signal, path, samplerate=self.samplerate, bit_depth=bit_depth)

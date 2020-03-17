@@ -6,6 +6,10 @@ from soundfactory.constants import (
     SEMITONE_CENTS,
     QUARTERTONE_CENTS,
 )
+from soundfactory.settings.config import BUILDER_CACHE_PATH
+import pickle
+from pathlib import Path
+import hashlib
 
 
 def cents_from_freq_ratio(upper_tone, lower_tone):
@@ -107,3 +111,42 @@ def progress_time(
         left=round(total_time-elapsed),
         suffix=suffix
     ), end='\r')
+
+
+def load_cache(path=BUILDER_CACHE_PATH):
+    try:
+        with open(path, 'rb') as f:
+            cache = pickle.load(f)
+    except FileNotFoundError:
+        cache = {}
+    return cache
+
+
+def save_cache(cache, path=BUILDER_CACHE_PATH):
+    path_obj = Path(path)
+    path_obj.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, 'wb') as f:
+        pickle.dump(cache, f, protocol=pickle.HIGHEST_PROTOCOL)
+
+        
+def builder_cache_key(freqs, amps, waves, phases, n_max, samplerate, duration):
+    if phases is None:
+        phases = [0] * len(freqs)
+    key = sorted(zip(freqs, amps, waves, phases), key=lambda x: x[0])
+    key += [n_max, samplerate, duration]
+    hash_object = hashlib.md5(repr(key).encode('utf-8'))
+    return hash_object.hexdigest()
+
+
+def cache_it(cache, key_encoder, path=BUILDER_CACHE_PATH):
+    def decorator(func):
+        def wrapped(*args):
+            key = key_encoder(*args)
+            val = cache.get(key)
+            if not val:
+                val = func(*args)
+                cache[key] = val
+                save_cache(cache, path)
+            return val
+        return wrapped
+    return decorator

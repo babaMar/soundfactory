@@ -88,3 +88,11 @@ def write(signal, filename, bit_depth=16, samplerate=44100):
     subtype = find_soundfile_subtype(bit_depth)
     sf.write(filename, signal, samplerate, subtype=subtype)
 
+
+def write_stereo(left, right, filename, bit_depth=16, samplerate=44100):
+    if isinstance(left, str) and isinstance(right, str):
+        left, l_samplerate = load_audio(left)
+        right, r_samplerate = load_audio(right)
+    duration = min([len(left), len(right)])
+    signal = np.array([left[:duration], right[:duration]]).T
+    write(signal, filename, bit_depth=bit_depth, samplerate=samplerate)

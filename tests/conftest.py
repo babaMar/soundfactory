@@ -83,3 +83,36 @@ def mono_audio_file():
 @pytest.fixture
 def stereo_audio_file():
     return str(Path(__file__).parent.parent / 'samples' / 'A3-Calib-220.wav')
+
+
+@pytest.fixture
+def rgb_file():
+    return str(
+        Path(__file__).parent.parent
+        / 'samples' / 'images' / 'rembrandt_rgb.jpg'
+    )    
+
+
+@pytest.fixture
+def rgba_file():
+    return str(
+        Path(__file__).parent.parent
+        / 'samples' / 'images' / 'rembrandt_rgba.png'
+    )    
+
+
+@pytest.fixture
+def grey_file():
+    return str(
+        Path(__file__).parent.parent
+        / 'samples' / 'images' / 'rembrandt_grey.jpg'
+    )    
+
+
+@pytest.fixture
+def cmyk_file():
+    return str(
+        Path(__file__).parent.parent
+        / 'samples' / 'images' / 'rembrandt_cmyk.jpg'
+    )    
+
