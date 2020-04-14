@@ -29,6 +29,7 @@ To check all the options run
       --save-fig
       --help                        Show this message and exit.
 
+Use the ``-w`` option to increase (or decrease) the sliding window for the spectrogram if spectral lines are not resolved in the plot.
 
 To inspect 300 milliseconds of the ``beat_20_1.wav`` sample produced in the
 ``create`` example run
