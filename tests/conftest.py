@@ -41,6 +41,16 @@ def triangle_wave(freq, phase=0, end=1., samples=DEFAULT_SAMPLERATE):
 
 
 @pytest.fixture
+def frequencies():
+    return [832.2, 30.1, 1.9, 1, 432]
+
+
+@pytest.fixture
+def n_max_range():
+    return [1, 10, 100, 1000]
+
+
+@pytest.fixture
 def lengths_samplerates():
     yield ((121, 121.354), (1, 1), (1, 4), (12, 1), (3, 12), (3 * 44100, 44100))
 
