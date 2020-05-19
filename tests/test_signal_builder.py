@@ -10,9 +10,6 @@ from soundfactory.constants import DEFAULT_SAMPLERATE
 
 
 TIME_RANGE = time_range()
-TEST_FREQUENCIES = [
-    832.2, 30.1, 1.9, 1, 432
-]
 APPROXIMATION_TOLERANCE = 0.01
 WAVE_ANALYTICS = [sine_wave, square_wave, sawtooth_wave, triangle_wave]
 WAVE_LABELS = ['sine', 'square', 'sawtooth', 'triangle']
@@ -28,11 +25,11 @@ class ApproximationDifferences:
 
 
 # Y: Diff (for each wave form) X: Freq
-def test_signal_approximation():
+def test_signal_approximation(frequencies):
     samplerate = DEFAULT_SAMPLERATE
     duration = 1.1
     amplitudes = (2.5 * random() for _ in range(3))
-    for freq in TEST_FREQUENCIES:
+    for freq in frequencies:
         for analytic_sig, wave_shape, tolerance in WAVES:
             for amplitude in amplitudes:
                 sig = amplitude * analytic_sig(

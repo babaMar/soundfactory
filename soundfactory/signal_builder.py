@@ -5,7 +5,7 @@ from .constants import DEFAULT_SAMPLERATE
 from .settings.signal import B_N_COEFF_MAP
 from .utils.signal import write
 from .settings.logging_settings import createlog
-from .utils.builder_utils import upsample_component, single_component
+from soundfactory.cyutils import builder_utils as cy_builder_utils
 
 
 class SignalBuilderError(Exception):
@@ -104,10 +104,13 @@ class SignalBuilder:
             )
             coefficients = B_N_COEFF_MAP[shape]
             coefficients = coefficients(self.n_terms)
-            upsampled = upsample_component(
+            upsampled = cy_builder_utils.upsample_component(
                 amp, ph, self.duration, self.time_space, coefficients, self.n_terms
             )
-            signal += single_component(freq, self.duration, upsampled, self.n_samples)
+            signal += cy_builder_utils.single_component(
+                freq, self.duration, upsampled, self.n_samples
+            )
+
         return signal
 
     def export(self, path, bit_depth=16):

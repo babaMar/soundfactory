@@ -3,11 +3,12 @@ cffi==1.14.0
 Click==7.0
 complexaudio==1.0.4
 cycler==0.10.0
+Cython==0.29.17
 getch==1.0
 lxml==4.5.0
 matplotlib==3.2.1
 numba==0.47.0
-numpy==1.15.4
+numpy==1.18.4
 Pillow==6.2.1
 PyAudio==0.2.11
 pycparser==2.20
