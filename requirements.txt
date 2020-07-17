@@ -4,7 +4,7 @@ complexaudio==1.0.4
 cycler==0.10.0
 getch==1.0
 lxml==4.2.5
-matplotlib==3.0.3
+matplotlib==3.3.0
 numpy==1.15.4
 PyAudio==0.2.11
 pycparser==2.18
