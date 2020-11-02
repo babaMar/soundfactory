@@ -12,6 +12,6 @@ pyparsing==2.2.0
 PySoundFile==0.9.0.post1
 python-dateutil==2.6.1
 python-toolbox==0.9.3
-pytz==2017.3
+pytz==2020.4
 scipy==1.1.0
 six==1.11.0
