@@ -1,4 +1,4 @@
-cffi==1.11.2
+cffi==1.14.4
 Click==7.0
 complexaudio==1.0.4
 cycler==0.10.0
