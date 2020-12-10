@@ -5,6 +5,7 @@ complexaudio==1.0.4
 cycler==0.10.0
 Cython==0.29.17
 getch==1.0
+llvmlite==0.32.1
 lxml==4.6.2
 matplotlib==3.3.3
 numba==0.47.0
