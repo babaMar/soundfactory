@@ -97,6 +97,7 @@ class SignalBuilder:
         for freq, amp, ph, shape in zip(
             self.frequencies, self.amplitudes, self.phases, self.wave_types
         ):
+            freq = round(freq, 2)
             createlog.info(
                 "Adding components from {s} wave of {f} hz frequency".format(
                     s=shape, f=freq
