@@ -20,8 +20,24 @@ COLORSPACE = {
 BUILDER_CACHE = load_cache()
 
 
+def default_amp_calculator(
+        u_values, v_values, u_vecs, v_vecs, limit):
+    amps = list()
+    for row_idx in range(limit):
+        u = u_values * u_vecs[row_idx]
+        v = v_values * v_vecs[row_idx]
+        v_s, u_s = sum(v), sum(u)
+        sign = np.sign(np.angle(v_s + u_s)) * np.sign(np.angle(v_s - u_s,))
+        amps.append(
+            1 / 2 * np.sqrt(((v_s + u_s).real + sign * (v_s - u_s).real) ** 2)
+        )
+    return amps
+
+
 class Channel:
-    def __init__(self, data, name):
+    def __init__(
+            self, data, name, amplitude_calculator=default_amp_calculator
+    ):
         self.data = np.asarray(data)
         self.name = name
         self._svd()
@@ -36,6 +52,7 @@ class Channel:
         )
         self.eigVvalues, self.eigVvectors = linalg.eig(self.V)
         self.intervals = self._intervals()
+        self.amp_calc = amplitude_calculator
 
     def _svd(self):
         M, N = self.data.shape
@@ -54,17 +71,11 @@ class Channel:
         return self.s[0] / self.s
 
     def calculate_amplitudes(self, limit):
-        amps = list()
-        for row_idx in range(limit):
-            v = self.eigVvalues * self.eigVvectors[row_idx]
-            u = self.eigUvalues * self.eigUvectors[row_idx]
-            v_s, u_s = sum(v), sum(u)
-
-            sign = np.sign(np.angle(v_s + u_s)) * np.sign(np.angle(v_s - u_s,))
-            amps.append(
-                1 / 2 * np.sqrt(((v_s + u_s).real + sign * (v_s - u_s).real) ** 2)
-            )
-        return amps
+        return self.amp_calc(
+            self.eigUvalues, self.eigVvalues,
+            self.eigUvectors, self.eigVvectors,
+            limit
+        )
 
     def audio_signal(self, resolution, fudge, **kw):
         fundamental = 2**fudge * self.separability_index
@@ -97,9 +108,12 @@ class Channel:
 
 
 class SoundImage:
-    def __init__(self, input_file):
+    def __init__(
+            self, input_file, amplitude_calculator=default_amp_calculator
+    ):
         self.name = str(input_file).split('/')[-1].split('.')[0]
         self.image = Image.open(input_file)
+        self.amp_calc = amplitude_calculator
         self.width, self.height = self.image.size
         self.channels = self._channels()
         self.bands = tuple(self.channels.keys())
@@ -107,7 +121,10 @@ class SoundImage:
     def _channels(self):
         return {
             band: Channel(
-                self.image.getchannel(band), band)
+                self.image.getchannel(band),
+                band,
+                amplitude_calculator=self.amp_calc
+            )
             for band in self.image.getbands()
         }
 
@@ -129,6 +146,7 @@ class SoundImage:
             )
         if right_band is None:
             left_builder.export(str(outpath), bit_depth=bit_depth)
+            logger.info("saving audio to {}".format(str(outpath)))
         else:
             right_builder = self.channels.get(right_band).audio_signal(
                 resolution, fudge, **kw
