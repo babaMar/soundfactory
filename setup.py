@@ -1,6 +1,7 @@
 import os
 from setuptools import setup, dist
-dist.Distribution().fetch_build_eggs(['Cython>=0.29.17', 'numpy>=1.18.4'])
+dist.Distribution().fetch_build_eggs(
+    ['Cython>=0.29.17', 'numpy>=1.18.4', 'cysignals>=1.10.2'])
 
 
 from Cython.Build import cythonize
