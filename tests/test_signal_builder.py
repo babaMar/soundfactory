@@ -28,7 +28,7 @@ class ApproximationDifferences:
 def test_signal_approximation(frequencies):
     samplerate = DEFAULT_SAMPLERATE
     duration = 1.1
-    amplitudes = (2.5 * random() for _ in range(3))
+    amplitudes = list(2.5 * random() for _ in range(3))
     for freq in frequencies:
         for analytic_sig, wave_shape, tolerance in WAVES:
             for amplitude in amplitudes:
