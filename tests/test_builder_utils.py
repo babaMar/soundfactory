@@ -1,3 +1,4 @@
+import time
 from numpy import pi, arange, ndarray, round as npround
 
 from soundfactory.cyutils import builder_utils as cy_builder_utils
@@ -59,14 +60,19 @@ def test_single_component(n_max_range, frequencies):
     n_samples = int(duration * DEFAULT_SAMPLERATE)
     for shape in B_N_COEFF_MAP.keys():
         for n, f in zip(n_max_range, frequencies):
+            start = time.time()
             terms = arange(1, n + 1)
             coefficients = B_N_COEFF_MAP[shape](terms)
+            print(f'Testing {f} with shape {shape}')
             upsampled = cy_builder_utils.upsample_component(
-                0.9, 45., 1., TIME_RANGE, coefficients, terms
+                0.9, 45., duration, TIME_RANGE, coefficients, terms
             )
+            print(f'Upsampling done in {round(time.time() - start, 2)} sec')
+            start_new = time.time()
             sc = cy_builder_utils.single_component(
                     f, duration, upsampled, n_samples
             )
+            print(f'Single Component in {round(time.time() - start_new, 2)} sec')
             assert isinstance(sc, ndarray)
             mask = sc == single_component(f, duration, upsampled, n_samples)
             assert all(mask)
