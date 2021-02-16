@@ -3,13 +3,20 @@
 /* BEGIN: Cython Metadata
 {
     "distutils": {
-        "depends": [],
-        "name": "builder_utils",
+        "depends": [
+            "/home/stefano/.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/cysignals/macros.h",
+            "/home/stefano/.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/cysignals/struct_signals.h"
+        ],
+        "extra_link_args": [],
+        "include_dirs": [
+            "/home/stefano/.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/cysignals"
+        ],
+        "name": "soundfactory.cyutils.builder_utils",
         "sources": [
-            "builder_utils.pyx"
+            "soundfactory/cyutils/builder_utils.pyx"
         ]
     },
-    "module_name": "builder_utils"
+    "module_name": "soundfactory.cyutils.builder_utils"
 }
 END: Cython Metadata */
 
@@ -605,13 +612,15 @@ static CYTHON_INLINE float __PYX_NAN() {
   #endif
 #endif
 
-#define __PYX_HAVE__builder_utils
-#define __PYX_HAVE_API__builder_utils
+#define __PYX_HAVE__soundfactory__cyutils__builder_utils
+#define __PYX_HAVE_API__soundfactory__cyutils__builder_utils
 /* Early includes */
 #include <string.h>
 #include <stdio.h>
 #include "numpy/arrayobject.h"
 #include "numpy/ufuncobject.h"
+#include <math.h>
+#include "struct_signals.h"
 #ifdef _OPENMP
 #include <omp.h>
 #endif /* _OPENMP */
@@ -842,7 +851,7 @@ static const char *__pyx_filename;
 
 
 static const char *__pyx_f[] = {
-  "builder_utils.pyx",
+  "soundfactory/cyutils/builder_utils.pyx",
   "__init__.pxd",
   "type.pxd",
 };
@@ -883,7 +892,7 @@ typedef struct {
 } __Pyx_BufFmt_Context;
 
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":776
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":776
  * # in Cython to enable them only on the right systems.
  * 
  * ctypedef npy_int8       int8_t             # <<<<<<<<<<<<<<
@@ -892,7 +901,7 @@ typedef struct {
  */
 typedef npy_int8 __pyx_t_5numpy_int8_t;
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":777
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":777
  * 
  * ctypedef npy_int8       int8_t
  * ctypedef npy_int16      int16_t             # <<<<<<<<<<<<<<
@@ -901,7 +910,7 @@ typedef npy_int8 __pyx_t_5numpy_int8_t;
  */
 typedef npy_int16 __pyx_t_5numpy_int16_t;
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":778
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":778
  * ctypedef npy_int8       int8_t
  * ctypedef npy_int16      int16_t
  * ctypedef npy_int32      int32_t             # <<<<<<<<<<<<<<
@@ -910,7 +919,7 @@ typedef npy_int16 __pyx_t_5numpy_int16_t;
  */
 typedef npy_int32 __pyx_t_5numpy_int32_t;
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":779
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":779
  * ctypedef npy_int16      int16_t
  * ctypedef npy_int32      int32_t
  * ctypedef npy_int64      int64_t             # <<<<<<<<<<<<<<
@@ -919,7 +928,7 @@ typedef npy_int32 __pyx_t_5numpy_int32_t;
  */
 typedef npy_int64 __pyx_t_5numpy_int64_t;
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":783
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":783
  * #ctypedef npy_int128     int128_t
  * 
  * ctypedef npy_uint8      uint8_t             # <<<<<<<<<<<<<<
@@ -928,7 +937,7 @@ typedef npy_int64 __pyx_t_5numpy_int64_t;
  */
 typedef npy_uint8 __pyx_t_5numpy_uint8_t;
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":784
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":784
  * 
  * ctypedef npy_uint8      uint8_t
  * ctypedef npy_uint16     uint16_t             # <<<<<<<<<<<<<<
@@ -937,7 +946,7 @@ typedef npy_uint8 __pyx_t_5numpy_uint8_t;
  */
 typedef npy_uint16 __pyx_t_5numpy_uint16_t;
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":785
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":785
  * ctypedef npy_uint8      uint8_t
  * ctypedef npy_uint16     uint16_t
  * ctypedef npy_uint32     uint32_t             # <<<<<<<<<<<<<<
@@ -946,7 +955,7 @@ typedef npy_uint16 __pyx_t_5numpy_uint16_t;
  */
 typedef npy_uint32 __pyx_t_5numpy_uint32_t;
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":786
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":786
  * ctypedef npy_uint16     uint16_t
  * ctypedef npy_uint32     uint32_t
  * ctypedef npy_uint64     uint64_t             # <<<<<<<<<<<<<<
@@ -955,7 +964,7 @@ typedef npy_uint32 __pyx_t_5numpy_uint32_t;
  */
 typedef npy_uint64 __pyx_t_5numpy_uint64_t;
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":790
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":790
  * #ctypedef npy_uint128    uint128_t
  * 
  * ctypedef npy_float32    float32_t             # <<<<<<<<<<<<<<
@@ -964,7 +973,7 @@ typedef npy_uint64 __pyx_t_5numpy_uint64_t;
  */
 typedef npy_float32 __pyx_t_5numpy_float32_t;
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":791
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":791
  * 
  * ctypedef npy_float32    float32_t
  * ctypedef npy_float64    float64_t             # <<<<<<<<<<<<<<
@@ -973,7 +982,7 @@ typedef npy_float32 __pyx_t_5numpy_float32_t;
  */
 typedef npy_float64 __pyx_t_5numpy_float64_t;
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":800
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":800
  * # The int types are mapped a bit surprising --
  * # numpy.int corresponds to 'l' and numpy.long to 'q'
  * ctypedef npy_long       int_t             # <<<<<<<<<<<<<<
@@ -982,7 +991,7 @@ typedef npy_float64 __pyx_t_5numpy_float64_t;
  */
 typedef npy_long __pyx_t_5numpy_int_t;
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":801
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":801
  * # numpy.int corresponds to 'l' and numpy.long to 'q'
  * ctypedef npy_long       int_t
  * ctypedef npy_longlong   long_t             # <<<<<<<<<<<<<<
@@ -991,7 +1000,7 @@ typedef npy_long __pyx_t_5numpy_int_t;
  */
 typedef npy_longlong __pyx_t_5numpy_long_t;
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":802
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":802
  * ctypedef npy_long       int_t
  * ctypedef npy_longlong   long_t
  * ctypedef npy_longlong   longlong_t             # <<<<<<<<<<<<<<
@@ -1000,7 +1009,7 @@ typedef npy_longlong __pyx_t_5numpy_long_t;
  */
 typedef npy_longlong __pyx_t_5numpy_longlong_t;
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":804
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":804
  * ctypedef npy_longlong   longlong_t
  * 
  * ctypedef npy_ulong      uint_t             # <<<<<<<<<<<<<<
@@ -1009,7 +1018,7 @@ typedef npy_longlong __pyx_t_5numpy_longlong_t;
  */
 typedef npy_ulong __pyx_t_5numpy_uint_t;
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":805
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":805
  * 
  * ctypedef npy_ulong      uint_t
  * ctypedef npy_ulonglong  ulong_t             # <<<<<<<<<<<<<<
@@ -1018,7 +1027,7 @@ typedef npy_ulong __pyx_t_5numpy_uint_t;
  */
 typedef npy_ulonglong __pyx_t_5numpy_ulong_t;
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":806
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":806
  * ctypedef npy_ulong      uint_t
  * ctypedef npy_ulonglong  ulong_t
  * ctypedef npy_ulonglong  ulonglong_t             # <<<<<<<<<<<<<<
@@ -1027,7 +1036,7 @@ typedef npy_ulonglong __pyx_t_5numpy_ulong_t;
  */
 typedef npy_ulonglong __pyx_t_5numpy_ulonglong_t;
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":808
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":808
  * ctypedef npy_ulonglong  ulonglong_t
  * 
  * ctypedef npy_intp       intp_t             # <<<<<<<<<<<<<<
@@ -1036,7 +1045,7 @@ typedef npy_ulonglong __pyx_t_5numpy_ulonglong_t;
  */
 typedef npy_intp __pyx_t_5numpy_intp_t;
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":809
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":809
  * 
  * ctypedef npy_intp       intp_t
  * ctypedef npy_uintp      uintp_t             # <<<<<<<<<<<<<<
@@ -1045,7 +1054,7 @@ typedef npy_intp __pyx_t_5numpy_intp_t;
  */
 typedef npy_uintp __pyx_t_5numpy_uintp_t;
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":811
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":811
  * ctypedef npy_uintp      uintp_t
  * 
  * ctypedef npy_double     float_t             # <<<<<<<<<<<<<<
@@ -1054,7 +1063,7 @@ typedef npy_uintp __pyx_t_5numpy_uintp_t;
  */
 typedef npy_double __pyx_t_5numpy_float_t;
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":812
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":812
  * 
  * ctypedef npy_double     float_t
  * ctypedef npy_double     double_t             # <<<<<<<<<<<<<<
@@ -1063,7 +1072,7 @@ typedef npy_double __pyx_t_5numpy_float_t;
  */
 typedef npy_double __pyx_t_5numpy_double_t;
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":813
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":813
  * ctypedef npy_double     float_t
  * ctypedef npy_double     double_t
  * ctypedef npy_longdouble longdouble_t             # <<<<<<<<<<<<<<
@@ -1072,32 +1081,32 @@ typedef npy_double __pyx_t_5numpy_double_t;
  */
 typedef npy_longdouble __pyx_t_5numpy_longdouble_t;
 
-/* "builder_utils.pyx":15
+/* "soundfactory/cyutils/builder_utils.pyx":21
  * # every type in the numpy module there's a corresponding compile-time
  * # type with a _t-suffix.
  * ctypedef np.int_t DTYPE_t             # <<<<<<<<<<<<<<
  * ctypedef np.int64_t DTYPEI_t
  * ctypedef np.float64_t DTYPE_f
  */
-typedef __pyx_t_5numpy_int_t __pyx_t_13builder_utils_DTYPE_t;
+typedef __pyx_t_5numpy_int_t __pyx_t_12soundfactory_7cyutils_13builder_utils_DTYPE_t;
 
-/* "builder_utils.pyx":16
+/* "soundfactory/cyutils/builder_utils.pyx":22
  * # type with a _t-suffix.
  * ctypedef np.int_t DTYPE_t
  * ctypedef np.int64_t DTYPEI_t             # <<<<<<<<<<<<<<
  * ctypedef np.float64_t DTYPE_f
  * 
  */
-typedef __pyx_t_5numpy_int64_t __pyx_t_13builder_utils_DTYPEI_t;
+typedef __pyx_t_5numpy_int64_t __pyx_t_12soundfactory_7cyutils_13builder_utils_DTYPEI_t;
 
-/* "builder_utils.pyx":17
+/* "soundfactory/cyutils/builder_utils.pyx":23
  * ctypedef np.int_t DTYPE_t
  * ctypedef np.int64_t DTYPEI_t
  * ctypedef np.float64_t DTYPE_f             # <<<<<<<<<<<<<<
  * 
  * cpdef double wn(int n, double freq):
  */
-typedef __pyx_t_5numpy_float64_t __pyx_t_13builder_utils_DTYPE_f;
+typedef __pyx_t_5numpy_float64_t __pyx_t_12soundfactory_7cyutils_13builder_utils_DTYPE_f;
 /* Declarations.proto */
 #if CYTHON_CCOMPLEX
   #ifdef __cplusplus
@@ -1125,7 +1134,7 @@ static CYTHON_INLINE __pyx_t_double_complex __pyx_t_double_complex_from_parts(do
 
 /*--- Type declarations ---*/
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":815
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":815
  * ctypedef npy_longdouble longdouble_t
  * 
  * ctypedef npy_cfloat      cfloat_t             # <<<<<<<<<<<<<<
@@ -1134,7 +1143,7 @@ static CYTHON_INLINE __pyx_t_double_complex __pyx_t_double_complex_from_parts(do
  */
 typedef npy_cfloat __pyx_t_5numpy_cfloat_t;
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":816
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":816
  * 
  * ctypedef npy_cfloat      cfloat_t
  * ctypedef npy_cdouble     cdouble_t             # <<<<<<<<<<<<<<
@@ -1143,7 +1152,7 @@ typedef npy_cfloat __pyx_t_5numpy_cfloat_t;
  */
 typedef npy_cdouble __pyx_t_5numpy_cdouble_t;
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":817
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":817
  * ctypedef npy_cfloat      cfloat_t
  * ctypedef npy_cdouble     cdouble_t
  * ctypedef npy_clongdouble clongdouble_t             # <<<<<<<<<<<<<<
@@ -1152,7 +1161,7 @@ typedef npy_cdouble __pyx_t_5numpy_cdouble_t;
  */
 typedef npy_clongdouble __pyx_t_5numpy_clongdouble_t;
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":819
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":819
  * ctypedef npy_clongdouble clongdouble_t
  * 
  * ctypedef npy_cdouble     complex_t             # <<<<<<<<<<<<<<
@@ -1711,6 +1720,12 @@ static CYTHON_INLINE int __Pyx_PyErr_GivenExceptionMatches2(PyObject *err, PyObj
 /* CheckBinaryVersion.proto */
 static int __Pyx_check_binary_version(void);
 
+/* VoidPtrImport.proto */
+static int __Pyx_ImportVoidPtr(PyObject *module, const char *name, void **p, const char *sig);
+
+/* FunctionImport.proto */
+static int __Pyx_ImportFunction(PyObject *module, const char *funcname, void (**f)(void), const char *sig);
+
 /* InitStrings.proto */
 static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
@@ -1744,20 +1759,33 @@ static PyTypeObject *__pyx_ptype_5numpy_ndarray = 0;
 static PyTypeObject *__pyx_ptype_5numpy_ufunc = 0;
 static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *, char *, char *, int *); /*proto*/
 
-/* Module declarations from 'builder_utils' */
-static double __pyx_f_13builder_utils_wn(int, double, int __pyx_skip_dispatch); /*proto*/
-static PyArrayObject *__pyx_f_13builder_utils_wn_arr(PyArrayObject *, double, int __pyx_skip_dispatch); /*proto*/
-static double __pyx_f_13builder_utils_to_radians(double, int __pyx_skip_dispatch); /*proto*/
-static double __pyx_f_13builder_utils_fourier_sum(double, PyArrayObject *, double, double, PyArrayObject *, int __pyx_skip_dispatch); /*proto*/
-static PyArrayObject *__pyx_f_13builder_utils_upsample_component(double, double, double, PyArrayObject *, PyArrayObject *, PyArrayObject *, int __pyx_skip_dispatch); /*proto*/
-static PyArrayObject *__pyx_f_13builder_utils_single_component(double, double, PyArrayObject *, int, int __pyx_skip_dispatch); /*proto*/
-static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_13builder_utils_DTYPE_t = { "DTYPE_t", NULL, sizeof(__pyx_t_13builder_utils_DTYPE_t), { 0 }, 0, IS_UNSIGNED(__pyx_t_13builder_utils_DTYPE_t) ? 'U' : 'I', IS_UNSIGNED(__pyx_t_13builder_utils_DTYPE_t), 0 };
-static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_13builder_utils_DTYPE_f = { "DTYPE_f", NULL, sizeof(__pyx_t_13builder_utils_DTYPE_f), { 0 }, 0, 'R', 0, 0 };
-#define __Pyx_MODULE_NAME "builder_utils"
-extern int __pyx_module_is_main_builder_utils;
-int __pyx_module_is_main_builder_utils = 0;
+/* Module declarations from 'libc.math' */
 
-/* Implementation of 'builder_utils' */
+/* Module declarations from 'cpython.exc' */
+
+/* Module declarations from 'cysignals.signals' */
+static cysigs_t *__pyx_vp_9cysignals_7signals_cysigs = 0;
+#define cysigs (*__pyx_vp_9cysignals_7signals_cysigs)
+static void (*__pyx_f_9cysignals_7signals_verify_exc_value)(void); /*proto*/
+static void (*_sig_on_interrupt_received)(void); /*proto*/
+static void (*_sig_on_recover)(void); /*proto*/
+static void (*_sig_off_warning)(char const *, int); /*proto*/
+static void (*print_backtrace)(void); /*proto*/
+
+/* Module declarations from 'soundfactory.cyutils.builder_utils' */
+static double __pyx_f_12soundfactory_7cyutils_13builder_utils_wn(int, double, int __pyx_skip_dispatch); /*proto*/
+static PyArrayObject *__pyx_f_12soundfactory_7cyutils_13builder_utils_wn_arr(PyArrayObject *, double, int __pyx_skip_dispatch); /*proto*/
+static double __pyx_f_12soundfactory_7cyutils_13builder_utils_to_radians(double, int __pyx_skip_dispatch); /*proto*/
+static double __pyx_f_12soundfactory_7cyutils_13builder_utils_fourier_sum(double, PyArrayObject *, double, double, PyArrayObject *, int __pyx_skip_dispatch); /*proto*/
+static PyArrayObject *__pyx_f_12soundfactory_7cyutils_13builder_utils_upsample_component(double, double, double, PyArrayObject *, PyArrayObject *, PyArrayObject *, int __pyx_skip_dispatch); /*proto*/
+static PyArrayObject *__pyx_f_12soundfactory_7cyutils_13builder_utils_single_component(double, double, PyArrayObject *, int, int __pyx_skip_dispatch); /*proto*/
+static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_12soundfactory_7cyutils_13builder_utils_DTYPE_t = { "DTYPE_t", NULL, sizeof(__pyx_t_12soundfactory_7cyutils_13builder_utils_DTYPE_t), { 0 }, 0, IS_UNSIGNED(__pyx_t_12soundfactory_7cyutils_13builder_utils_DTYPE_t) ? 'U' : 'I', IS_UNSIGNED(__pyx_t_12soundfactory_7cyutils_13builder_utils_DTYPE_t), 0 };
+static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_12soundfactory_7cyutils_13builder_utils_DTYPE_f = { "DTYPE_f", NULL, sizeof(__pyx_t_12soundfactory_7cyutils_13builder_utils_DTYPE_f), { 0 }, 0, 'R', 0, 0 };
+#define __Pyx_MODULE_NAME "soundfactory.cyutils.builder_utils"
+extern int __pyx_module_is_main_soundfactory__cyutils__builder_utils;
+int __pyx_module_is_main_soundfactory__cyutils__builder_utils = 0;
+
+/* Implementation of 'soundfactory.cyutils.builder_utils' */
 static PyObject *__pyx_builtin_range;
 static PyObject *__pyx_builtin_round;
 static PyObject *__pyx_builtin_ValueError;
@@ -1849,12 +1877,12 @@ static PyObject *__pyx_kp_u_unknown_dtype_code_in_numpy_pxd;
 static PyObject *__pyx_n_s_upsampled;
 static PyObject *__pyx_n_s_x;
 static PyObject *__pyx_n_s_zeros;
-static PyObject *__pyx_pf_13builder_utils_wn(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_n, double __pyx_v_freq); /* proto */
-static PyObject *__pyx_pf_13builder_utils_2wn_arr(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_nterms, double __pyx_v_freq); /* proto */
-static PyObject *__pyx_pf_13builder_utils_4to_radians(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_degrees); /* proto */
-static PyObject *__pyx_pf_13builder_utils_6fourier_sum(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_x, PyArrayObject *__pyx_v_coefficients, double __pyx_v_freq, double __pyx_v_phase, PyArrayObject *__pyx_v_nterms); /* proto */
-static PyObject *__pyx_pf_13builder_utils_8upsample_component(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_amp, double __pyx_v_phase, double __pyx_v_duration, PyArrayObject *__pyx_v_times, PyArrayObject *__pyx_v_coefficients, PyArrayObject *__pyx_v_nterms); /* proto */
-static PyObject *__pyx_pf_13builder_utils_10single_component(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_freq, double __pyx_v_duration, PyArrayObject *__pyx_v_upsampled, int __pyx_v_samples); /* proto */
+static PyObject *__pyx_pf_12soundfactory_7cyutils_13builder_utils_wn(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_n, double __pyx_v_freq); /* proto */
+static PyObject *__pyx_pf_12soundfactory_7cyutils_13builder_utils_2wn_arr(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_nterms, double __pyx_v_freq); /* proto */
+static PyObject *__pyx_pf_12soundfactory_7cyutils_13builder_utils_4to_radians(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_degrees); /* proto */
+static PyObject *__pyx_pf_12soundfactory_7cyutils_13builder_utils_6fourier_sum(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_x, PyArrayObject *__pyx_v_coefficients, double __pyx_v_freq, double __pyx_v_phase, PyArrayObject *__pyx_v_nterms); /* proto */
+static PyObject *__pyx_pf_12soundfactory_7cyutils_13builder_utils_8upsample_component(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_amp, double __pyx_v_phase, double __pyx_v_duration, PyArrayObject *__pyx_v_times, PyArrayObject *__pyx_v_coefficients, PyArrayObject *__pyx_v_nterms); /* proto */
+static PyObject *__pyx_pf_12soundfactory_7cyutils_13builder_utils_10single_component(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_freq, double __pyx_v_duration, PyArrayObject *__pyx_v_upsampled, int __pyx_v_samples); /* proto */
 static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
 static PyObject *__pyx_int_0;
@@ -1867,8 +1895,9 @@ static PyObject *__pyx_tuple__5;
 static PyObject *__pyx_tuple__6;
 static PyObject *__pyx_tuple__7;
 /* Late includes */
+#include "macros.h"
 
-/* "builder_utils.pyx":19
+/* "soundfactory/cyutils/builder_utils.pyx":25
  * ctypedef np.float64_t DTYPE_f
  * 
  * cpdef double wn(int n, double freq):             # <<<<<<<<<<<<<<
@@ -1876,8 +1905,8 @@ static PyObject *__pyx_tuple__7;
  *     cdef double pi = np.pi
  */
 
-static PyObject *__pyx_pw_13builder_utils_1wn(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static double __pyx_f_13builder_utils_wn(int __pyx_v_n, double __pyx_v_freq, CYTHON_UNUSED int __pyx_skip_dispatch) {
+static PyObject *__pyx_pw_12soundfactory_7cyutils_13builder_utils_1wn(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static double __pyx_f_12soundfactory_7cyutils_13builder_utils_wn(int __pyx_v_n, double __pyx_v_freq, CYTHON_UNUSED int __pyx_skip_dispatch) {
   double __pyx_v_pi;
   double __pyx_r;
   __Pyx_RefNannyDeclarations
@@ -1886,23 +1915,23 @@ static double __pyx_f_13builder_utils_wn(int __pyx_v_n, double __pyx_v_freq, CYT
   double __pyx_t_3;
   __Pyx_RefNannySetupContext("wn", 0);
 
-  /* "builder_utils.pyx":21
+  /* "soundfactory/cyutils/builder_utils.pyx":27
  * cpdef double wn(int n, double freq):
  *     """Compute the angular frequency"""
  *     cdef double pi = np.pi             # <<<<<<<<<<<<<<
  *     return (2 * pi * n) * freq
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_pi); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_pi); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_3 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 21, __pyx_L1_error)
+  __pyx_t_3 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_3 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_pi = __pyx_t_3;
 
-  /* "builder_utils.pyx":22
+  /* "soundfactory/cyutils/builder_utils.pyx":28
  *     """Compute the angular frequency"""
  *     cdef double pi = np.pi
  *     return (2 * pi * n) * freq             # <<<<<<<<<<<<<<
@@ -1912,7 +1941,7 @@ static double __pyx_f_13builder_utils_wn(int __pyx_v_n, double __pyx_v_freq, CYT
   __pyx_r = (((2.0 * __pyx_v_pi) * __pyx_v_n) * __pyx_v_freq);
   goto __pyx_L0;
 
-  /* "builder_utils.pyx":19
+  /* "soundfactory/cyutils/builder_utils.pyx":25
  * ctypedef np.float64_t DTYPE_f
  * 
  * cpdef double wn(int n, double freq):             # <<<<<<<<<<<<<<
@@ -1924,7 +1953,7 @@ static double __pyx_f_13builder_utils_wn(int __pyx_v_n, double __pyx_v_freq, CYT
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_WriteUnraisable("builder_utils.wn", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_WriteUnraisable("soundfactory.cyutils.builder_utils.wn", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -1932,9 +1961,9 @@ static double __pyx_f_13builder_utils_wn(int __pyx_v_n, double __pyx_v_freq, CYT
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_13builder_utils_1wn(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_13builder_utils_wn[] = "Compute the angular frequency";
-static PyObject *__pyx_pw_13builder_utils_1wn(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_12soundfactory_7cyutils_13builder_utils_1wn(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_12soundfactory_7cyutils_13builder_utils_wn[] = "Compute the angular frequency";
+static PyObject *__pyx_pw_12soundfactory_7cyutils_13builder_utils_1wn(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   int __pyx_v_n;
   double __pyx_v_freq;
   PyObject *__pyx_r = 0;
@@ -1963,11 +1992,11 @@ static PyObject *__pyx_pw_13builder_utils_1wn(PyObject *__pyx_self, PyObject *__
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_freq)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("wn", 1, 2, 2, 1); __PYX_ERR(0, 19, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("wn", 1, 2, 2, 1); __PYX_ERR(0, 25, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wn") < 0)) __PYX_ERR(0, 19, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wn") < 0)) __PYX_ERR(0, 25, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -1975,31 +2004,31 @@ static PyObject *__pyx_pw_13builder_utils_1wn(PyObject *__pyx_self, PyObject *__
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_n = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_n == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 19, __pyx_L3_error)
-    __pyx_v_freq = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_freq == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 19, __pyx_L3_error)
+    __pyx_v_n = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_n == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 25, __pyx_L3_error)
+    __pyx_v_freq = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_freq == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 25, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("wn", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 19, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("wn", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 25, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("builder_utils.wn", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("soundfactory.cyutils.builder_utils.wn", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_13builder_utils_wn(__pyx_self, __pyx_v_n, __pyx_v_freq);
+  __pyx_r = __pyx_pf_12soundfactory_7cyutils_13builder_utils_wn(__pyx_self, __pyx_v_n, __pyx_v_freq);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_13builder_utils_wn(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_n, double __pyx_v_freq) {
+static PyObject *__pyx_pf_12soundfactory_7cyutils_13builder_utils_wn(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_n, double __pyx_v_freq) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("wn", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_13builder_utils_wn(__pyx_v_n, __pyx_v_freq, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_12soundfactory_7cyutils_13builder_utils_wn(__pyx_v_n, __pyx_v_freq, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 25, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -2008,7 +2037,7 @@ static PyObject *__pyx_pf_13builder_utils_wn(CYTHON_UNUSED PyObject *__pyx_self,
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("builder_utils.wn", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("soundfactory.cyutils.builder_utils.wn", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -2016,7 +2045,7 @@ static PyObject *__pyx_pf_13builder_utils_wn(CYTHON_UNUSED PyObject *__pyx_self,
   return __pyx_r;
 }
 
-/* "builder_utils.pyx":25
+/* "soundfactory/cyutils/builder_utils.pyx":31
  * 
  * 
  * cpdef np.ndarray wn_arr(np.ndarray[DTYPE_t, ndim=1] nterms, double freq):             # <<<<<<<<<<<<<<
@@ -2024,8 +2053,8 @@ static PyObject *__pyx_pf_13builder_utils_wn(CYTHON_UNUSED PyObject *__pyx_self,
  *     cdef np.ndarray res = np.zeros([N], dtype=DTYPEF)
  */
 
-static PyObject *__pyx_pw_13builder_utils_3wn_arr(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyArrayObject *__pyx_f_13builder_utils_wn_arr(PyArrayObject *__pyx_v_nterms, double __pyx_v_freq, CYTHON_UNUSED int __pyx_skip_dispatch) {
+static PyObject *__pyx_pw_12soundfactory_7cyutils_13builder_utils_3wn_arr(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyArrayObject *__pyx_f_12soundfactory_7cyutils_13builder_utils_wn_arr(PyArrayObject *__pyx_v_nterms, double __pyx_v_freq, CYTHON_UNUSED int __pyx_skip_dispatch) {
   int __pyx_v_N;
   PyArrayObject *__pyx_v_res = 0;
   PyObject *__pyx_v_i = NULL;
@@ -2047,11 +2076,11 @@ static PyArrayObject *__pyx_f_13builder_utils_wn_arr(PyArrayObject *__pyx_v_nter
   __pyx_pybuffernd_nterms.rcbuffer = &__pyx_pybuffer_nterms;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_nterms.rcbuffer->pybuffer, (PyObject*)__pyx_v_nterms, &__Pyx_TypeInfo_nn___pyx_t_13builder_utils_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 25, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_nterms.rcbuffer->pybuffer, (PyObject*)__pyx_v_nterms, &__Pyx_TypeInfo_nn___pyx_t_12soundfactory_7cyutils_13builder_utils_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 31, __pyx_L1_error)
   }
   __pyx_pybuffernd_nterms.diminfo[0].strides = __pyx_pybuffernd_nterms.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_nterms.diminfo[0].shape = __pyx_pybuffernd_nterms.rcbuffer->pybuffer.shape[0];
 
-  /* "builder_utils.pyx":26
+  /* "soundfactory/cyutils/builder_utils.pyx":32
  * 
  * cpdef np.ndarray wn_arr(np.ndarray[DTYPE_t, ndim=1] nterms, double freq):
  *     cdef int N = nterms.shape[0]             # <<<<<<<<<<<<<<
@@ -2060,64 +2089,64 @@ static PyArrayObject *__pyx_f_13builder_utils_wn_arr(PyArrayObject *__pyx_v_nter
  */
   __pyx_v_N = (__pyx_v_nterms->dimensions[0]);
 
-  /* "builder_utils.pyx":27
+  /* "soundfactory/cyutils/builder_utils.pyx":33
  * cpdef np.ndarray wn_arr(np.ndarray[DTYPE_t, ndim=1] nterms, double freq):
  *     cdef int N = nterms.shape[0]
  *     cdef np.ndarray res = np.zeros([N], dtype=DTYPEF)             # <<<<<<<<<<<<<<
  *     for i in range(N):
  *         res[i] = wn(i + 1, freq)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_N); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_N); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_1);
   PyList_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_3);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_3);
   __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_DTYPEF); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_DTYPEF); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 27, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 27, __pyx_L1_error)
+  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 33, __pyx_L1_error)
   __pyx_v_res = ((PyArrayObject *)__pyx_t_4);
   __pyx_t_4 = 0;
 
-  /* "builder_utils.pyx":28
+  /* "soundfactory/cyutils/builder_utils.pyx":34
  *     cdef int N = nterms.shape[0]
  *     cdef np.ndarray res = np.zeros([N], dtype=DTYPEF)
  *     for i in range(N):             # <<<<<<<<<<<<<<
  *         res[i] = wn(i + 1, freq)
  *     return res
  */
-  __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_N); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_N); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_range, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_range, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   if (likely(PyList_CheckExact(__pyx_t_3)) || PyTuple_CheckExact(__pyx_t_3)) {
     __pyx_t_4 = __pyx_t_3; __Pyx_INCREF(__pyx_t_4); __pyx_t_5 = 0;
     __pyx_t_6 = NULL;
   } else {
-    __pyx_t_5 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 28, __pyx_L1_error)
+    __pyx_t_5 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 34, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_6 = Py_TYPE(__pyx_t_4)->tp_iternext; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 28, __pyx_L1_error)
+    __pyx_t_6 = Py_TYPE(__pyx_t_4)->tp_iternext; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 34, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   for (;;) {
@@ -2125,17 +2154,17 @@ static PyArrayObject *__pyx_f_13builder_utils_wn_arr(PyArrayObject *__pyx_v_nter
       if (likely(PyList_CheckExact(__pyx_t_4))) {
         if (__pyx_t_5 >= PyList_GET_SIZE(__pyx_t_4)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_3 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_5); __Pyx_INCREF(__pyx_t_3); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 28, __pyx_L1_error)
+        __pyx_t_3 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_5); __Pyx_INCREF(__pyx_t_3); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 34, __pyx_L1_error)
         #else
-        __pyx_t_3 = PySequence_ITEM(__pyx_t_4, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 28, __pyx_L1_error)
+        __pyx_t_3 = PySequence_ITEM(__pyx_t_4, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 34, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         #endif
       } else {
         if (__pyx_t_5 >= PyTuple_GET_SIZE(__pyx_t_4)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_5); __Pyx_INCREF(__pyx_t_3); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 28, __pyx_L1_error)
+        __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_5); __Pyx_INCREF(__pyx_t_3); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 34, __pyx_L1_error)
         #else
-        __pyx_t_3 = PySequence_ITEM(__pyx_t_4, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 28, __pyx_L1_error)
+        __pyx_t_3 = PySequence_ITEM(__pyx_t_4, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 34, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         #endif
       }
@@ -2145,7 +2174,7 @@ static PyArrayObject *__pyx_f_13builder_utils_wn_arr(PyArrayObject *__pyx_v_nter
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 28, __pyx_L1_error)
+          else __PYX_ERR(0, 34, __pyx_L1_error)
         }
         break;
       }
@@ -2154,23 +2183,23 @@ static PyArrayObject *__pyx_f_13builder_utils_wn_arr(PyArrayObject *__pyx_v_nter
     __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "builder_utils.pyx":29
+    /* "soundfactory/cyutils/builder_utils.pyx":35
  *     cdef np.ndarray res = np.zeros([N], dtype=DTYPEF)
  *     for i in range(N):
  *         res[i] = wn(i + 1, freq)             # <<<<<<<<<<<<<<
  *     return res
  * 
  */
-    __pyx_t_3 = __Pyx_PyInt_AddObjC(__pyx_v_i, __pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 29, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyInt_AddObjC(__pyx_v_i, __pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 35, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_7 = __Pyx_PyInt_As_int(__pyx_t_3); if (unlikely((__pyx_t_7 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 29, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyInt_As_int(__pyx_t_3); if (unlikely((__pyx_t_7 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 35, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_f_13builder_utils_wn(__pyx_t_7, __pyx_v_freq, 0)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 29, __pyx_L1_error)
+    __pyx_t_3 = PyFloat_FromDouble(__pyx_f_12soundfactory_7cyutils_13builder_utils_wn(__pyx_t_7, __pyx_v_freq, 0)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 35, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    if (unlikely(PyObject_SetItem(((PyObject *)__pyx_v_res), __pyx_v_i, __pyx_t_3) < 0)) __PYX_ERR(0, 29, __pyx_L1_error)
+    if (unlikely(PyObject_SetItem(((PyObject *)__pyx_v_res), __pyx_v_i, __pyx_t_3) < 0)) __PYX_ERR(0, 35, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "builder_utils.pyx":28
+    /* "soundfactory/cyutils/builder_utils.pyx":34
  *     cdef int N = nterms.shape[0]
  *     cdef np.ndarray res = np.zeros([N], dtype=DTYPEF)
  *     for i in range(N):             # <<<<<<<<<<<<<<
@@ -2180,7 +2209,7 @@ static PyArrayObject *__pyx_f_13builder_utils_wn_arr(PyArrayObject *__pyx_v_nter
   }
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "builder_utils.pyx":30
+  /* "soundfactory/cyutils/builder_utils.pyx":36
  *     for i in range(N):
  *         res[i] = wn(i + 1, freq)
  *     return res             # <<<<<<<<<<<<<<
@@ -2192,7 +2221,7 @@ static PyArrayObject *__pyx_f_13builder_utils_wn_arr(PyArrayObject *__pyx_v_nter
   __pyx_r = __pyx_v_res;
   goto __pyx_L0;
 
-  /* "builder_utils.pyx":25
+  /* "soundfactory/cyutils/builder_utils.pyx":31
  * 
  * 
  * cpdef np.ndarray wn_arr(np.ndarray[DTYPE_t, ndim=1] nterms, double freq):             # <<<<<<<<<<<<<<
@@ -2212,7 +2241,7 @@ static PyArrayObject *__pyx_f_13builder_utils_wn_arr(PyArrayObject *__pyx_v_nter
     __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_nterms.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("builder_utils.wn_arr", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("soundfactory.cyutils.builder_utils.wn_arr", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   goto __pyx_L2;
   __pyx_L0:;
@@ -2226,8 +2255,8 @@ static PyArrayObject *__pyx_f_13builder_utils_wn_arr(PyArrayObject *__pyx_v_nter
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_13builder_utils_3wn_arr(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_13builder_utils_3wn_arr(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_12soundfactory_7cyutils_13builder_utils_3wn_arr(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_12soundfactory_7cyutils_13builder_utils_3wn_arr(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_nterms = 0;
   double __pyx_v_freq;
   PyObject *__pyx_r = 0;
@@ -2256,11 +2285,11 @@ static PyObject *__pyx_pw_13builder_utils_3wn_arr(PyObject *__pyx_self, PyObject
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_freq)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("wn_arr", 1, 2, 2, 1); __PYX_ERR(0, 25, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("wn_arr", 1, 2, 2, 1); __PYX_ERR(0, 31, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wn_arr") < 0)) __PYX_ERR(0, 25, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wn_arr") < 0)) __PYX_ERR(0, 31, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -2269,18 +2298,18 @@ static PyObject *__pyx_pw_13builder_utils_3wn_arr(PyObject *__pyx_self, PyObject
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
     __pyx_v_nterms = ((PyArrayObject *)values[0]);
-    __pyx_v_freq = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_freq == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 25, __pyx_L3_error)
+    __pyx_v_freq = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_freq == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 31, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("wn_arr", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 25, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("wn_arr", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 31, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("builder_utils.wn_arr", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("soundfactory.cyutils.builder_utils.wn_arr", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_nterms), __pyx_ptype_5numpy_ndarray, 1, "nterms", 0))) __PYX_ERR(0, 25, __pyx_L1_error)
-  __pyx_r = __pyx_pf_13builder_utils_2wn_arr(__pyx_self, __pyx_v_nterms, __pyx_v_freq);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_nterms), __pyx_ptype_5numpy_ndarray, 1, "nterms", 0))) __PYX_ERR(0, 31, __pyx_L1_error)
+  __pyx_r = __pyx_pf_12soundfactory_7cyutils_13builder_utils_2wn_arr(__pyx_self, __pyx_v_nterms, __pyx_v_freq);
 
   /* function exit code */
   goto __pyx_L0;
@@ -2291,7 +2320,7 @@ static PyObject *__pyx_pw_13builder_utils_3wn_arr(PyObject *__pyx_self, PyObject
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_13builder_utils_2wn_arr(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_nterms, double __pyx_v_freq) {
+static PyObject *__pyx_pf_12soundfactory_7cyutils_13builder_utils_2wn_arr(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_nterms, double __pyx_v_freq) {
   __Pyx_LocalBuf_ND __pyx_pybuffernd_nterms;
   __Pyx_Buffer __pyx_pybuffer_nterms;
   PyObject *__pyx_r = NULL;
@@ -2304,11 +2333,11 @@ static PyObject *__pyx_pf_13builder_utils_2wn_arr(CYTHON_UNUSED PyObject *__pyx_
   __pyx_pybuffernd_nterms.rcbuffer = &__pyx_pybuffer_nterms;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_nterms.rcbuffer->pybuffer, (PyObject*)__pyx_v_nterms, &__Pyx_TypeInfo_nn___pyx_t_13builder_utils_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 25, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_nterms.rcbuffer->pybuffer, (PyObject*)__pyx_v_nterms, &__Pyx_TypeInfo_nn___pyx_t_12soundfactory_7cyutils_13builder_utils_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 31, __pyx_L1_error)
   }
   __pyx_pybuffernd_nterms.diminfo[0].strides = __pyx_pybuffernd_nterms.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_nterms.diminfo[0].shape = __pyx_pybuffernd_nterms.rcbuffer->pybuffer.shape[0];
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((PyObject *)__pyx_f_13builder_utils_wn_arr(__pyx_v_nterms, __pyx_v_freq, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_12soundfactory_7cyutils_13builder_utils_wn_arr(__pyx_v_nterms, __pyx_v_freq, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -2323,7 +2352,7 @@ static PyObject *__pyx_pf_13builder_utils_2wn_arr(CYTHON_UNUSED PyObject *__pyx_
     __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_nterms.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("builder_utils.wn_arr", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("soundfactory.cyutils.builder_utils.wn_arr", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   goto __pyx_L2;
   __pyx_L0:;
@@ -2334,7 +2363,7 @@ static PyObject *__pyx_pf_13builder_utils_2wn_arr(CYTHON_UNUSED PyObject *__pyx_
   return __pyx_r;
 }
 
-/* "builder_utils.pyx":33
+/* "soundfactory/cyutils/builder_utils.pyx":39
  * 
  * 
  * cpdef double to_radians(double degrees):             # <<<<<<<<<<<<<<
@@ -2342,8 +2371,8 @@ static PyObject *__pyx_pf_13builder_utils_2wn_arr(CYTHON_UNUSED PyObject *__pyx_
  *     return degrees * (pi / 180)
  */
 
-static PyObject *__pyx_pw_13builder_utils_5to_radians(PyObject *__pyx_self, PyObject *__pyx_arg_degrees); /*proto*/
-static double __pyx_f_13builder_utils_to_radians(double __pyx_v_degrees, CYTHON_UNUSED int __pyx_skip_dispatch) {
+static PyObject *__pyx_pw_12soundfactory_7cyutils_13builder_utils_5to_radians(PyObject *__pyx_self, PyObject *__pyx_arg_degrees); /*proto*/
+static double __pyx_f_12soundfactory_7cyutils_13builder_utils_to_radians(double __pyx_v_degrees, CYTHON_UNUSED int __pyx_skip_dispatch) {
   double __pyx_v_pi;
   double __pyx_r;
   __Pyx_RefNannyDeclarations
@@ -2352,23 +2381,23 @@ static double __pyx_f_13builder_utils_to_radians(double __pyx_v_degrees, CYTHON_
   double __pyx_t_3;
   __Pyx_RefNannySetupContext("to_radians", 0);
 
-  /* "builder_utils.pyx":34
+  /* "soundfactory/cyutils/builder_utils.pyx":40
  * 
  * cpdef double to_radians(double degrees):
  *     cdef double pi = np.pi             # <<<<<<<<<<<<<<
  *     return degrees * (pi / 180)
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_pi); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_pi); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 40, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_3 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_3 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_3 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 40, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_pi = __pyx_t_3;
 
-  /* "builder_utils.pyx":35
+  /* "soundfactory/cyutils/builder_utils.pyx":41
  * cpdef double to_radians(double degrees):
  *     cdef double pi = np.pi
  *     return degrees * (pi / 180)             # <<<<<<<<<<<<<<
@@ -2378,7 +2407,7 @@ static double __pyx_f_13builder_utils_to_radians(double __pyx_v_degrees, CYTHON_
   __pyx_r = (__pyx_v_degrees * (__pyx_v_pi / 180.0));
   goto __pyx_L0;
 
-  /* "builder_utils.pyx":33
+  /* "soundfactory/cyutils/builder_utils.pyx":39
  * 
  * 
  * cpdef double to_radians(double degrees):             # <<<<<<<<<<<<<<
@@ -2390,7 +2419,7 @@ static double __pyx_f_13builder_utils_to_radians(double __pyx_v_degrees, CYTHON_
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_WriteUnraisable("builder_utils.to_radians", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_WriteUnraisable("soundfactory.cyutils.builder_utils.to_radians", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -2398,35 +2427,35 @@ static double __pyx_f_13builder_utils_to_radians(double __pyx_v_degrees, CYTHON_
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_13builder_utils_5to_radians(PyObject *__pyx_self, PyObject *__pyx_arg_degrees); /*proto*/
-static PyObject *__pyx_pw_13builder_utils_5to_radians(PyObject *__pyx_self, PyObject *__pyx_arg_degrees) {
+static PyObject *__pyx_pw_12soundfactory_7cyutils_13builder_utils_5to_radians(PyObject *__pyx_self, PyObject *__pyx_arg_degrees); /*proto*/
+static PyObject *__pyx_pw_12soundfactory_7cyutils_13builder_utils_5to_radians(PyObject *__pyx_self, PyObject *__pyx_arg_degrees) {
   double __pyx_v_degrees;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("to_radians (wrapper)", 0);
   assert(__pyx_arg_degrees); {
-    __pyx_v_degrees = __pyx_PyFloat_AsDouble(__pyx_arg_degrees); if (unlikely((__pyx_v_degrees == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 33, __pyx_L3_error)
+    __pyx_v_degrees = __pyx_PyFloat_AsDouble(__pyx_arg_degrees); if (unlikely((__pyx_v_degrees == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 39, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
-  __Pyx_AddTraceback("builder_utils.to_radians", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("soundfactory.cyutils.builder_utils.to_radians", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_13builder_utils_4to_radians(__pyx_self, ((double)__pyx_v_degrees));
+  __pyx_r = __pyx_pf_12soundfactory_7cyutils_13builder_utils_4to_radians(__pyx_self, ((double)__pyx_v_degrees));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_13builder_utils_4to_radians(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_degrees) {
+static PyObject *__pyx_pf_12soundfactory_7cyutils_13builder_utils_4to_radians(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_degrees) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("to_radians", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_13builder_utils_to_radians(__pyx_v_degrees, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_12soundfactory_7cyutils_13builder_utils_to_radians(__pyx_v_degrees, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 39, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -2435,7 +2464,7 @@ static PyObject *__pyx_pf_13builder_utils_4to_radians(CYTHON_UNUSED PyObject *__
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("builder_utils.to_radians", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("soundfactory.cyutils.builder_utils.to_radians", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -2443,7 +2472,7 @@ static PyObject *__pyx_pf_13builder_utils_4to_radians(CYTHON_UNUSED PyObject *__
   return __pyx_r;
 }
 
-/* "builder_utils.pyx":38
+/* "soundfactory/cyutils/builder_utils.pyx":44
  * 
  * 
  * cpdef double fourier_sum(             # <<<<<<<<<<<<<<
@@ -2451,23 +2480,24 @@ static PyObject *__pyx_pf_13builder_utils_4to_radians(CYTHON_UNUSED PyObject *__
  *         np.ndarray[DTYPE_f, ndim=1] coefficients,
  */
 
-static PyObject *__pyx_pw_13builder_utils_7fourier_sum(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static double __pyx_f_13builder_utils_fourier_sum(double __pyx_v_x, PyArrayObject *__pyx_v_coefficients, double __pyx_v_freq, double __pyx_v_phase, PyArrayObject *__pyx_v_nterms, CYTHON_UNUSED int __pyx_skip_dispatch) {
-  PyObject *__pyx_v_partial_sums = NULL;
+static PyObject *__pyx_pw_12soundfactory_7cyutils_13builder_utils_7fourier_sum(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static double __pyx_f_12soundfactory_7cyutils_13builder_utils_fourier_sum(double __pyx_v_x, PyArrayObject *__pyx_v_coefficients, double __pyx_v_freq, double __pyx_v_phase, PyArrayObject *__pyx_v_nterms, CYTHON_UNUSED int __pyx_skip_dispatch) {
+  double __pyx_v__part_sum;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_coefficients;
   __Pyx_Buffer __pyx_pybuffer_coefficients;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_nterms;
   __Pyx_Buffer __pyx_pybuffer_nterms;
   double __pyx_r;
   __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_1;
   PyObject *__pyx_t_2 = NULL;
   PyObject *__pyx_t_3 = NULL;
   PyObject *__pyx_t_4 = NULL;
   PyObject *__pyx_t_5 = NULL;
   PyObject *__pyx_t_6 = NULL;
   PyObject *__pyx_t_7 = NULL;
-  double __pyx_t_8;
+  PyObject *__pyx_t_8 = NULL;
+  double __pyx_t_9;
   __Pyx_RefNannySetupContext("fourier_sum", 0);
   __pyx_pybuffer_coefficients.pybuffer.buf = NULL;
   __pyx_pybuffer_coefficients.refcount = 0;
@@ -2479,107 +2509,133 @@ static double __pyx_f_13builder_utils_fourier_sum(double __pyx_v_x, PyArrayObjec
   __pyx_pybuffernd_nterms.rcbuffer = &__pyx_pybuffer_nterms;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_coefficients.rcbuffer->pybuffer, (PyObject*)__pyx_v_coefficients, &__Pyx_TypeInfo_nn___pyx_t_13builder_utils_DTYPE_f, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 38, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_coefficients.rcbuffer->pybuffer, (PyObject*)__pyx_v_coefficients, &__Pyx_TypeInfo_nn___pyx_t_12soundfactory_7cyutils_13builder_utils_DTYPE_f, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 44, __pyx_L1_error)
   }
   __pyx_pybuffernd_coefficients.diminfo[0].strides = __pyx_pybuffernd_coefficients.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_coefficients.diminfo[0].shape = __pyx_pybuffernd_coefficients.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_nterms.rcbuffer->pybuffer, (PyObject*)__pyx_v_nterms, &__Pyx_TypeInfo_nn___pyx_t_13builder_utils_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 38, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_nterms.rcbuffer->pybuffer, (PyObject*)__pyx_v_nterms, &__Pyx_TypeInfo_nn___pyx_t_12soundfactory_7cyutils_13builder_utils_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 44, __pyx_L1_error)
   }
   __pyx_pybuffernd_nterms.diminfo[0].strides = __pyx_pybuffernd_nterms.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_nterms.diminfo[0].shape = __pyx_pybuffernd_nterms.rcbuffer->pybuffer.shape[0];
 
-  /* "builder_utils.pyx":46
- * ):
+  /* "soundfactory/cyutils/builder_utils.pyx":52
+ * ) except *:
  *     """Partial sum of the fourier series up to nterms"""
- *     partial_sums = np.sum(             # <<<<<<<<<<<<<<
+ *     cdef double _part_sum = 0.0             # <<<<<<<<<<<<<<
+ * 
+ *     sig_check()
+ */
+  __pyx_v__part_sum = 0.0;
+
+  /* "soundfactory/cyutils/builder_utils.pyx":54
+ *     cdef double _part_sum = 0.0
+ * 
+ *     sig_check()             # <<<<<<<<<<<<<<
+ *     _part_sum = np.sum(
+ *         coefficients * np.sin(wn_arr(nterms, freq) * x + nterms * to_radians(phase))
+ */
+  __pyx_t_1 = sig_check(); if (unlikely(__pyx_t_1 == ((int)0))) __PYX_ERR(0, 54, __pyx_L1_error)
+
+  /* "soundfactory/cyutils/builder_utils.pyx":55
+ * 
+ *     sig_check()
+ *     _part_sum = np.sum(             # <<<<<<<<<<<<<<
  *         coefficients * np.sin(wn_arr(nterms, freq) * x + nterms * to_radians(phase))
  *     )
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 46, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_sum); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_sum); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "builder_utils.pyx":47
- *     """Partial sum of the fourier series up to nterms"""
- *     partial_sums = np.sum(
+  /* "soundfactory/cyutils/builder_utils.pyx":56
+ *     sig_check()
+ *     _part_sum = np.sum(
  *         coefficients * np.sin(wn_arr(nterms, freq) * x + nterms * to_radians(phase))             # <<<<<<<<<<<<<<
  *     )
- *     return partial_sums
+ *     return _part_sum
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_sin); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = ((PyObject *)__pyx_f_13builder_utils_wn_arr(((PyArrayObject *)__pyx_v_nterms), __pyx_v_freq, 0)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_x); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_sin); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_7 = PyNumber_Multiply(__pyx_t_4, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = ((PyObject *)__pyx_f_12soundfactory_7cyutils_13builder_utils_wn_arr(((PyArrayObject *)__pyx_v_nterms), __pyx_v_freq, 0)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 56, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_7 = PyFloat_FromDouble(__pyx_v_x); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = PyFloat_FromDouble(__pyx_f_13builder_utils_to_radians(__pyx_v_phase, 0)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 47, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_4 = PyNumber_Multiply(((PyObject *)__pyx_v_nterms), __pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = PyNumber_Add(__pyx_t_7, __pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 47, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_8 = PyNumber_Multiply(__pyx_t_5, __pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 56, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = NULL;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_5))) {
-    __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_5);
-    if (likely(__pyx_t_4)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
-      __Pyx_INCREF(__pyx_t_4);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_5, function);
-    }
-  }
-  __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_4, __pyx_t_6) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_6);
-  __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 47, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyNumber_Multiply(((PyObject *)__pyx_v_coefficients), __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_7 = PyFloat_FromDouble(__pyx_f_12soundfactory_7cyutils_13builder_utils_to_radians(__pyx_v_phase, 0)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 56, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_5 = PyNumber_Multiply(((PyObject *)__pyx_v_nterms), __pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = NULL;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
-    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
-    if (likely(__pyx_t_2)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
-      __Pyx_INCREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_7 = PyNumber_Add(__pyx_t_8, __pyx_t_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 56, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = NULL;
+  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_6))) {
+    __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_6);
+    if (likely(__pyx_t_5)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_6);
+      __Pyx_INCREF(__pyx_t_5);
       __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_3, function);
+      __Pyx_DECREF_SET(__pyx_t_6, function);
     }
   }
-  __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_2, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_5);
-  __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_3 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_6, __pyx_t_5, __pyx_t_7) : __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_7);
+  __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 56, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __pyx_t_6 = PyNumber_Multiply(((PyObject *)__pyx_v_coefficients), __pyx_t_3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 56, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_v_partial_sums = __pyx_t_1;
-  __pyx_t_1 = 0;
+  __pyx_t_3 = NULL;
+  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_4))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_4);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_4, function);
+    }
+  }
+  __pyx_t_2 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_4, __pyx_t_3, __pyx_t_6) : __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_6);
+  __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "builder_utils.pyx":49
+  /* "soundfactory/cyutils/builder_utils.pyx":55
+ * 
+ *     sig_check()
+ *     _part_sum = np.sum(             # <<<<<<<<<<<<<<
  *         coefficients * np.sin(wn_arr(nterms, freq) * x + nterms * to_radians(phase))
  *     )
- *     return partial_sums             # <<<<<<<<<<<<<<
+ */
+  __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_t_2); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 55, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_v__part_sum = __pyx_t_9;
+
+  /* "soundfactory/cyutils/builder_utils.pyx":58
+ *         coefficients * np.sin(wn_arr(nterms, freq) * x + nterms * to_radians(phase))
+ *     )
+ *     return _part_sum             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_v_partial_sums); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 49, __pyx_L1_error)
-  __pyx_r = __pyx_t_8;
+  __pyx_r = __pyx_v__part_sum;
   goto __pyx_L0;
 
-  /* "builder_utils.pyx":38
+  /* "soundfactory/cyutils/builder_utils.pyx":44
  * 
  * 
  * cpdef double fourier_sum(             # <<<<<<<<<<<<<<
@@ -2589,13 +2645,13 @@ static double __pyx_f_13builder_utils_fourier_sum(double __pyx_v_x, PyArrayObjec
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
+  __Pyx_XDECREF(__pyx_t_8);
   { PyObject *__pyx_type, *__pyx_value, *__pyx_tb;
     __Pyx_PyThreadState_declare
     __Pyx_PyThreadState_assign
@@ -2603,22 +2659,21 @@ static double __pyx_f_13builder_utils_fourier_sum(double __pyx_v_x, PyArrayObjec
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_coefficients.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_nterms.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_WriteUnraisable("builder_utils.fourier_sum", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
-  __pyx_r = 0;
+  __Pyx_AddTraceback("soundfactory.cyutils.builder_utils.fourier_sum", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = -1;
   goto __pyx_L2;
   __pyx_L0:;
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_coefficients.rcbuffer->pybuffer);
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_nterms.rcbuffer->pybuffer);
   __pyx_L2:;
-  __Pyx_XDECREF(__pyx_v_partial_sums);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_13builder_utils_7fourier_sum(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_13builder_utils_6fourier_sum[] = "Partial sum of the fourier series up to nterms";
-static PyObject *__pyx_pw_13builder_utils_7fourier_sum(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_12soundfactory_7cyutils_13builder_utils_7fourier_sum(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_12soundfactory_7cyutils_13builder_utils_6fourier_sum[] = "Partial sum of the fourier series up to nterms";
+static PyObject *__pyx_pw_12soundfactory_7cyutils_13builder_utils_7fourier_sum(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   double __pyx_v_x;
   PyArrayObject *__pyx_v_coefficients = 0;
   double __pyx_v_freq;
@@ -2656,29 +2711,29 @@ static PyObject *__pyx_pw_13builder_utils_7fourier_sum(PyObject *__pyx_self, PyO
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_coefficients)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("fourier_sum", 1, 5, 5, 1); __PYX_ERR(0, 38, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("fourier_sum", 1, 5, 5, 1); __PYX_ERR(0, 44, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_freq)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("fourier_sum", 1, 5, 5, 2); __PYX_ERR(0, 38, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("fourier_sum", 1, 5, 5, 2); __PYX_ERR(0, 44, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_phase)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("fourier_sum", 1, 5, 5, 3); __PYX_ERR(0, 38, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("fourier_sum", 1, 5, 5, 3); __PYX_ERR(0, 44, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nterms)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("fourier_sum", 1, 5, 5, 4); __PYX_ERR(0, 38, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("fourier_sum", 1, 5, 5, 4); __PYX_ERR(0, 44, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "fourier_sum") < 0)) __PYX_ERR(0, 38, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "fourier_sum") < 0)) __PYX_ERR(0, 44, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 5) {
       goto __pyx_L5_argtuple_error;
@@ -2689,23 +2744,23 @@ static PyObject *__pyx_pw_13builder_utils_7fourier_sum(PyObject *__pyx_self, PyO
       values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
       values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
     }
-    __pyx_v_x = __pyx_PyFloat_AsDouble(values[0]); if (unlikely((__pyx_v_x == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 39, __pyx_L3_error)
+    __pyx_v_x = __pyx_PyFloat_AsDouble(values[0]); if (unlikely((__pyx_v_x == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 45, __pyx_L3_error)
     __pyx_v_coefficients = ((PyArrayObject *)values[1]);
-    __pyx_v_freq = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_freq == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 41, __pyx_L3_error)
-    __pyx_v_phase = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_phase == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 42, __pyx_L3_error)
+    __pyx_v_freq = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_freq == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 47, __pyx_L3_error)
+    __pyx_v_phase = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_phase == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 48, __pyx_L3_error)
     __pyx_v_nterms = ((PyArrayObject *)values[4]);
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("fourier_sum", 1, 5, 5, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 38, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("fourier_sum", 1, 5, 5, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 44, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("builder_utils.fourier_sum", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("soundfactory.cyutils.builder_utils.fourier_sum", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_coefficients), __pyx_ptype_5numpy_ndarray, 1, "coefficients", 0))) __PYX_ERR(0, 40, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_nterms), __pyx_ptype_5numpy_ndarray, 1, "nterms", 0))) __PYX_ERR(0, 43, __pyx_L1_error)
-  __pyx_r = __pyx_pf_13builder_utils_6fourier_sum(__pyx_self, __pyx_v_x, __pyx_v_coefficients, __pyx_v_freq, __pyx_v_phase, __pyx_v_nterms);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_coefficients), __pyx_ptype_5numpy_ndarray, 1, "coefficients", 0))) __PYX_ERR(0, 46, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_nterms), __pyx_ptype_5numpy_ndarray, 1, "nterms", 0))) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_r = __pyx_pf_12soundfactory_7cyutils_13builder_utils_6fourier_sum(__pyx_self, __pyx_v_x, __pyx_v_coefficients, __pyx_v_freq, __pyx_v_phase, __pyx_v_nterms);
 
   /* function exit code */
   goto __pyx_L0;
@@ -2716,14 +2771,15 @@ static PyObject *__pyx_pw_13builder_utils_7fourier_sum(PyObject *__pyx_self, PyO
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_13builder_utils_6fourier_sum(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_x, PyArrayObject *__pyx_v_coefficients, double __pyx_v_freq, double __pyx_v_phase, PyArrayObject *__pyx_v_nterms) {
+static PyObject *__pyx_pf_12soundfactory_7cyutils_13builder_utils_6fourier_sum(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_x, PyArrayObject *__pyx_v_coefficients, double __pyx_v_freq, double __pyx_v_phase, PyArrayObject *__pyx_v_nterms) {
   __Pyx_LocalBuf_ND __pyx_pybuffernd_coefficients;
   __Pyx_Buffer __pyx_pybuffer_coefficients;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_nterms;
   __Pyx_Buffer __pyx_pybuffer_nterms;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
+  double __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
   __Pyx_RefNannySetupContext("fourier_sum", 0);
   __pyx_pybuffer_coefficients.pybuffer.buf = NULL;
   __pyx_pybuffer_coefficients.refcount = 0;
@@ -2735,24 +2791,25 @@ static PyObject *__pyx_pf_13builder_utils_6fourier_sum(CYTHON_UNUSED PyObject *_
   __pyx_pybuffernd_nterms.rcbuffer = &__pyx_pybuffer_nterms;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_coefficients.rcbuffer->pybuffer, (PyObject*)__pyx_v_coefficients, &__Pyx_TypeInfo_nn___pyx_t_13builder_utils_DTYPE_f, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 38, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_coefficients.rcbuffer->pybuffer, (PyObject*)__pyx_v_coefficients, &__Pyx_TypeInfo_nn___pyx_t_12soundfactory_7cyutils_13builder_utils_DTYPE_f, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 44, __pyx_L1_error)
   }
   __pyx_pybuffernd_coefficients.diminfo[0].strides = __pyx_pybuffernd_coefficients.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_coefficients.diminfo[0].shape = __pyx_pybuffernd_coefficients.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_nterms.rcbuffer->pybuffer, (PyObject*)__pyx_v_nterms, &__Pyx_TypeInfo_nn___pyx_t_13builder_utils_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 38, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_nterms.rcbuffer->pybuffer, (PyObject*)__pyx_v_nterms, &__Pyx_TypeInfo_nn___pyx_t_12soundfactory_7cyutils_13builder_utils_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 44, __pyx_L1_error)
   }
   __pyx_pybuffernd_nterms.diminfo[0].strides = __pyx_pybuffernd_nterms.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_nterms.diminfo[0].shape = __pyx_pybuffernd_nterms.rcbuffer->pybuffer.shape[0];
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_13builder_utils_fourier_sum(__pyx_v_x, __pyx_v_coefficients, __pyx_v_freq, __pyx_v_phase, __pyx_v_nterms, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_r = __pyx_t_1;
-  __pyx_t_1 = 0;
+  __pyx_t_1 = __pyx_f_12soundfactory_7cyutils_13builder_utils_fourier_sum(__pyx_v_x, __pyx_v_coefficients, __pyx_v_freq, __pyx_v_phase, __pyx_v_nterms, 0); if (unlikely(__pyx_t_1 == ((double)-1) && PyErr_Occurred())) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_t_2 = PyFloat_FromDouble(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_r = __pyx_t_2;
+  __pyx_t_2 = 0;
   goto __pyx_L0;
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
   { PyObject *__pyx_type, *__pyx_value, *__pyx_tb;
     __Pyx_PyThreadState_declare
     __Pyx_PyThreadState_assign
@@ -2760,7 +2817,7 @@ static PyObject *__pyx_pf_13builder_utils_6fourier_sum(CYTHON_UNUSED PyObject *_
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_coefficients.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_nterms.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("builder_utils.fourier_sum", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("soundfactory.cyutils.builder_utils.fourier_sum", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   goto __pyx_L2;
   __pyx_L0:;
@@ -2772,7 +2829,7 @@ static PyObject *__pyx_pf_13builder_utils_6fourier_sum(CYTHON_UNUSED PyObject *_
   return __pyx_r;
 }
 
-/* "builder_utils.pyx":52
+/* "soundfactory/cyutils/builder_utils.pyx":61
  * 
  * 
  * cpdef np.ndarray upsample_component(             # <<<<<<<<<<<<<<
@@ -2780,8 +2837,8 @@ static PyObject *__pyx_pf_13builder_utils_6fourier_sum(CYTHON_UNUSED PyObject *_
  *         double phase,
  */
 
-static PyObject *__pyx_pw_13builder_utils_9upsample_component(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyArrayObject *__pyx_f_13builder_utils_upsample_component(double __pyx_v_amp, double __pyx_v_phase, double __pyx_v_duration, PyArrayObject *__pyx_v_times, PyArrayObject *__pyx_v_coefficients, PyArrayObject *__pyx_v_nterms, CYTHON_UNUSED int __pyx_skip_dispatch) {
+static PyObject *__pyx_pw_12soundfactory_7cyutils_13builder_utils_9upsample_component(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyArrayObject *__pyx_f_12soundfactory_7cyutils_13builder_utils_upsample_component(double __pyx_v_amp, double __pyx_v_phase, double __pyx_v_duration, PyArrayObject *__pyx_v_times, PyArrayObject *__pyx_v_coefficients, PyArrayObject *__pyx_v_nterms, CYTHON_UNUSED int __pyx_skip_dispatch) {
   int __pyx_v_N;
   PyArrayObject *__pyx_v_res = 0;
   double __pyx_v_frequency;
@@ -2801,8 +2858,9 @@ static PyArrayObject *__pyx_f_13builder_utils_upsample_component(double __pyx_v_
   int __pyx_t_5;
   int __pyx_t_6;
   int __pyx_t_7;
-  Py_ssize_t __pyx_t_8;
-  int __pyx_t_9;
+  int __pyx_t_8;
+  Py_ssize_t __pyx_t_9;
+  double __pyx_t_10;
   __Pyx_RefNannySetupContext("upsample_component", 0);
   __pyx_pybuffer_times.pybuffer.buf = NULL;
   __pyx_pybuffer_times.refcount = 0;
@@ -2818,21 +2876,21 @@ static PyArrayObject *__pyx_f_13builder_utils_upsample_component(double __pyx_v_
   __pyx_pybuffernd_nterms.rcbuffer = &__pyx_pybuffer_nterms;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_times.rcbuffer->pybuffer, (PyObject*)__pyx_v_times, &__Pyx_TypeInfo_nn___pyx_t_13builder_utils_DTYPE_f, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 52, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_times.rcbuffer->pybuffer, (PyObject*)__pyx_v_times, &__Pyx_TypeInfo_nn___pyx_t_12soundfactory_7cyutils_13builder_utils_DTYPE_f, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 61, __pyx_L1_error)
   }
   __pyx_pybuffernd_times.diminfo[0].strides = __pyx_pybuffernd_times.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_times.diminfo[0].shape = __pyx_pybuffernd_times.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_coefficients.rcbuffer->pybuffer, (PyObject*)__pyx_v_coefficients, &__Pyx_TypeInfo_nn___pyx_t_13builder_utils_DTYPE_f, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 52, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_coefficients.rcbuffer->pybuffer, (PyObject*)__pyx_v_coefficients, &__Pyx_TypeInfo_nn___pyx_t_12soundfactory_7cyutils_13builder_utils_DTYPE_f, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 61, __pyx_L1_error)
   }
   __pyx_pybuffernd_coefficients.diminfo[0].strides = __pyx_pybuffernd_coefficients.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_coefficients.diminfo[0].shape = __pyx_pybuffernd_coefficients.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_nterms.rcbuffer->pybuffer, (PyObject*)__pyx_v_nterms, &__Pyx_TypeInfo_nn___pyx_t_13builder_utils_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 52, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_nterms.rcbuffer->pybuffer, (PyObject*)__pyx_v_nterms, &__Pyx_TypeInfo_nn___pyx_t_12soundfactory_7cyutils_13builder_utils_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 61, __pyx_L1_error)
   }
   __pyx_pybuffernd_nterms.diminfo[0].strides = __pyx_pybuffernd_nterms.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_nterms.diminfo[0].shape = __pyx_pybuffernd_nterms.rcbuffer->pybuffer.shape[0];
 
-  /* "builder_utils.pyx":60
+  /* "soundfactory/cyutils/builder_utils.pyx":69
  *         np.ndarray[DTYPE_t, ndim=1] nterms
  * ):
  *     cdef int N = times.shape[0]             # <<<<<<<<<<<<<<
@@ -2841,96 +2899,106 @@ static PyArrayObject *__pyx_f_13builder_utils_upsample_component(double __pyx_v_
  */
   __pyx_v_N = (__pyx_v_times->dimensions[0]);
 
-  /* "builder_utils.pyx":61
+  /* "soundfactory/cyutils/builder_utils.pyx":70
  * ):
  *     cdef int N = times.shape[0]
  *     cdef np.ndarray res = np.zeros([N], dtype=DTYPEF)             # <<<<<<<<<<<<<<
  *     cdef double frequency = 1. / duration
- *     for i in range(N):
+ * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_N); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_N); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_1);
   PyList_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_3);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_3);
   __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_DTYPEF); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_DTYPEF); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 61, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 61, __pyx_L1_error)
+  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 70, __pyx_L1_error)
   __pyx_v_res = ((PyArrayObject *)__pyx_t_4);
   __pyx_t_4 = 0;
 
-  /* "builder_utils.pyx":62
+  /* "soundfactory/cyutils/builder_utils.pyx":71
  *     cdef int N = times.shape[0]
  *     cdef np.ndarray res = np.zeros([N], dtype=DTYPEF)
  *     cdef double frequency = 1. / duration             # <<<<<<<<<<<<<<
+ * 
  *     for i in range(N):
- *         res[i] = amp * fourier_sum(times[i], coefficients, frequency, phase, nterms)
  */
   if (unlikely(__pyx_v_duration == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 62, __pyx_L1_error)
+    __PYX_ERR(0, 71, __pyx_L1_error)
   }
   __pyx_v_frequency = (1. / __pyx_v_duration);
 
-  /* "builder_utils.pyx":63
- *     cdef np.ndarray res = np.zeros([N], dtype=DTYPEF)
+  /* "soundfactory/cyutils/builder_utils.pyx":73
  *     cdef double frequency = 1. / duration
+ * 
  *     for i in range(N):             # <<<<<<<<<<<<<<
+ *         PyErr_CheckSignals()
  *         res[i] = amp * fourier_sum(times[i], coefficients, frequency, phase, nterms)
- *     return res
  */
   __pyx_t_5 = __pyx_v_N;
   __pyx_t_6 = __pyx_t_5;
   for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
     __pyx_v_i = __pyx_t_7;
 
-    /* "builder_utils.pyx":64
- *     cdef double frequency = 1. / duration
+    /* "soundfactory/cyutils/builder_utils.pyx":74
+ * 
  *     for i in range(N):
- *         res[i] = amp * fourier_sum(times[i], coefficients, frequency, phase, nterms)             # <<<<<<<<<<<<<<
- *     return res
+ *         PyErr_CheckSignals()             # <<<<<<<<<<<<<<
+ *         res[i] = amp * fourier_sum(times[i], coefficients, frequency, phase, nterms)
  * 
  */
-    __pyx_t_8 = __pyx_v_i;
-    __pyx_t_9 = -1;
-    if (__pyx_t_8 < 0) {
-      __pyx_t_8 += __pyx_pybuffernd_times.diminfo[0].shape;
-      if (unlikely(__pyx_t_8 < 0)) __pyx_t_9 = 0;
-    } else if (unlikely(__pyx_t_8 >= __pyx_pybuffernd_times.diminfo[0].shape)) __pyx_t_9 = 0;
-    if (unlikely(__pyx_t_9 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_9);
-      __PYX_ERR(0, 64, __pyx_L1_error)
+    __pyx_t_8 = PyErr_CheckSignals(); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(0, 74, __pyx_L1_error)
+
+    /* "soundfactory/cyutils/builder_utils.pyx":75
+ *     for i in range(N):
+ *         PyErr_CheckSignals()
+ *         res[i] = amp * fourier_sum(times[i], coefficients, frequency, phase, nterms)             # <<<<<<<<<<<<<<
+ * 
+ *     return res
+ */
+    __pyx_t_9 = __pyx_v_i;
+    __pyx_t_8 = -1;
+    if (__pyx_t_9 < 0) {
+      __pyx_t_9 += __pyx_pybuffernd_times.diminfo[0].shape;
+      if (unlikely(__pyx_t_9 < 0)) __pyx_t_8 = 0;
+    } else if (unlikely(__pyx_t_9 >= __pyx_pybuffernd_times.diminfo[0].shape)) __pyx_t_8 = 0;
+    if (unlikely(__pyx_t_8 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_8);
+      __PYX_ERR(0, 75, __pyx_L1_error)
     }
-    __pyx_t_4 = PyFloat_FromDouble((__pyx_v_amp * __pyx_f_13builder_utils_fourier_sum((*__Pyx_BufPtrStrided1d(__pyx_t_13builder_utils_DTYPE_f *, __pyx_pybuffernd_times.rcbuffer->pybuffer.buf, __pyx_t_8, __pyx_pybuffernd_times.diminfo[0].strides)), ((PyArrayObject *)__pyx_v_coefficients), __pyx_v_frequency, __pyx_v_phase, ((PyArrayObject *)__pyx_v_nterms), 0))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 64, __pyx_L1_error)
+    __pyx_t_10 = __pyx_f_12soundfactory_7cyutils_13builder_utils_fourier_sum((*__Pyx_BufPtrStrided1d(__pyx_t_12soundfactory_7cyutils_13builder_utils_DTYPE_f *, __pyx_pybuffernd_times.rcbuffer->pybuffer.buf, __pyx_t_9, __pyx_pybuffernd_times.diminfo[0].strides)), ((PyArrayObject *)__pyx_v_coefficients), __pyx_v_frequency, __pyx_v_phase, ((PyArrayObject *)__pyx_v_nterms), 0); if (unlikely(__pyx_t_10 == ((double)-1) && PyErr_Occurred())) __PYX_ERR(0, 75, __pyx_L1_error)
+    __pyx_t_4 = PyFloat_FromDouble((__pyx_v_amp * __pyx_t_10)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 75, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    if (unlikely(__Pyx_SetItemInt(((PyObject *)__pyx_v_res), __pyx_v_i, __pyx_t_4, int, 1, __Pyx_PyInt_From_int, 0, 1, 1) < 0)) __PYX_ERR(0, 64, __pyx_L1_error)
+    if (unlikely(__Pyx_SetItemInt(((PyObject *)__pyx_v_res), __pyx_v_i, __pyx_t_4, int, 1, __Pyx_PyInt_From_int, 0, 1, 1) < 0)) __PYX_ERR(0, 75, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   }
 
-  /* "builder_utils.pyx":65
- *     for i in range(N):
+  /* "soundfactory/cyutils/builder_utils.pyx":77
  *         res[i] = amp * fourier_sum(times[i], coefficients, frequency, phase, nterms)
+ * 
  *     return res             # <<<<<<<<<<<<<<
  * 
  * 
@@ -2940,7 +3008,7 @@ static PyArrayObject *__pyx_f_13builder_utils_upsample_component(double __pyx_v_
   __pyx_r = __pyx_v_res;
   goto __pyx_L0;
 
-  /* "builder_utils.pyx":52
+  /* "soundfactory/cyutils/builder_utils.pyx":61
  * 
  * 
  * cpdef np.ndarray upsample_component(             # <<<<<<<<<<<<<<
@@ -2962,7 +3030,7 @@ static PyArrayObject *__pyx_f_13builder_utils_upsample_component(double __pyx_v_
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_nterms.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_times.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("builder_utils.upsample_component", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("soundfactory.cyutils.builder_utils.upsample_component", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   goto __pyx_L2;
   __pyx_L0:;
@@ -2977,8 +3045,8 @@ static PyArrayObject *__pyx_f_13builder_utils_upsample_component(double __pyx_v_
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_13builder_utils_9upsample_component(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_13builder_utils_9upsample_component(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_12soundfactory_7cyutils_13builder_utils_9upsample_component(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_12soundfactory_7cyutils_13builder_utils_9upsample_component(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   double __pyx_v_amp;
   double __pyx_v_phase;
   double __pyx_v_duration;
@@ -3019,35 +3087,35 @@ static PyObject *__pyx_pw_13builder_utils_9upsample_component(PyObject *__pyx_se
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_phase)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("upsample_component", 1, 6, 6, 1); __PYX_ERR(0, 52, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("upsample_component", 1, 6, 6, 1); __PYX_ERR(0, 61, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_duration)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("upsample_component", 1, 6, 6, 2); __PYX_ERR(0, 52, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("upsample_component", 1, 6, 6, 2); __PYX_ERR(0, 61, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_times)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("upsample_component", 1, 6, 6, 3); __PYX_ERR(0, 52, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("upsample_component", 1, 6, 6, 3); __PYX_ERR(0, 61, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_coefficients)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("upsample_component", 1, 6, 6, 4); __PYX_ERR(0, 52, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("upsample_component", 1, 6, 6, 4); __PYX_ERR(0, 61, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nterms)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("upsample_component", 1, 6, 6, 5); __PYX_ERR(0, 52, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("upsample_component", 1, 6, 6, 5); __PYX_ERR(0, 61, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "upsample_component") < 0)) __PYX_ERR(0, 52, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "upsample_component") < 0)) __PYX_ERR(0, 61, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 6) {
       goto __pyx_L5_argtuple_error;
@@ -3059,25 +3127,25 @@ static PyObject *__pyx_pw_13builder_utils_9upsample_component(PyObject *__pyx_se
       values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
       values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
     }
-    __pyx_v_amp = __pyx_PyFloat_AsDouble(values[0]); if (unlikely((__pyx_v_amp == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 53, __pyx_L3_error)
-    __pyx_v_phase = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_phase == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 54, __pyx_L3_error)
-    __pyx_v_duration = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_duration == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 55, __pyx_L3_error)
+    __pyx_v_amp = __pyx_PyFloat_AsDouble(values[0]); if (unlikely((__pyx_v_amp == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 62, __pyx_L3_error)
+    __pyx_v_phase = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_phase == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 63, __pyx_L3_error)
+    __pyx_v_duration = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_duration == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 64, __pyx_L3_error)
     __pyx_v_times = ((PyArrayObject *)values[3]);
     __pyx_v_coefficients = ((PyArrayObject *)values[4]);
     __pyx_v_nterms = ((PyArrayObject *)values[5]);
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("upsample_component", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 52, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("upsample_component", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 61, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("builder_utils.upsample_component", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("soundfactory.cyutils.builder_utils.upsample_component", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_times), __pyx_ptype_5numpy_ndarray, 1, "times", 0))) __PYX_ERR(0, 56, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_coefficients), __pyx_ptype_5numpy_ndarray, 1, "coefficients", 0))) __PYX_ERR(0, 57, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_nterms), __pyx_ptype_5numpy_ndarray, 1, "nterms", 0))) __PYX_ERR(0, 58, __pyx_L1_error)
-  __pyx_r = __pyx_pf_13builder_utils_8upsample_component(__pyx_self, __pyx_v_amp, __pyx_v_phase, __pyx_v_duration, __pyx_v_times, __pyx_v_coefficients, __pyx_v_nterms);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_times), __pyx_ptype_5numpy_ndarray, 1, "times", 0))) __PYX_ERR(0, 65, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_coefficients), __pyx_ptype_5numpy_ndarray, 1, "coefficients", 0))) __PYX_ERR(0, 66, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_nterms), __pyx_ptype_5numpy_ndarray, 1, "nterms", 0))) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_r = __pyx_pf_12soundfactory_7cyutils_13builder_utils_8upsample_component(__pyx_self, __pyx_v_amp, __pyx_v_phase, __pyx_v_duration, __pyx_v_times, __pyx_v_coefficients, __pyx_v_nterms);
 
   /* function exit code */
   goto __pyx_L0;
@@ -3088,7 +3156,7 @@ static PyObject *__pyx_pw_13builder_utils_9upsample_component(PyObject *__pyx_se
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_13builder_utils_8upsample_component(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_amp, double __pyx_v_phase, double __pyx_v_duration, PyArrayObject *__pyx_v_times, PyArrayObject *__pyx_v_coefficients, PyArrayObject *__pyx_v_nterms) {
+static PyObject *__pyx_pf_12soundfactory_7cyutils_13builder_utils_8upsample_component(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_amp, double __pyx_v_phase, double __pyx_v_duration, PyArrayObject *__pyx_v_times, PyArrayObject *__pyx_v_coefficients, PyArrayObject *__pyx_v_nterms) {
   __Pyx_LocalBuf_ND __pyx_pybuffernd_coefficients;
   __Pyx_Buffer __pyx_pybuffer_coefficients;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_nterms;
@@ -3113,21 +3181,21 @@ static PyObject *__pyx_pf_13builder_utils_8upsample_component(CYTHON_UNUSED PyOb
   __pyx_pybuffernd_nterms.rcbuffer = &__pyx_pybuffer_nterms;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_times.rcbuffer->pybuffer, (PyObject*)__pyx_v_times, &__Pyx_TypeInfo_nn___pyx_t_13builder_utils_DTYPE_f, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 52, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_times.rcbuffer->pybuffer, (PyObject*)__pyx_v_times, &__Pyx_TypeInfo_nn___pyx_t_12soundfactory_7cyutils_13builder_utils_DTYPE_f, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 61, __pyx_L1_error)
   }
   __pyx_pybuffernd_times.diminfo[0].strides = __pyx_pybuffernd_times.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_times.diminfo[0].shape = __pyx_pybuffernd_times.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_coefficients.rcbuffer->pybuffer, (PyObject*)__pyx_v_coefficients, &__Pyx_TypeInfo_nn___pyx_t_13builder_utils_DTYPE_f, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 52, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_coefficients.rcbuffer->pybuffer, (PyObject*)__pyx_v_coefficients, &__Pyx_TypeInfo_nn___pyx_t_12soundfactory_7cyutils_13builder_utils_DTYPE_f, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 61, __pyx_L1_error)
   }
   __pyx_pybuffernd_coefficients.diminfo[0].strides = __pyx_pybuffernd_coefficients.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_coefficients.diminfo[0].shape = __pyx_pybuffernd_coefficients.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_nterms.rcbuffer->pybuffer, (PyObject*)__pyx_v_nterms, &__Pyx_TypeInfo_nn___pyx_t_13builder_utils_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 52, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_nterms.rcbuffer->pybuffer, (PyObject*)__pyx_v_nterms, &__Pyx_TypeInfo_nn___pyx_t_12soundfactory_7cyutils_13builder_utils_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 61, __pyx_L1_error)
   }
   __pyx_pybuffernd_nterms.diminfo[0].strides = __pyx_pybuffernd_nterms.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_nterms.diminfo[0].shape = __pyx_pybuffernd_nterms.rcbuffer->pybuffer.shape[0];
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((PyObject *)__pyx_f_13builder_utils_upsample_component(__pyx_v_amp, __pyx_v_phase, __pyx_v_duration, __pyx_v_times, __pyx_v_coefficients, __pyx_v_nterms, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_12soundfactory_7cyutils_13builder_utils_upsample_component(__pyx_v_amp, __pyx_v_phase, __pyx_v_duration, __pyx_v_times, __pyx_v_coefficients, __pyx_v_nterms, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3144,7 +3212,7 @@ static PyObject *__pyx_pf_13builder_utils_8upsample_component(CYTHON_UNUSED PyOb
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_nterms.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_times.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("builder_utils.upsample_component", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("soundfactory.cyutils.builder_utils.upsample_component", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   goto __pyx_L2;
   __pyx_L0:;
@@ -3157,7 +3225,7 @@ static PyObject *__pyx_pf_13builder_utils_8upsample_component(CYTHON_UNUSED PyOb
   return __pyx_r;
 }
 
-/* "builder_utils.pyx":68
+/* "soundfactory/cyutils/builder_utils.pyx":80
  * 
  * 
  * cpdef np.ndarray single_component(             # <<<<<<<<<<<<<<
@@ -3165,8 +3233,8 @@ static PyObject *__pyx_pf_13builder_utils_8upsample_component(CYTHON_UNUSED PyOb
  *         double duration,
  */
 
-static PyObject *__pyx_pw_13builder_utils_11single_component(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyArrayObject *__pyx_f_13builder_utils_single_component(double __pyx_v_freq, double __pyx_v_duration, PyArrayObject *__pyx_v_upsampled, int __pyx_v_samples, CYTHON_UNUSED int __pyx_skip_dispatch) {
+static PyObject *__pyx_pw_12soundfactory_7cyutils_13builder_utils_11single_component(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyArrayObject *__pyx_f_12soundfactory_7cyutils_13builder_utils_single_component(double __pyx_v_freq, double __pyx_v_duration, PyArrayObject *__pyx_v_upsampled, int __pyx_v_samples, CYTHON_UNUSED int __pyx_skip_dispatch) {
   double __pyx_v_cycles;
   PyArrayObject *__pyx_v_sample_range = 0;
   PyArrayObject *__pyx_v_indexes = 0;
@@ -3183,6 +3251,7 @@ static PyArrayObject *__pyx_f_13builder_utils_single_component(double __pyx_v_fr
   PyObject *__pyx_t_6 = NULL;
   int __pyx_t_7;
   int __pyx_t_8;
+  int __pyx_t_9;
   __Pyx_RefNannySetupContext("single_component", 0);
   __pyx_pybuffer_upsampled.pybuffer.buf = NULL;
   __pyx_pybuffer_upsampled.refcount = 0;
@@ -3190,11 +3259,11 @@ static PyArrayObject *__pyx_f_13builder_utils_single_component(double __pyx_v_fr
   __pyx_pybuffernd_upsampled.rcbuffer = &__pyx_pybuffer_upsampled;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_upsampled.rcbuffer->pybuffer, (PyObject*)__pyx_v_upsampled, &__Pyx_TypeInfo_nn___pyx_t_13builder_utils_DTYPE_f, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 68, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_upsampled.rcbuffer->pybuffer, (PyObject*)__pyx_v_upsampled, &__Pyx_TypeInfo_nn___pyx_t_12soundfactory_7cyutils_13builder_utils_DTYPE_f, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 80, __pyx_L1_error)
   }
   __pyx_pybuffernd_upsampled.diminfo[0].strides = __pyx_pybuffernd_upsampled.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_upsampled.diminfo[0].shape = __pyx_pybuffernd_upsampled.rcbuffer->pybuffer.shape[0];
 
-  /* "builder_utils.pyx":74
+  /* "soundfactory/cyutils/builder_utils.pyx":86
  *         int samples
  * ):
  *     cdef double cycles = freq * duration             # <<<<<<<<<<<<<<
@@ -3203,19 +3272,19 @@ static PyArrayObject *__pyx_f_13builder_utils_single_component(double __pyx_v_fr
  */
   __pyx_v_cycles = (__pyx_v_freq * __pyx_v_duration);
 
-  /* "builder_utils.pyx":75
+  /* "soundfactory/cyutils/builder_utils.pyx":87
  * ):
  *     cdef double cycles = freq * duration
  *     cdef np.ndarray sample_range = np.arange(0, samples)             # <<<<<<<<<<<<<<
  *     cdef np.ndarray indexes = np.zeros([samples], dtype=DTYPEI)
- *     for i in range(samples):
+ * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 87, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_arange); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_arange); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 87, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_samples); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_samples); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 87, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_4 = NULL;
   __pyx_t_5 = 0;
@@ -3232,7 +3301,7 @@ static PyArrayObject *__pyx_f_13builder_utils_single_component(double __pyx_v_fr
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_int_0, __pyx_t_2};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 75, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 87, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -3241,14 +3310,14 @@ static PyArrayObject *__pyx_f_13builder_utils_single_component(double __pyx_v_fr
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_int_0, __pyx_t_2};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 75, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 87, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   } else
   #endif
   {
-    __pyx_t_6 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 75, __pyx_L1_error)
+    __pyx_t_6 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 87, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     if (__pyx_t_4) {
       __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4); __pyx_t_4 = NULL;
@@ -3259,108 +3328,117 @@ static PyArrayObject *__pyx_f_13builder_utils_single_component(double __pyx_v_fr
     __Pyx_GIVEREF(__pyx_t_2);
     PyTuple_SET_ITEM(__pyx_t_6, 1+__pyx_t_5, __pyx_t_2);
     __pyx_t_2 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 75, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 87, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 75, __pyx_L1_error)
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 87, __pyx_L1_error)
   __pyx_v_sample_range = ((PyArrayObject *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "builder_utils.pyx":76
+  /* "soundfactory/cyutils/builder_utils.pyx":88
  *     cdef double cycles = freq * duration
  *     cdef np.ndarray sample_range = np.arange(0, samples)
  *     cdef np.ndarray indexes = np.zeros([samples], dtype=DTYPEI)             # <<<<<<<<<<<<<<
+ * 
  *     for i in range(samples):
- *         indexes[i] = round(sample_range[i] * cycles) % samples
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_samples); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_samples); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = PyList_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_6 = PyList_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_GIVEREF(__pyx_t_1);
   PyList_SET_ITEM(__pyx_t_6, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_6);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_6);
   __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_DTYPEI); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_DTYPEI); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 76, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_1, __pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_1, __pyx_t_6); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 76, __pyx_L1_error)
+  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 88, __pyx_L1_error)
   __pyx_v_indexes = ((PyArrayObject *)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "builder_utils.pyx":77
- *     cdef np.ndarray sample_range = np.arange(0, samples)
+  /* "soundfactory/cyutils/builder_utils.pyx":90
  *     cdef np.ndarray indexes = np.zeros([samples], dtype=DTYPEI)
- *     for i in range(samples):             # <<<<<<<<<<<<<<
- *         indexes[i] = round(sample_range[i] * cycles) % samples
  * 
+ *     for i in range(samples):             # <<<<<<<<<<<<<<
+ *         PyErr_CheckSignals()
+ *         indexes[i] = round(sample_range[i] * cycles) % samples
  */
   __pyx_t_5 = __pyx_v_samples;
   __pyx_t_7 = __pyx_t_5;
   for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
     __pyx_v_i = __pyx_t_8;
 
-    /* "builder_utils.pyx":78
- *     cdef np.ndarray indexes = np.zeros([samples], dtype=DTYPEI)
+    /* "soundfactory/cyutils/builder_utils.pyx":91
+ * 
  *     for i in range(samples):
+ *         PyErr_CheckSignals()             # <<<<<<<<<<<<<<
+ *         indexes[i] = round(sample_range[i] * cycles) % samples
+ * 
+ */
+    __pyx_t_9 = PyErr_CheckSignals(); if (unlikely(__pyx_t_9 == ((int)-1))) __PYX_ERR(0, 91, __pyx_L1_error)
+
+    /* "soundfactory/cyutils/builder_utils.pyx":92
+ *     for i in range(samples):
+ *         PyErr_CheckSignals()
  *         indexes[i] = round(sample_range[i] * cycles) % samples             # <<<<<<<<<<<<<<
  * 
  *     return upsampled[indexes]
  */
-    __pyx_t_2 = __Pyx_GetItemInt(((PyObject *)__pyx_v_sample_range), __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 1, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_GetItemInt(((PyObject *)__pyx_v_sample_range), __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 1, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 92, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_6 = PyFloat_FromDouble(__pyx_v_cycles); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_6 = PyFloat_FromDouble(__pyx_v_cycles); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 92, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_1 = PyNumber_Multiply(__pyx_t_2, __pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_1 = PyNumber_Multiply(__pyx_t_2, __pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 92, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_builtin_round, __pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_builtin_round, __pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 92, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_samples); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_samples); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 92, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_2 = PyNumber_Remainder(__pyx_t_6, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_2 = PyNumber_Remainder(__pyx_t_6, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 92, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (unlikely(__Pyx_SetItemInt(((PyObject *)__pyx_v_indexes), __pyx_v_i, __pyx_t_2, int, 1, __Pyx_PyInt_From_int, 0, 1, 1) < 0)) __PYX_ERR(0, 78, __pyx_L1_error)
+    if (unlikely(__Pyx_SetItemInt(((PyObject *)__pyx_v_indexes), __pyx_v_i, __pyx_t_2, int, 1, __Pyx_PyInt_From_int, 0, 1, 1) < 0)) __PYX_ERR(0, 92, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
 
-  /* "builder_utils.pyx":80
+  /* "soundfactory/cyutils/builder_utils.pyx":94
  *         indexes[i] = round(sample_range[i] * cycles) % samples
  * 
  *     return upsampled[indexes]             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(((PyObject *)__pyx_r));
-  __pyx_t_2 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_upsampled), ((PyObject *)__pyx_v_indexes)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetItem(((PyObject *)__pyx_v_upsampled), ((PyObject *)__pyx_v_indexes)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 80, __pyx_L1_error)
+  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 94, __pyx_L1_error)
   __pyx_r = ((PyArrayObject *)__pyx_t_2);
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "builder_utils.pyx":68
+  /* "soundfactory/cyutils/builder_utils.pyx":80
  * 
  * 
  * cpdef np.ndarray single_component(             # <<<<<<<<<<<<<<
@@ -3381,7 +3459,7 @@ static PyArrayObject *__pyx_f_13builder_utils_single_component(double __pyx_v_fr
     __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_upsampled.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("builder_utils.single_component", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("soundfactory.cyutils.builder_utils.single_component", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   goto __pyx_L2;
   __pyx_L0:;
@@ -3395,8 +3473,8 @@ static PyArrayObject *__pyx_f_13builder_utils_single_component(double __pyx_v_fr
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_13builder_utils_11single_component(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_13builder_utils_11single_component(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_12soundfactory_7cyutils_13builder_utils_11single_component(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_12soundfactory_7cyutils_13builder_utils_11single_component(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   double __pyx_v_freq;
   double __pyx_v_duration;
   PyArrayObject *__pyx_v_upsampled = 0;
@@ -3431,23 +3509,23 @@ static PyObject *__pyx_pw_13builder_utils_11single_component(PyObject *__pyx_sel
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_duration)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("single_component", 1, 4, 4, 1); __PYX_ERR(0, 68, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("single_component", 1, 4, 4, 1); __PYX_ERR(0, 80, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_upsampled)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("single_component", 1, 4, 4, 2); __PYX_ERR(0, 68, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("single_component", 1, 4, 4, 2); __PYX_ERR(0, 80, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_samples)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("single_component", 1, 4, 4, 3); __PYX_ERR(0, 68, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("single_component", 1, 4, 4, 3); __PYX_ERR(0, 80, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "single_component") < 0)) __PYX_ERR(0, 68, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "single_component") < 0)) __PYX_ERR(0, 80, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 4) {
       goto __pyx_L5_argtuple_error;
@@ -3457,21 +3535,21 @@ static PyObject *__pyx_pw_13builder_utils_11single_component(PyObject *__pyx_sel
       values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
       values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
     }
-    __pyx_v_freq = __pyx_PyFloat_AsDouble(values[0]); if (unlikely((__pyx_v_freq == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 69, __pyx_L3_error)
-    __pyx_v_duration = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_duration == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 70, __pyx_L3_error)
+    __pyx_v_freq = __pyx_PyFloat_AsDouble(values[0]); if (unlikely((__pyx_v_freq == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 81, __pyx_L3_error)
+    __pyx_v_duration = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_duration == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 82, __pyx_L3_error)
     __pyx_v_upsampled = ((PyArrayObject *)values[2]);
-    __pyx_v_samples = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_samples == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 72, __pyx_L3_error)
+    __pyx_v_samples = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_samples == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 84, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("single_component", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 68, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("single_component", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 80, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("builder_utils.single_component", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("soundfactory.cyutils.builder_utils.single_component", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_upsampled), __pyx_ptype_5numpy_ndarray, 1, "upsampled", 0))) __PYX_ERR(0, 71, __pyx_L1_error)
-  __pyx_r = __pyx_pf_13builder_utils_10single_component(__pyx_self, __pyx_v_freq, __pyx_v_duration, __pyx_v_upsampled, __pyx_v_samples);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_upsampled), __pyx_ptype_5numpy_ndarray, 1, "upsampled", 0))) __PYX_ERR(0, 83, __pyx_L1_error)
+  __pyx_r = __pyx_pf_12soundfactory_7cyutils_13builder_utils_10single_component(__pyx_self, __pyx_v_freq, __pyx_v_duration, __pyx_v_upsampled, __pyx_v_samples);
 
   /* function exit code */
   goto __pyx_L0;
@@ -3482,7 +3560,7 @@ static PyObject *__pyx_pw_13builder_utils_11single_component(PyObject *__pyx_sel
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_13builder_utils_10single_component(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_freq, double __pyx_v_duration, PyArrayObject *__pyx_v_upsampled, int __pyx_v_samples) {
+static PyObject *__pyx_pf_12soundfactory_7cyutils_13builder_utils_10single_component(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_freq, double __pyx_v_duration, PyArrayObject *__pyx_v_upsampled, int __pyx_v_samples) {
   __Pyx_LocalBuf_ND __pyx_pybuffernd_upsampled;
   __Pyx_Buffer __pyx_pybuffer_upsampled;
   PyObject *__pyx_r = NULL;
@@ -3495,11 +3573,11 @@ static PyObject *__pyx_pf_13builder_utils_10single_component(CYTHON_UNUSED PyObj
   __pyx_pybuffernd_upsampled.rcbuffer = &__pyx_pybuffer_upsampled;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_upsampled.rcbuffer->pybuffer, (PyObject*)__pyx_v_upsampled, &__Pyx_TypeInfo_nn___pyx_t_13builder_utils_DTYPE_f, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 68, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_upsampled.rcbuffer->pybuffer, (PyObject*)__pyx_v_upsampled, &__Pyx_TypeInfo_nn___pyx_t_12soundfactory_7cyutils_13builder_utils_DTYPE_f, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 80, __pyx_L1_error)
   }
   __pyx_pybuffernd_upsampled.diminfo[0].strides = __pyx_pybuffernd_upsampled.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_upsampled.diminfo[0].shape = __pyx_pybuffernd_upsampled.rcbuffer->pybuffer.shape[0];
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = ((PyObject *)__pyx_f_13builder_utils_single_component(__pyx_v_freq, __pyx_v_duration, __pyx_v_upsampled, __pyx_v_samples, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_1 = ((PyObject *)__pyx_f_12soundfactory_7cyutils_13builder_utils_single_component(__pyx_v_freq, __pyx_v_duration, __pyx_v_upsampled, __pyx_v_samples, 0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 80, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -3514,7 +3592,7 @@ static PyObject *__pyx_pf_13builder_utils_10single_component(CYTHON_UNUSED PyObj
     __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_upsampled.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("builder_utils.single_component", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("soundfactory.cyutils.builder_utils.single_component", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   goto __pyx_L2;
   __pyx_L0:;
@@ -3525,7 +3603,7 @@ static PyObject *__pyx_pf_13builder_utils_10single_component(CYTHON_UNUSED PyObj
   return __pyx_r;
 }
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":258
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":258
  *         # experimental exception made for __getbuffer__ and __releasebuffer__
  *         # -- the details of this may change.
  *         def __getbuffer__(ndarray self, Py_buffer* info, int flags):             # <<<<<<<<<<<<<<
@@ -3574,7 +3652,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   __pyx_v_info->obj = Py_None; __Pyx_INCREF(Py_None);
   __Pyx_GIVEREF(__pyx_v_info->obj);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":265
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":265
  * 
  *             cdef int i, ndim
  *             cdef int endian_detector = 1             # <<<<<<<<<<<<<<
@@ -3583,7 +3661,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_endian_detector = 1;
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":266
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":266
  *             cdef int i, ndim
  *             cdef int endian_detector = 1
  *             cdef bint little_endian = ((<char*>&endian_detector)[0] != 0)             # <<<<<<<<<<<<<<
@@ -3592,7 +3670,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_little_endian = ((((char *)(&__pyx_v_endian_detector))[0]) != 0);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":268
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":268
  *             cdef bint little_endian = ((<char*>&endian_detector)[0] != 0)
  * 
  *             ndim = PyArray_NDIM(self)             # <<<<<<<<<<<<<<
@@ -3601,7 +3679,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_ndim = PyArray_NDIM(__pyx_v_self);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":270
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":270
  *             ndim = PyArray_NDIM(self)
  * 
  *             if ((flags & pybuf.PyBUF_C_CONTIGUOUS == pybuf.PyBUF_C_CONTIGUOUS)             # <<<<<<<<<<<<<<
@@ -3615,7 +3693,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     goto __pyx_L4_bool_binop_done;
   }
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":271
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":271
  * 
  *             if ((flags & pybuf.PyBUF_C_CONTIGUOUS == pybuf.PyBUF_C_CONTIGUOUS)
  *                 and not PyArray_CHKFLAGS(self, NPY_ARRAY_C_CONTIGUOUS)):             # <<<<<<<<<<<<<<
@@ -3626,7 +3704,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   __pyx_t_1 = __pyx_t_2;
   __pyx_L4_bool_binop_done:;
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":270
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":270
  *             ndim = PyArray_NDIM(self)
  * 
  *             if ((flags & pybuf.PyBUF_C_CONTIGUOUS == pybuf.PyBUF_C_CONTIGUOUS)             # <<<<<<<<<<<<<<
@@ -3635,7 +3713,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   if (unlikely(__pyx_t_1)) {
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":272
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":272
  *             if ((flags & pybuf.PyBUF_C_CONTIGUOUS == pybuf.PyBUF_C_CONTIGUOUS)
  *                 and not PyArray_CHKFLAGS(self, NPY_ARRAY_C_CONTIGUOUS)):
  *                 raise ValueError(u"ndarray is not C contiguous")             # <<<<<<<<<<<<<<
@@ -3648,7 +3726,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __PYX_ERR(1, 272, __pyx_L1_error)
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":270
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":270
  *             ndim = PyArray_NDIM(self)
  * 
  *             if ((flags & pybuf.PyBUF_C_CONTIGUOUS == pybuf.PyBUF_C_CONTIGUOUS)             # <<<<<<<<<<<<<<
@@ -3657,7 +3735,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   }
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":274
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":274
  *                 raise ValueError(u"ndarray is not C contiguous")
  * 
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)             # <<<<<<<<<<<<<<
@@ -3671,7 +3749,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     goto __pyx_L7_bool_binop_done;
   }
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":275
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":275
  * 
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)
  *                 and not PyArray_CHKFLAGS(self, NPY_ARRAY_F_CONTIGUOUS)):             # <<<<<<<<<<<<<<
@@ -3682,7 +3760,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   __pyx_t_1 = __pyx_t_2;
   __pyx_L7_bool_binop_done:;
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":274
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":274
  *                 raise ValueError(u"ndarray is not C contiguous")
  * 
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)             # <<<<<<<<<<<<<<
@@ -3691,7 +3769,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   if (unlikely(__pyx_t_1)) {
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":276
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":276
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)
  *                 and not PyArray_CHKFLAGS(self, NPY_ARRAY_F_CONTIGUOUS)):
  *                 raise ValueError(u"ndarray is not Fortran contiguous")             # <<<<<<<<<<<<<<
@@ -3704,7 +3782,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __PYX_ERR(1, 276, __pyx_L1_error)
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":274
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":274
  *                 raise ValueError(u"ndarray is not C contiguous")
  * 
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)             # <<<<<<<<<<<<<<
@@ -3713,7 +3791,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   }
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":278
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":278
  *                 raise ValueError(u"ndarray is not Fortran contiguous")
  * 
  *             info.buf = PyArray_DATA(self)             # <<<<<<<<<<<<<<
@@ -3722,7 +3800,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_info->buf = PyArray_DATA(__pyx_v_self);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":279
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":279
  * 
  *             info.buf = PyArray_DATA(self)
  *             info.ndim = ndim             # <<<<<<<<<<<<<<
@@ -3731,7 +3809,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_info->ndim = __pyx_v_ndim;
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":280
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":280
  *             info.buf = PyArray_DATA(self)
  *             info.ndim = ndim
  *             if sizeof(npy_intp) != sizeof(Py_ssize_t):             # <<<<<<<<<<<<<<
@@ -3741,7 +3819,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   __pyx_t_1 = (((sizeof(npy_intp)) != (sizeof(Py_ssize_t))) != 0);
   if (__pyx_t_1) {
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":283
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":283
  *                 # Allocate new buffer for strides and shape info.
  *                 # This is allocated as one block, strides first.
  *                 info.strides = <Py_ssize_t*>PyObject_Malloc(sizeof(Py_ssize_t) * 2 * <size_t>ndim)             # <<<<<<<<<<<<<<
@@ -3750,7 +3828,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
     __pyx_v_info->strides = ((Py_ssize_t *)PyObject_Malloc((((sizeof(Py_ssize_t)) * 2) * ((size_t)__pyx_v_ndim))));
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":284
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":284
  *                 # This is allocated as one block, strides first.
  *                 info.strides = <Py_ssize_t*>PyObject_Malloc(sizeof(Py_ssize_t) * 2 * <size_t>ndim)
  *                 info.shape = info.strides + ndim             # <<<<<<<<<<<<<<
@@ -3759,7 +3837,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
     __pyx_v_info->shape = (__pyx_v_info->strides + __pyx_v_ndim);
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":285
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":285
  *                 info.strides = <Py_ssize_t*>PyObject_Malloc(sizeof(Py_ssize_t) * 2 * <size_t>ndim)
  *                 info.shape = info.strides + ndim
  *                 for i in range(ndim):             # <<<<<<<<<<<<<<
@@ -3771,7 +3849,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
       __pyx_v_i = __pyx_t_6;
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":286
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":286
  *                 info.shape = info.strides + ndim
  *                 for i in range(ndim):
  *                     info.strides[i] = PyArray_STRIDES(self)[i]             # <<<<<<<<<<<<<<
@@ -3780,7 +3858,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
       (__pyx_v_info->strides[__pyx_v_i]) = (PyArray_STRIDES(__pyx_v_self)[__pyx_v_i]);
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":287
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":287
  *                 for i in range(ndim):
  *                     info.strides[i] = PyArray_STRIDES(self)[i]
  *                     info.shape[i] = PyArray_DIMS(self)[i]             # <<<<<<<<<<<<<<
@@ -3790,7 +3868,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       (__pyx_v_info->shape[__pyx_v_i]) = (PyArray_DIMS(__pyx_v_self)[__pyx_v_i]);
     }
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":280
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":280
  *             info.buf = PyArray_DATA(self)
  *             info.ndim = ndim
  *             if sizeof(npy_intp) != sizeof(Py_ssize_t):             # <<<<<<<<<<<<<<
@@ -3800,7 +3878,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     goto __pyx_L9;
   }
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":289
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":289
  *                     info.shape[i] = PyArray_DIMS(self)[i]
  *             else:
  *                 info.strides = <Py_ssize_t*>PyArray_STRIDES(self)             # <<<<<<<<<<<<<<
@@ -3810,7 +3888,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   /*else*/ {
     __pyx_v_info->strides = ((Py_ssize_t *)PyArray_STRIDES(__pyx_v_self));
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":290
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":290
  *             else:
  *                 info.strides = <Py_ssize_t*>PyArray_STRIDES(self)
  *                 info.shape = <Py_ssize_t*>PyArray_DIMS(self)             # <<<<<<<<<<<<<<
@@ -3821,7 +3899,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   }
   __pyx_L9:;
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":291
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":291
  *                 info.strides = <Py_ssize_t*>PyArray_STRIDES(self)
  *                 info.shape = <Py_ssize_t*>PyArray_DIMS(self)
  *             info.suboffsets = NULL             # <<<<<<<<<<<<<<
@@ -3830,7 +3908,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_info->suboffsets = NULL;
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":292
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":292
  *                 info.shape = <Py_ssize_t*>PyArray_DIMS(self)
  *             info.suboffsets = NULL
  *             info.itemsize = PyArray_ITEMSIZE(self)             # <<<<<<<<<<<<<<
@@ -3839,7 +3917,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_info->itemsize = PyArray_ITEMSIZE(__pyx_v_self);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":293
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":293
  *             info.suboffsets = NULL
  *             info.itemsize = PyArray_ITEMSIZE(self)
  *             info.readonly = not PyArray_ISWRITEABLE(self)             # <<<<<<<<<<<<<<
@@ -3848,7 +3926,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_info->readonly = (!(PyArray_ISWRITEABLE(__pyx_v_self) != 0));
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":296
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":296
  * 
  *             cdef int t
  *             cdef char* f = NULL             # <<<<<<<<<<<<<<
@@ -3857,7 +3935,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_f = NULL;
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":297
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":297
  *             cdef int t
  *             cdef char* f = NULL
  *             cdef dtype descr = <dtype>PyArray_DESCR(self)             # <<<<<<<<<<<<<<
@@ -3870,7 +3948,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   __pyx_v_descr = ((PyArray_Descr *)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":300
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":300
  *             cdef int offset
  * 
  *             info.obj = self             # <<<<<<<<<<<<<<
@@ -3883,7 +3961,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   __Pyx_DECREF(__pyx_v_info->obj);
   __pyx_v_info->obj = ((PyObject *)__pyx_v_self);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":302
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":302
  *             info.obj = self
  * 
  *             if not PyDataType_HASFIELDS(descr):             # <<<<<<<<<<<<<<
@@ -3893,7 +3971,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   __pyx_t_1 = ((!(PyDataType_HASFIELDS(__pyx_v_descr) != 0)) != 0);
   if (__pyx_t_1) {
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":303
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":303
  * 
  *             if not PyDataType_HASFIELDS(descr):
  *                 t = descr.type_num             # <<<<<<<<<<<<<<
@@ -3903,7 +3981,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     __pyx_t_4 = __pyx_v_descr->type_num;
     __pyx_v_t = __pyx_t_4;
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":304
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":304
  *             if not PyDataType_HASFIELDS(descr):
  *                 t = descr.type_num
  *                 if ((descr.byteorder == c'>' and little_endian) or             # <<<<<<<<<<<<<<
@@ -3923,7 +4001,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     }
     __pyx_L15_next_or:;
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":305
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":305
  *                 t = descr.type_num
  *                 if ((descr.byteorder == c'>' and little_endian) or
  *                     (descr.byteorder == c'<' and not little_endian)):             # <<<<<<<<<<<<<<
@@ -3940,7 +4018,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     __pyx_t_1 = __pyx_t_2;
     __pyx_L14_bool_binop_done:;
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":304
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":304
  *             if not PyDataType_HASFIELDS(descr):
  *                 t = descr.type_num
  *                 if ((descr.byteorder == c'>' and little_endian) or             # <<<<<<<<<<<<<<
@@ -3949,7 +4027,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
     if (unlikely(__pyx_t_1)) {
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":306
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":306
  *                 if ((descr.byteorder == c'>' and little_endian) or
  *                     (descr.byteorder == c'<' and not little_endian)):
  *                     raise ValueError(u"Non-native byte order not supported")             # <<<<<<<<<<<<<<
@@ -3962,7 +4040,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __PYX_ERR(1, 306, __pyx_L1_error)
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":304
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":304
  *             if not PyDataType_HASFIELDS(descr):
  *                 t = descr.type_num
  *                 if ((descr.byteorder == c'>' and little_endian) or             # <<<<<<<<<<<<<<
@@ -3971,7 +4049,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
     }
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":307
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":307
  *                     (descr.byteorder == c'<' and not little_endian)):
  *                     raise ValueError(u"Non-native byte order not supported")
  *                 if   t == NPY_BYTE:        f = "b"             # <<<<<<<<<<<<<<
@@ -3984,7 +4062,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       break;
       case NPY_UBYTE:
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":308
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":308
  *                     raise ValueError(u"Non-native byte order not supported")
  *                 if   t == NPY_BYTE:        f = "b"
  *                 elif t == NPY_UBYTE:       f = "B"             # <<<<<<<<<<<<<<
@@ -3995,7 +4073,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       break;
       case NPY_SHORT:
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":309
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":309
  *                 if   t == NPY_BYTE:        f = "b"
  *                 elif t == NPY_UBYTE:       f = "B"
  *                 elif t == NPY_SHORT:       f = "h"             # <<<<<<<<<<<<<<
@@ -4006,7 +4084,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       break;
       case NPY_USHORT:
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":310
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":310
  *                 elif t == NPY_UBYTE:       f = "B"
  *                 elif t == NPY_SHORT:       f = "h"
  *                 elif t == NPY_USHORT:      f = "H"             # <<<<<<<<<<<<<<
@@ -4017,7 +4095,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       break;
       case NPY_INT:
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":311
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":311
  *                 elif t == NPY_SHORT:       f = "h"
  *                 elif t == NPY_USHORT:      f = "H"
  *                 elif t == NPY_INT:         f = "i"             # <<<<<<<<<<<<<<
@@ -4028,7 +4106,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       break;
       case NPY_UINT:
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":312
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":312
  *                 elif t == NPY_USHORT:      f = "H"
  *                 elif t == NPY_INT:         f = "i"
  *                 elif t == NPY_UINT:        f = "I"             # <<<<<<<<<<<<<<
@@ -4039,7 +4117,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       break;
       case NPY_LONG:
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":313
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":313
  *                 elif t == NPY_INT:         f = "i"
  *                 elif t == NPY_UINT:        f = "I"
  *                 elif t == NPY_LONG:        f = "l"             # <<<<<<<<<<<<<<
@@ -4050,7 +4128,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       break;
       case NPY_ULONG:
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":314
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":314
  *                 elif t == NPY_UINT:        f = "I"
  *                 elif t == NPY_LONG:        f = "l"
  *                 elif t == NPY_ULONG:       f = "L"             # <<<<<<<<<<<<<<
@@ -4061,7 +4139,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       break;
       case NPY_LONGLONG:
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":315
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":315
  *                 elif t == NPY_LONG:        f = "l"
  *                 elif t == NPY_ULONG:       f = "L"
  *                 elif t == NPY_LONGLONG:    f = "q"             # <<<<<<<<<<<<<<
@@ -4072,7 +4150,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       break;
       case NPY_ULONGLONG:
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":316
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":316
  *                 elif t == NPY_ULONG:       f = "L"
  *                 elif t == NPY_LONGLONG:    f = "q"
  *                 elif t == NPY_ULONGLONG:   f = "Q"             # <<<<<<<<<<<<<<
@@ -4083,7 +4161,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       break;
       case NPY_FLOAT:
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":317
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":317
  *                 elif t == NPY_LONGLONG:    f = "q"
  *                 elif t == NPY_ULONGLONG:   f = "Q"
  *                 elif t == NPY_FLOAT:       f = "f"             # <<<<<<<<<<<<<<
@@ -4094,7 +4172,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       break;
       case NPY_DOUBLE:
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":318
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":318
  *                 elif t == NPY_ULONGLONG:   f = "Q"
  *                 elif t == NPY_FLOAT:       f = "f"
  *                 elif t == NPY_DOUBLE:      f = "d"             # <<<<<<<<<<<<<<
@@ -4105,7 +4183,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       break;
       case NPY_LONGDOUBLE:
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":319
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":319
  *                 elif t == NPY_FLOAT:       f = "f"
  *                 elif t == NPY_DOUBLE:      f = "d"
  *                 elif t == NPY_LONGDOUBLE:  f = "g"             # <<<<<<<<<<<<<<
@@ -4116,7 +4194,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       break;
       case NPY_CFLOAT:
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":320
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":320
  *                 elif t == NPY_DOUBLE:      f = "d"
  *                 elif t == NPY_LONGDOUBLE:  f = "g"
  *                 elif t == NPY_CFLOAT:      f = "Zf"             # <<<<<<<<<<<<<<
@@ -4127,7 +4205,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       break;
       case NPY_CDOUBLE:
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":321
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":321
  *                 elif t == NPY_LONGDOUBLE:  f = "g"
  *                 elif t == NPY_CFLOAT:      f = "Zf"
  *                 elif t == NPY_CDOUBLE:     f = "Zd"             # <<<<<<<<<<<<<<
@@ -4138,7 +4216,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       break;
       case NPY_CLONGDOUBLE:
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":322
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":322
  *                 elif t == NPY_CFLOAT:      f = "Zf"
  *                 elif t == NPY_CDOUBLE:     f = "Zd"
  *                 elif t == NPY_CLONGDOUBLE: f = "Zg"             # <<<<<<<<<<<<<<
@@ -4149,7 +4227,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       break;
       case NPY_OBJECT:
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":323
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":323
  *                 elif t == NPY_CDOUBLE:     f = "Zd"
  *                 elif t == NPY_CLONGDOUBLE: f = "Zg"
  *                 elif t == NPY_OBJECT:      f = "O"             # <<<<<<<<<<<<<<
@@ -4160,7 +4238,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       break;
       default:
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":325
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":325
  *                 elif t == NPY_OBJECT:      f = "O"
  *                 else:
  *                     raise ValueError(u"unknown dtype code in numpy.pxd (%d)" % t)             # <<<<<<<<<<<<<<
@@ -4181,7 +4259,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       break;
     }
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":326
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":326
  *                 else:
  *                     raise ValueError(u"unknown dtype code in numpy.pxd (%d)" % t)
  *                 info.format = f             # <<<<<<<<<<<<<<
@@ -4190,7 +4268,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
     __pyx_v_info->format = __pyx_v_f;
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":327
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":327
  *                     raise ValueError(u"unknown dtype code in numpy.pxd (%d)" % t)
  *                 info.format = f
  *                 return             # <<<<<<<<<<<<<<
@@ -4200,7 +4278,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":302
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":302
  *             info.obj = self
  * 
  *             if not PyDataType_HASFIELDS(descr):             # <<<<<<<<<<<<<<
@@ -4209,7 +4287,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   }
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":329
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":329
  *                 return
  *             else:
  *                 info.format = <char*>PyObject_Malloc(_buffer_format_string_len)             # <<<<<<<<<<<<<<
@@ -4219,7 +4297,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   /*else*/ {
     __pyx_v_info->format = ((char *)PyObject_Malloc(0xFF));
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":330
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":330
  *             else:
  *                 info.format = <char*>PyObject_Malloc(_buffer_format_string_len)
  *                 info.format[0] = c'^' # Native data types, manual alignment             # <<<<<<<<<<<<<<
@@ -4228,7 +4306,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
     (__pyx_v_info->format[0]) = '^';
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":331
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":331
  *                 info.format = <char*>PyObject_Malloc(_buffer_format_string_len)
  *                 info.format[0] = c'^' # Native data types, manual alignment
  *                 offset = 0             # <<<<<<<<<<<<<<
@@ -4237,7 +4315,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
     __pyx_v_offset = 0;
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":332
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":332
  *                 info.format[0] = c'^' # Native data types, manual alignment
  *                 offset = 0
  *                 f = _util_dtypestring(descr, info.format + 1,             # <<<<<<<<<<<<<<
@@ -4247,7 +4325,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     __pyx_t_9 = __pyx_f_5numpy__util_dtypestring(__pyx_v_descr, (__pyx_v_info->format + 1), (__pyx_v_info->format + 0xFF), (&__pyx_v_offset)); if (unlikely(__pyx_t_9 == ((char *)NULL))) __PYX_ERR(1, 332, __pyx_L1_error)
     __pyx_v_f = __pyx_t_9;
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":335
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":335
  *                                       info.format + _buffer_format_string_len,
  *                                       &offset)
  *                 f[0] = c'\0' # Terminate format string             # <<<<<<<<<<<<<<
@@ -4257,7 +4335,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     (__pyx_v_f[0]) = '\x00';
   }
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":258
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":258
  *         # experimental exception made for __getbuffer__ and __releasebuffer__
  *         # -- the details of this may change.
  *         def __getbuffer__(ndarray self, Py_buffer* info, int flags):             # <<<<<<<<<<<<<<
@@ -4289,7 +4367,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   return __pyx_r;
 }
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":337
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":337
  *                 f[0] = c'\0' # Terminate format string
  * 
  *         def __releasebuffer__(ndarray self, Py_buffer* info):             # <<<<<<<<<<<<<<
@@ -4313,7 +4391,7 @@ static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_s
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("__releasebuffer__", 0);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":338
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":338
  * 
  *         def __releasebuffer__(ndarray self, Py_buffer* info):
  *             if PyArray_HASFIELDS(self):             # <<<<<<<<<<<<<<
@@ -4323,7 +4401,7 @@ static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_s
   __pyx_t_1 = (PyArray_HASFIELDS(__pyx_v_self) != 0);
   if (__pyx_t_1) {
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":339
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":339
  *         def __releasebuffer__(ndarray self, Py_buffer* info):
  *             if PyArray_HASFIELDS(self):
  *                 PyObject_Free(info.format)             # <<<<<<<<<<<<<<
@@ -4332,7 +4410,7 @@ static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_s
  */
     PyObject_Free(__pyx_v_info->format);
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":338
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":338
  * 
  *         def __releasebuffer__(ndarray self, Py_buffer* info):
  *             if PyArray_HASFIELDS(self):             # <<<<<<<<<<<<<<
@@ -4341,7 +4419,7 @@ static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_s
  */
   }
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":340
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":340
  *             if PyArray_HASFIELDS(self):
  *                 PyObject_Free(info.format)
  *             if sizeof(npy_intp) != sizeof(Py_ssize_t):             # <<<<<<<<<<<<<<
@@ -4351,7 +4429,7 @@ static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_s
   __pyx_t_1 = (((sizeof(npy_intp)) != (sizeof(Py_ssize_t))) != 0);
   if (__pyx_t_1) {
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":341
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":341
  *                 PyObject_Free(info.format)
  *             if sizeof(npy_intp) != sizeof(Py_ssize_t):
  *                 PyObject_Free(info.strides)             # <<<<<<<<<<<<<<
@@ -4360,7 +4438,7 @@ static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_s
  */
     PyObject_Free(__pyx_v_info->strides);
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":340
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":340
  *             if PyArray_HASFIELDS(self):
  *                 PyObject_Free(info.format)
  *             if sizeof(npy_intp) != sizeof(Py_ssize_t):             # <<<<<<<<<<<<<<
@@ -4369,7 +4447,7 @@ static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_s
  */
   }
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":337
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":337
  *                 f[0] = c'\0' # Terminate format string
  * 
  *         def __releasebuffer__(ndarray self, Py_buffer* info):             # <<<<<<<<<<<<<<
@@ -4381,7 +4459,7 @@ static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_s
   __Pyx_RefNannyFinishContext();
 }
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":821
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":821
  * ctypedef npy_cdouble     complex_t
  * 
  * cdef inline object PyArray_MultiIterNew1(a):             # <<<<<<<<<<<<<<
@@ -4395,7 +4473,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew1(PyObject *__
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew1", 0);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":822
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":822
  * 
  * cdef inline object PyArray_MultiIterNew1(a):
  *     return PyArray_MultiIterNew(1, <void*>a)             # <<<<<<<<<<<<<<
@@ -4409,7 +4487,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew1(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":821
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":821
  * ctypedef npy_cdouble     complex_t
  * 
  * cdef inline object PyArray_MultiIterNew1(a):             # <<<<<<<<<<<<<<
@@ -4428,7 +4506,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew1(PyObject *__
   return __pyx_r;
 }
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":824
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":824
  *     return PyArray_MultiIterNew(1, <void*>a)
  * 
  * cdef inline object PyArray_MultiIterNew2(a, b):             # <<<<<<<<<<<<<<
@@ -4442,7 +4520,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew2(PyObject *__
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew2", 0);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":825
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":825
  * 
  * cdef inline object PyArray_MultiIterNew2(a, b):
  *     return PyArray_MultiIterNew(2, <void*>a, <void*>b)             # <<<<<<<<<<<<<<
@@ -4456,7 +4534,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew2(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":824
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":824
  *     return PyArray_MultiIterNew(1, <void*>a)
  * 
  * cdef inline object PyArray_MultiIterNew2(a, b):             # <<<<<<<<<<<<<<
@@ -4475,7 +4553,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew2(PyObject *__
   return __pyx_r;
 }
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":827
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":827
  *     return PyArray_MultiIterNew(2, <void*>a, <void*>b)
  * 
  * cdef inline object PyArray_MultiIterNew3(a, b, c):             # <<<<<<<<<<<<<<
@@ -4489,7 +4567,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew3(PyObject *__
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew3", 0);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":828
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":828
  * 
  * cdef inline object PyArray_MultiIterNew3(a, b, c):
  *     return PyArray_MultiIterNew(3, <void*>a, <void*>b, <void*> c)             # <<<<<<<<<<<<<<
@@ -4503,7 +4581,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew3(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":827
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":827
  *     return PyArray_MultiIterNew(2, <void*>a, <void*>b)
  * 
  * cdef inline object PyArray_MultiIterNew3(a, b, c):             # <<<<<<<<<<<<<<
@@ -4522,7 +4600,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew3(PyObject *__
   return __pyx_r;
 }
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":830
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":830
  *     return PyArray_MultiIterNew(3, <void*>a, <void*>b, <void*> c)
  * 
  * cdef inline object PyArray_MultiIterNew4(a, b, c, d):             # <<<<<<<<<<<<<<
@@ -4536,7 +4614,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew4(PyObject *__
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew4", 0);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":831
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":831
  * 
  * cdef inline object PyArray_MultiIterNew4(a, b, c, d):
  *     return PyArray_MultiIterNew(4, <void*>a, <void*>b, <void*>c, <void*> d)             # <<<<<<<<<<<<<<
@@ -4550,7 +4628,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew4(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":830
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":830
  *     return PyArray_MultiIterNew(3, <void*>a, <void*>b, <void*> c)
  * 
  * cdef inline object PyArray_MultiIterNew4(a, b, c, d):             # <<<<<<<<<<<<<<
@@ -4569,7 +4647,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew4(PyObject *__
   return __pyx_r;
 }
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":833
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":833
  *     return PyArray_MultiIterNew(4, <void*>a, <void*>b, <void*>c, <void*> d)
  * 
  * cdef inline object PyArray_MultiIterNew5(a, b, c, d, e):             # <<<<<<<<<<<<<<
@@ -4583,7 +4661,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew5(PyObject *__
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew5", 0);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":834
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":834
  * 
  * cdef inline object PyArray_MultiIterNew5(a, b, c, d, e):
  *     return PyArray_MultiIterNew(5, <void*>a, <void*>b, <void*>c, <void*> d, <void*> e)             # <<<<<<<<<<<<<<
@@ -4597,7 +4675,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew5(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":833
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":833
  *     return PyArray_MultiIterNew(4, <void*>a, <void*>b, <void*>c, <void*> d)
  * 
  * cdef inline object PyArray_MultiIterNew5(a, b, c, d, e):             # <<<<<<<<<<<<<<
@@ -4616,7 +4694,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew5(PyObject *__
   return __pyx_r;
 }
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":836
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":836
  *     return PyArray_MultiIterNew(5, <void*>a, <void*>b, <void*>c, <void*> d, <void*> e)
  * 
  * cdef inline tuple PyDataType_SHAPE(dtype d):             # <<<<<<<<<<<<<<
@@ -4630,7 +4708,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("PyDataType_SHAPE", 0);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":837
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":837
  * 
  * cdef inline tuple PyDataType_SHAPE(dtype d):
  *     if PyDataType_HASSUBARRAY(d):             # <<<<<<<<<<<<<<
@@ -4640,7 +4718,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__
   __pyx_t_1 = (PyDataType_HASSUBARRAY(__pyx_v_d) != 0);
   if (__pyx_t_1) {
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":838
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":838
  * cdef inline tuple PyDataType_SHAPE(dtype d):
  *     if PyDataType_HASSUBARRAY(d):
  *         return <tuple>d.subarray.shape             # <<<<<<<<<<<<<<
@@ -4652,7 +4730,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__
     __pyx_r = ((PyObject*)__pyx_v_d->subarray->shape);
     goto __pyx_L0;
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":837
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":837
  * 
  * cdef inline tuple PyDataType_SHAPE(dtype d):
  *     if PyDataType_HASSUBARRAY(d):             # <<<<<<<<<<<<<<
@@ -4661,7 +4739,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__
  */
   }
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":840
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":840
  *         return <tuple>d.subarray.shape
  *     else:
  *         return ()             # <<<<<<<<<<<<<<
@@ -4675,7 +4753,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__
     goto __pyx_L0;
   }
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":836
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":836
  *     return PyArray_MultiIterNew(5, <void*>a, <void*>b, <void*>c, <void*> d, <void*> e)
  * 
  * cdef inline tuple PyDataType_SHAPE(dtype d):             # <<<<<<<<<<<<<<
@@ -4690,7 +4768,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__
   return __pyx_r;
 }
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":842
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":842
  *         return ()
  * 
  * cdef inline char* _util_dtypestring(dtype descr, char* f, char* end, int* offset) except NULL:             # <<<<<<<<<<<<<<
@@ -4719,7 +4797,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
   char *__pyx_t_9;
   __Pyx_RefNannySetupContext("_util_dtypestring", 0);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":847
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":847
  * 
  *     cdef dtype child
  *     cdef int endian_detector = 1             # <<<<<<<<<<<<<<
@@ -4728,7 +4806,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
   __pyx_v_endian_detector = 1;
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":848
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":848
  *     cdef dtype child
  *     cdef int endian_detector = 1
  *     cdef bint little_endian = ((<char*>&endian_detector)[0] != 0)             # <<<<<<<<<<<<<<
@@ -4737,7 +4815,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
   __pyx_v_little_endian = ((((char *)(&__pyx_v_endian_detector))[0]) != 0);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":851
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":851
  *     cdef tuple fields
  * 
  *     for childname in descr.names:             # <<<<<<<<<<<<<<
@@ -4760,7 +4838,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     __Pyx_XDECREF_SET(__pyx_v_childname, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":852
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":852
  * 
  *     for childname in descr.names:
  *         fields = descr.fields[childname]             # <<<<<<<<<<<<<<
@@ -4777,7 +4855,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     __Pyx_XDECREF_SET(__pyx_v_fields, ((PyObject*)__pyx_t_3));
     __pyx_t_3 = 0;
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":853
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":853
  *     for childname in descr.names:
  *         fields = descr.fields[childname]
  *         child, new_offset = fields             # <<<<<<<<<<<<<<
@@ -4812,7 +4890,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     __Pyx_XDECREF_SET(__pyx_v_new_offset, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":855
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":855
  *         child, new_offset = fields
  * 
  *         if (end - f) - <int>(new_offset - offset[0]) < 15:             # <<<<<<<<<<<<<<
@@ -4829,7 +4907,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     __pyx_t_6 = ((((__pyx_v_end - __pyx_v_f) - ((int)__pyx_t_5)) < 15) != 0);
     if (unlikely(__pyx_t_6)) {
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":856
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":856
  * 
  *         if (end - f) - <int>(new_offset - offset[0]) < 15:
  *             raise RuntimeError(u"Format string allocated too short, see comment in numpy.pxd")             # <<<<<<<<<<<<<<
@@ -4842,7 +4920,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __PYX_ERR(1, 856, __pyx_L1_error)
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":855
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":855
  *         child, new_offset = fields
  * 
  *         if (end - f) - <int>(new_offset - offset[0]) < 15:             # <<<<<<<<<<<<<<
@@ -4851,7 +4929,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
     }
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":858
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":858
  *             raise RuntimeError(u"Format string allocated too short, see comment in numpy.pxd")
  * 
  *         if ((child.byteorder == c'>' and little_endian) or             # <<<<<<<<<<<<<<
@@ -4871,7 +4949,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     }
     __pyx_L8_next_or:;
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":859
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":859
  * 
  *         if ((child.byteorder == c'>' and little_endian) or
  *             (child.byteorder == c'<' and not little_endian)):             # <<<<<<<<<<<<<<
@@ -4888,7 +4966,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     __pyx_t_6 = __pyx_t_7;
     __pyx_L7_bool_binop_done:;
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":858
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":858
  *             raise RuntimeError(u"Format string allocated too short, see comment in numpy.pxd")
  * 
  *         if ((child.byteorder == c'>' and little_endian) or             # <<<<<<<<<<<<<<
@@ -4897,7 +4975,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
     if (unlikely(__pyx_t_6)) {
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":860
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":860
  *         if ((child.byteorder == c'>' and little_endian) or
  *             (child.byteorder == c'<' and not little_endian)):
  *             raise ValueError(u"Non-native byte order not supported")             # <<<<<<<<<<<<<<
@@ -4910,7 +4988,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __PYX_ERR(1, 860, __pyx_L1_error)
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":858
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":858
  *             raise RuntimeError(u"Format string allocated too short, see comment in numpy.pxd")
  * 
  *         if ((child.byteorder == c'>' and little_endian) or             # <<<<<<<<<<<<<<
@@ -4919,7 +4997,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
     }
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":870
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":870
  * 
  *         # Output padding bytes
  *         while offset[0] < new_offset:             # <<<<<<<<<<<<<<
@@ -4935,7 +5013,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       if (!__pyx_t_6) break;
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":871
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":871
  *         # Output padding bytes
  *         while offset[0] < new_offset:
  *             f[0] = 120 # "x"; pad byte             # <<<<<<<<<<<<<<
@@ -4944,7 +5022,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
       (__pyx_v_f[0]) = 0x78;
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":872
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":872
  *         while offset[0] < new_offset:
  *             f[0] = 120 # "x"; pad byte
  *             f += 1             # <<<<<<<<<<<<<<
@@ -4953,7 +5031,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
       __pyx_v_f = (__pyx_v_f + 1);
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":873
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":873
  *             f[0] = 120 # "x"; pad byte
  *             f += 1
  *             offset[0] += 1             # <<<<<<<<<<<<<<
@@ -4964,7 +5042,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
       (__pyx_v_offset[__pyx_t_8]) = ((__pyx_v_offset[__pyx_t_8]) + 1);
     }
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":875
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":875
  *             offset[0] += 1
  * 
  *         offset[0] += child.itemsize             # <<<<<<<<<<<<<<
@@ -4974,7 +5052,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     __pyx_t_8 = 0;
     (__pyx_v_offset[__pyx_t_8]) = ((__pyx_v_offset[__pyx_t_8]) + __pyx_v_child->elsize);
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":877
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":877
  *         offset[0] += child.itemsize
  * 
  *         if not PyDataType_HASFIELDS(child):             # <<<<<<<<<<<<<<
@@ -4984,7 +5062,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     __pyx_t_6 = ((!(PyDataType_HASFIELDS(__pyx_v_child) != 0)) != 0);
     if (__pyx_t_6) {
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":878
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":878
  * 
  *         if not PyDataType_HASFIELDS(child):
  *             t = child.type_num             # <<<<<<<<<<<<<<
@@ -4996,7 +5074,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
       __Pyx_XDECREF_SET(__pyx_v_t, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":879
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":879
  *         if not PyDataType_HASFIELDS(child):
  *             t = child.type_num
  *             if end - f < 5:             # <<<<<<<<<<<<<<
@@ -5006,7 +5084,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
       __pyx_t_6 = (((__pyx_v_end - __pyx_v_f) < 5) != 0);
       if (unlikely(__pyx_t_6)) {
 
-        /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":880
+        /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":880
  *             t = child.type_num
  *             if end - f < 5:
  *                 raise RuntimeError(u"Format string allocated too short.")             # <<<<<<<<<<<<<<
@@ -5019,7 +5097,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         __PYX_ERR(1, 880, __pyx_L1_error)
 
-        /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":879
+        /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":879
  *         if not PyDataType_HASFIELDS(child):
  *             t = child.type_num
  *             if end - f < 5:             # <<<<<<<<<<<<<<
@@ -5028,7 +5106,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
       }
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":883
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":883
  * 
  *             # Until ticket #99 is fixed, use integers to avoid warnings
  *             if   t == NPY_BYTE:        f[0] =  98 #"b"             # <<<<<<<<<<<<<<
@@ -5046,7 +5124,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":884
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":884
  *             # Until ticket #99 is fixed, use integers to avoid warnings
  *             if   t == NPY_BYTE:        f[0] =  98 #"b"
  *             elif t == NPY_UBYTE:       f[0] =  66 #"B"             # <<<<<<<<<<<<<<
@@ -5064,7 +5142,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":885
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":885
  *             if   t == NPY_BYTE:        f[0] =  98 #"b"
  *             elif t == NPY_UBYTE:       f[0] =  66 #"B"
  *             elif t == NPY_SHORT:       f[0] = 104 #"h"             # <<<<<<<<<<<<<<
@@ -5082,7 +5160,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":886
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":886
  *             elif t == NPY_UBYTE:       f[0] =  66 #"B"
  *             elif t == NPY_SHORT:       f[0] = 104 #"h"
  *             elif t == NPY_USHORT:      f[0] =  72 #"H"             # <<<<<<<<<<<<<<
@@ -5100,7 +5178,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":887
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":887
  *             elif t == NPY_SHORT:       f[0] = 104 #"h"
  *             elif t == NPY_USHORT:      f[0] =  72 #"H"
  *             elif t == NPY_INT:         f[0] = 105 #"i"             # <<<<<<<<<<<<<<
@@ -5118,7 +5196,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":888
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":888
  *             elif t == NPY_USHORT:      f[0] =  72 #"H"
  *             elif t == NPY_INT:         f[0] = 105 #"i"
  *             elif t == NPY_UINT:        f[0] =  73 #"I"             # <<<<<<<<<<<<<<
@@ -5136,7 +5214,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":889
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":889
  *             elif t == NPY_INT:         f[0] = 105 #"i"
  *             elif t == NPY_UINT:        f[0] =  73 #"I"
  *             elif t == NPY_LONG:        f[0] = 108 #"l"             # <<<<<<<<<<<<<<
@@ -5154,7 +5232,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":890
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":890
  *             elif t == NPY_UINT:        f[0] =  73 #"I"
  *             elif t == NPY_LONG:        f[0] = 108 #"l"
  *             elif t == NPY_ULONG:       f[0] = 76  #"L"             # <<<<<<<<<<<<<<
@@ -5172,7 +5250,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":891
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":891
  *             elif t == NPY_LONG:        f[0] = 108 #"l"
  *             elif t == NPY_ULONG:       f[0] = 76  #"L"
  *             elif t == NPY_LONGLONG:    f[0] = 113 #"q"             # <<<<<<<<<<<<<<
@@ -5190,7 +5268,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":892
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":892
  *             elif t == NPY_ULONG:       f[0] = 76  #"L"
  *             elif t == NPY_LONGLONG:    f[0] = 113 #"q"
  *             elif t == NPY_ULONGLONG:   f[0] = 81  #"Q"             # <<<<<<<<<<<<<<
@@ -5208,7 +5286,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":893
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":893
  *             elif t == NPY_LONGLONG:    f[0] = 113 #"q"
  *             elif t == NPY_ULONGLONG:   f[0] = 81  #"Q"
  *             elif t == NPY_FLOAT:       f[0] = 102 #"f"             # <<<<<<<<<<<<<<
@@ -5226,7 +5304,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":894
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":894
  *             elif t == NPY_ULONGLONG:   f[0] = 81  #"Q"
  *             elif t == NPY_FLOAT:       f[0] = 102 #"f"
  *             elif t == NPY_DOUBLE:      f[0] = 100 #"d"             # <<<<<<<<<<<<<<
@@ -5244,7 +5322,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":895
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":895
  *             elif t == NPY_FLOAT:       f[0] = 102 #"f"
  *             elif t == NPY_DOUBLE:      f[0] = 100 #"d"
  *             elif t == NPY_LONGDOUBLE:  f[0] = 103 #"g"             # <<<<<<<<<<<<<<
@@ -5262,7 +5340,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":896
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":896
  *             elif t == NPY_DOUBLE:      f[0] = 100 #"d"
  *             elif t == NPY_LONGDOUBLE:  f[0] = 103 #"g"
  *             elif t == NPY_CFLOAT:      f[0] = 90; f[1] = 102; f += 1 # Zf             # <<<<<<<<<<<<<<
@@ -5282,7 +5360,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":897
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":897
  *             elif t == NPY_LONGDOUBLE:  f[0] = 103 #"g"
  *             elif t == NPY_CFLOAT:      f[0] = 90; f[1] = 102; f += 1 # Zf
  *             elif t == NPY_CDOUBLE:     f[0] = 90; f[1] = 100; f += 1 # Zd             # <<<<<<<<<<<<<<
@@ -5302,7 +5380,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":898
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":898
  *             elif t == NPY_CFLOAT:      f[0] = 90; f[1] = 102; f += 1 # Zf
  *             elif t == NPY_CDOUBLE:     f[0] = 90; f[1] = 100; f += 1 # Zd
  *             elif t == NPY_CLONGDOUBLE: f[0] = 90; f[1] = 103; f += 1 # Zg             # <<<<<<<<<<<<<<
@@ -5322,7 +5400,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":899
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":899
  *             elif t == NPY_CDOUBLE:     f[0] = 90; f[1] = 100; f += 1 # Zd
  *             elif t == NPY_CLONGDOUBLE: f[0] = 90; f[1] = 103; f += 1 # Zg
  *             elif t == NPY_OBJECT:      f[0] = 79 #"O"             # <<<<<<<<<<<<<<
@@ -5340,7 +5418,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":901
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":901
  *             elif t == NPY_OBJECT:      f[0] = 79 #"O"
  *             else:
  *                 raise ValueError(u"unknown dtype code in numpy.pxd (%d)" % t)             # <<<<<<<<<<<<<<
@@ -5359,7 +5437,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
       }
       __pyx_L15:;
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":902
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":902
  *             else:
  *                 raise ValueError(u"unknown dtype code in numpy.pxd (%d)" % t)
  *             f += 1             # <<<<<<<<<<<<<<
@@ -5368,7 +5446,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
       __pyx_v_f = (__pyx_v_f + 1);
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":877
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":877
  *         offset[0] += child.itemsize
  * 
  *         if not PyDataType_HASFIELDS(child):             # <<<<<<<<<<<<<<
@@ -5378,7 +5456,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
       goto __pyx_L13;
     }
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":906
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":906
  *             # Cython ignores struct boundary information ("T{...}"),
  *             # so don't output it
  *             f = _util_dtypestring(child, f, end, offset)             # <<<<<<<<<<<<<<
@@ -5391,7 +5469,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     }
     __pyx_L13:;
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":851
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":851
  *     cdef tuple fields
  * 
  *     for childname in descr.names:             # <<<<<<<<<<<<<<
@@ -5401,7 +5479,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":907
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":907
  *             # so don't output it
  *             f = _util_dtypestring(child, f, end, offset)
  *     return f             # <<<<<<<<<<<<<<
@@ -5411,7 +5489,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
   __pyx_r = __pyx_v_f;
   goto __pyx_L0;
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":842
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":842
  *         return ()
  * 
  * cdef inline char* _util_dtypestring(dtype descr, char* f, char* end, int* offset) except NULL:             # <<<<<<<<<<<<<<
@@ -5436,7 +5514,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
   return __pyx_r;
 }
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1022
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1022
  *     int _import_umath() except -1
  * 
  * cdef inline void set_array_base(ndarray arr, object base):             # <<<<<<<<<<<<<<
@@ -5448,7 +5526,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("set_array_base", 0);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1023
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1023
  * 
  * cdef inline void set_array_base(ndarray arr, object base):
  *     Py_INCREF(base) # important to do this before stealing the reference below!             # <<<<<<<<<<<<<<
@@ -5457,7 +5535,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
  */
   Py_INCREF(__pyx_v_base);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1024
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1024
  * cdef inline void set_array_base(ndarray arr, object base):
  *     Py_INCREF(base) # important to do this before stealing the reference below!
  *     PyArray_SetBaseObject(arr, base)             # <<<<<<<<<<<<<<
@@ -5466,7 +5544,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
  */
   (void)(PyArray_SetBaseObject(__pyx_v_arr, __pyx_v_base));
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1022
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1022
  *     int _import_umath() except -1
  * 
  * cdef inline void set_array_base(ndarray arr, object base):             # <<<<<<<<<<<<<<
@@ -5478,7 +5556,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
   __Pyx_RefNannyFinishContext();
 }
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1026
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1026
  *     PyArray_SetBaseObject(arr, base)
  * 
  * cdef inline object get_array_base(ndarray arr):             # <<<<<<<<<<<<<<
@@ -5493,7 +5571,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("get_array_base", 0);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1027
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1027
  * 
  * cdef inline object get_array_base(ndarray arr):
  *     base = PyArray_BASE(arr)             # <<<<<<<<<<<<<<
@@ -5502,7 +5580,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
  */
   __pyx_v_base = PyArray_BASE(__pyx_v_arr);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1028
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1028
  * cdef inline object get_array_base(ndarray arr):
  *     base = PyArray_BASE(arr)
  *     if base is NULL:             # <<<<<<<<<<<<<<
@@ -5512,7 +5590,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
   __pyx_t_1 = ((__pyx_v_base == NULL) != 0);
   if (__pyx_t_1) {
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1029
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1029
  *     base = PyArray_BASE(arr)
  *     if base is NULL:
  *         return None             # <<<<<<<<<<<<<<
@@ -5523,7 +5601,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
     __pyx_r = Py_None; __Pyx_INCREF(Py_None);
     goto __pyx_L0;
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1028
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1028
  * cdef inline object get_array_base(ndarray arr):
  *     base = PyArray_BASE(arr)
  *     if base is NULL:             # <<<<<<<<<<<<<<
@@ -5532,7 +5610,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
  */
   }
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1030
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1030
  *     if base is NULL:
  *         return None
  *     return <object>base             # <<<<<<<<<<<<<<
@@ -5544,7 +5622,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
   __pyx_r = ((PyObject *)__pyx_v_base);
   goto __pyx_L0;
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1026
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1026
  *     PyArray_SetBaseObject(arr, base)
  * 
  * cdef inline object get_array_base(ndarray arr):             # <<<<<<<<<<<<<<
@@ -5559,7 +5637,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
   return __pyx_r;
 }
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1034
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1034
  * # Versions of the import_* functions which are more suitable for
  * # Cython code.
  * cdef inline int import_array() except -1:             # <<<<<<<<<<<<<<
@@ -5580,7 +5658,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
   PyObject *__pyx_t_8 = NULL;
   __Pyx_RefNannySetupContext("import_array", 0);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1035
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1035
  * # Cython code.
  * cdef inline int import_array() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -5596,7 +5674,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
     __Pyx_XGOTREF(__pyx_t_3);
     /*try:*/ {
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1036
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1036
  * cdef inline int import_array() except -1:
  *     try:
  *         _import_array()             # <<<<<<<<<<<<<<
@@ -5605,7 +5683,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
  */
       __pyx_t_4 = _import_array(); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(1, 1036, __pyx_L3_error)
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1035
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1035
  * # Cython code.
  * cdef inline int import_array() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -5619,7 +5697,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
     goto __pyx_L8_try_end;
     __pyx_L3_error:;
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1037
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1037
  *     try:
  *         _import_array()
  *     except Exception:             # <<<<<<<<<<<<<<
@@ -5634,7 +5712,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GOTREF(__pyx_t_7);
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1038
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1038
  *         _import_array()
  *     except Exception:
  *         raise ImportError("numpy.core.multiarray failed to import")             # <<<<<<<<<<<<<<
@@ -5650,7 +5728,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
     goto __pyx_L5_except_error;
     __pyx_L5_except_error:;
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1035
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1035
  * # Cython code.
  * cdef inline int import_array() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -5665,7 +5743,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
     __pyx_L8_try_end:;
   }
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1034
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1034
  * # Versions of the import_* functions which are more suitable for
  * # Cython code.
  * cdef inline int import_array() except -1:             # <<<<<<<<<<<<<<
@@ -5688,7 +5766,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
   return __pyx_r;
 }
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1040
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1040
  *         raise ImportError("numpy.core.multiarray failed to import")
  * 
  * cdef inline int import_umath() except -1:             # <<<<<<<<<<<<<<
@@ -5709,7 +5787,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
   PyObject *__pyx_t_8 = NULL;
   __Pyx_RefNannySetupContext("import_umath", 0);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1041
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1041
  * 
  * cdef inline int import_umath() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -5725,7 +5803,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
     __Pyx_XGOTREF(__pyx_t_3);
     /*try:*/ {
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1042
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1042
  * cdef inline int import_umath() except -1:
  *     try:
  *         _import_umath()             # <<<<<<<<<<<<<<
@@ -5734,7 +5812,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
  */
       __pyx_t_4 = _import_umath(); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(1, 1042, __pyx_L3_error)
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1041
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1041
  * 
  * cdef inline int import_umath() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -5748,7 +5826,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
     goto __pyx_L8_try_end;
     __pyx_L3_error:;
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1043
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1043
  *     try:
  *         _import_umath()
  *     except Exception:             # <<<<<<<<<<<<<<
@@ -5763,7 +5841,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GOTREF(__pyx_t_7);
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1044
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1044
  *         _import_umath()
  *     except Exception:
  *         raise ImportError("numpy.core.umath failed to import")             # <<<<<<<<<<<<<<
@@ -5779,7 +5857,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
     goto __pyx_L5_except_error;
     __pyx_L5_except_error:;
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1041
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1041
  * 
  * cdef inline int import_umath() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -5794,7 +5872,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
     __pyx_L8_try_end:;
   }
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1040
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1040
  *         raise ImportError("numpy.core.multiarray failed to import")
  * 
  * cdef inline int import_umath() except -1:             # <<<<<<<<<<<<<<
@@ -5817,7 +5895,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
   return __pyx_r;
 }
 
-/* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1046
+/* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1046
  *         raise ImportError("numpy.core.umath failed to import")
  * 
  * cdef inline int import_ufunc() except -1:             # <<<<<<<<<<<<<<
@@ -5838,7 +5916,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
   PyObject *__pyx_t_8 = NULL;
   __Pyx_RefNannySetupContext("import_ufunc", 0);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1047
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1047
  * 
  * cdef inline int import_ufunc() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -5854,7 +5932,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
     __Pyx_XGOTREF(__pyx_t_3);
     /*try:*/ {
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1048
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1048
  * cdef inline int import_ufunc() except -1:
  *     try:
  *         _import_umath()             # <<<<<<<<<<<<<<
@@ -5863,7 +5941,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
  */
       __pyx_t_4 = _import_umath(); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(1, 1048, __pyx_L3_error)
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1047
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1047
  * 
  * cdef inline int import_ufunc() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -5877,7 +5955,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
     goto __pyx_L8_try_end;
     __pyx_L3_error:;
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1049
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1049
  *     try:
  *         _import_umath()
  *     except Exception:             # <<<<<<<<<<<<<<
@@ -5891,7 +5969,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GOTREF(__pyx_t_7);
 
-      /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1050
+      /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1050
  *         _import_umath()
  *     except Exception:
  *         raise ImportError("numpy.core.umath failed to import")             # <<<<<<<<<<<<<<
@@ -5905,7 +5983,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
     goto __pyx_L5_except_error;
     __pyx_L5_except_error:;
 
-    /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1047
+    /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1047
  * 
  * cdef inline int import_ufunc() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -5920,7 +5998,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
     __pyx_L8_try_end:;
   }
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1046
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1046
  *         raise ImportError("numpy.core.umath failed to import")
  * 
  * cdef inline int import_ufunc() except -1:             # <<<<<<<<<<<<<<
@@ -5943,13 +6021,158 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
   return __pyx_r;
 }
 
+/* "cysignals/signals.pxd":57
+ * # (PyErr_Occurred() is non-NULL). To Cython, it will look like
+ * # cython_check_exception() actually raised the exception.
+ * cdef inline void cython_check_exception() nogil except *:             # <<<<<<<<<<<<<<
+ *     pass
+ * 
+ */
+
+static CYTHON_INLINE void __pyx_f_9cysignals_7signals_cython_check_exception(void) {
+
+  /* function exit code */
+}
+
+/* "cysignals/signals.pxd":63
+ * cdef void verify_exc_value()
+ * 
+ * cdef inline PyObject* sig_occurred():             # <<<<<<<<<<<<<<
+ *     """
+ *     Borrowed reference to the exception which is currently being
+ */
+
+static CYTHON_INLINE PyObject *__pyx_f_9cysignals_7signals_sig_occurred(void) {
+  PyObject *__pyx_r;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  __Pyx_RefNannySetupContext("sig_occurred", 0);
+
+  /* "cysignals/signals.pxd":77
+ *     exception is stored somewhere.
+ *     """
+ *     if unlikely(cysigs.exc_value is not NULL):             # <<<<<<<<<<<<<<
+ *         verify_exc_value()
+ *     return cysigs.exc_value
+ */
+  __pyx_t_1 = (unlikely((cysigs.exc_value != NULL)) != 0);
+  if (__pyx_t_1) {
+
+    /* "cysignals/signals.pxd":78
+ *     """
+ *     if unlikely(cysigs.exc_value is not NULL):
+ *         verify_exc_value()             # <<<<<<<<<<<<<<
+ *     return cysigs.exc_value
+ * 
+ */
+    __pyx_f_9cysignals_7signals_verify_exc_value();
+
+    /* "cysignals/signals.pxd":77
+ *     exception is stored somewhere.
+ *     """
+ *     if unlikely(cysigs.exc_value is not NULL):             # <<<<<<<<<<<<<<
+ *         verify_exc_value()
+ *     return cysigs.exc_value
+ */
+  }
+
+  /* "cysignals/signals.pxd":79
+ *     if unlikely(cysigs.exc_value is not NULL):
+ *         verify_exc_value()
+ *     return cysigs.exc_value             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __pyx_r = cysigs.exc_value;
+  goto __pyx_L0;
+
+  /* "cysignals/signals.pxd":63
+ * cdef void verify_exc_value()
+ * 
+ * cdef inline PyObject* sig_occurred():             # <<<<<<<<<<<<<<
+ *     """
+ *     Borrowed reference to the exception which is currently being
+ */
+
+  /* function exit code */
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "cysignals/signals.pxd":93
+ * 
+ * 
+ * cdef inline void __generate_declarations():             # <<<<<<<<<<<<<<
+ *     cysigs
+ *     _sig_on_interrupt_received
+ */
+
+static CYTHON_INLINE void __pyx_f_9cysignals_7signals___generate_declarations(void) {
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__generate_declarations", 0);
+
+  /* "cysignals/signals.pxd":94
+ * 
+ * cdef inline void __generate_declarations():
+ *     cysigs             # <<<<<<<<<<<<<<
+ *     _sig_on_interrupt_received
+ *     _sig_on_recover
+ */
+  (void)(cysigs);
+
+  /* "cysignals/signals.pxd":95
+ * cdef inline void __generate_declarations():
+ *     cysigs
+ *     _sig_on_interrupt_received             # <<<<<<<<<<<<<<
+ *     _sig_on_recover
+ *     _sig_off_warning
+ */
+  (void)(_sig_on_interrupt_received);
+
+  /* "cysignals/signals.pxd":96
+ *     cysigs
+ *     _sig_on_interrupt_received
+ *     _sig_on_recover             # <<<<<<<<<<<<<<
+ *     _sig_off_warning
+ *     print_backtrace
+ */
+  (void)(_sig_on_recover);
+
+  /* "cysignals/signals.pxd":97
+ *     _sig_on_interrupt_received
+ *     _sig_on_recover
+ *     _sig_off_warning             # <<<<<<<<<<<<<<
+ *     print_backtrace
+ */
+  (void)(_sig_off_warning);
+
+  /* "cysignals/signals.pxd":98
+ *     _sig_on_recover
+ *     _sig_off_warning
+ *     print_backtrace             # <<<<<<<<<<<<<<
+ */
+  (void)(print_backtrace);
+
+  /* "cysignals/signals.pxd":93
+ * 
+ * 
+ * cdef inline void __generate_declarations():             # <<<<<<<<<<<<<<
+ *     cysigs
+ *     _sig_on_interrupt_received
+ */
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+}
+
 static PyMethodDef __pyx_methods[] = {
-  {"wn", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_13builder_utils_1wn, METH_VARARGS|METH_KEYWORDS, __pyx_doc_13builder_utils_wn},
-  {"wn_arr", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_13builder_utils_3wn_arr, METH_VARARGS|METH_KEYWORDS, 0},
-  {"to_radians", (PyCFunction)__pyx_pw_13builder_utils_5to_radians, METH_O, 0},
-  {"fourier_sum", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_13builder_utils_7fourier_sum, METH_VARARGS|METH_KEYWORDS, __pyx_doc_13builder_utils_6fourier_sum},
-  {"upsample_component", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_13builder_utils_9upsample_component, METH_VARARGS|METH_KEYWORDS, 0},
-  {"single_component", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_13builder_utils_11single_component, METH_VARARGS|METH_KEYWORDS, 0},
+  {"wn", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_12soundfactory_7cyutils_13builder_utils_1wn, METH_VARARGS|METH_KEYWORDS, __pyx_doc_12soundfactory_7cyutils_13builder_utils_wn},
+  {"wn_arr", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_12soundfactory_7cyutils_13builder_utils_3wn_arr, METH_VARARGS|METH_KEYWORDS, 0},
+  {"to_radians", (PyCFunction)__pyx_pw_12soundfactory_7cyutils_13builder_utils_5to_radians, METH_O, 0},
+  {"fourier_sum", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_12soundfactory_7cyutils_13builder_utils_7fourier_sum, METH_VARARGS|METH_KEYWORDS, __pyx_doc_12soundfactory_7cyutils_13builder_utils_6fourier_sum},
+  {"upsample_component", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_12soundfactory_7cyutils_13builder_utils_9upsample_component, METH_VARARGS|METH_KEYWORDS, 0},
+  {"single_component", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_12soundfactory_7cyutils_13builder_utils_11single_component, METH_VARARGS|METH_KEYWORDS, 0},
   {0, 0, 0, 0}
 };
 
@@ -6041,8 +6264,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 28, __pyx_L1_error)
-  __pyx_builtin_round = __Pyx_GetBuiltinName(__pyx_n_s_round); if (!__pyx_builtin_round) __PYX_ERR(0, 78, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_builtin_round = __Pyx_GetBuiltinName(__pyx_n_s_round); if (!__pyx_builtin_round) __PYX_ERR(0, 92, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 272, __pyx_L1_error)
   __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) __PYX_ERR(1, 856, __pyx_L1_error)
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(1, 1038, __pyx_L1_error)
@@ -6055,7 +6278,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":272
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":272
  *             if ((flags & pybuf.PyBUF_C_CONTIGUOUS == pybuf.PyBUF_C_CONTIGUOUS)
  *                 and not PyArray_CHKFLAGS(self, NPY_ARRAY_C_CONTIGUOUS)):
  *                 raise ValueError(u"ndarray is not C contiguous")             # <<<<<<<<<<<<<<
@@ -6066,7 +6289,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":276
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":276
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)
  *                 and not PyArray_CHKFLAGS(self, NPY_ARRAY_F_CONTIGUOUS)):
  *                 raise ValueError(u"ndarray is not Fortran contiguous")             # <<<<<<<<<<<<<<
@@ -6077,7 +6300,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":306
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":306
  *                 if ((descr.byteorder == c'>' and little_endian) or
  *                     (descr.byteorder == c'<' and not little_endian)):
  *                     raise ValueError(u"Non-native byte order not supported")             # <<<<<<<<<<<<<<
@@ -6088,7 +6311,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":856
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":856
  * 
  *         if (end - f) - <int>(new_offset - offset[0]) < 15:
  *             raise RuntimeError(u"Format string allocated too short, see comment in numpy.pxd")             # <<<<<<<<<<<<<<
@@ -6099,7 +6322,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":880
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":880
  *             t = child.type_num
  *             if end - f < 5:
  *                 raise RuntimeError(u"Format string allocated too short.")             # <<<<<<<<<<<<<<
@@ -6110,7 +6333,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__5);
   __Pyx_GIVEREF(__pyx_tuple__5);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1038
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1038
  *         _import_array()
  *     except Exception:
  *         raise ImportError("numpy.core.multiarray failed to import")             # <<<<<<<<<<<<<<
@@ -6121,7 +6344,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__6);
   __Pyx_GIVEREF(__pyx_tuple__6);
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1044
+  /* "../../../.local/share/virtualenvs/soundfactory-7c_y-wYW/lib/python3.8/site-packages/Cython/Includes/numpy/__init__.pxd":1044
  *         _import_umath()
  *     except Exception:
  *         raise ImportError("numpy.core.umath failed to import")             # <<<<<<<<<<<<<<
@@ -6226,18 +6449,38 @@ static int __Pyx_modinit_type_import_code(void) {
 
 static int __Pyx_modinit_variable_import_code(void) {
   __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__Pyx_modinit_variable_import_code", 0);
   /*--- Variable import code ---*/
+  __pyx_t_1 = PyImport_ImportModule("cysignals.signals"); if (!__pyx_t_1) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ImportVoidPtr(__pyx_t_1, "cysigs", (void **)&__pyx_vp_9cysignals_7signals_cysigs, "cysigs_t") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  Py_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_RefNannyFinishContext();
   return 0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_RefNannyFinishContext();
+  return -1;
 }
 
 static int __Pyx_modinit_function_import_code(void) {
   __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__Pyx_modinit_function_import_code", 0);
   /*--- Function import code ---*/
+  __pyx_t_1 = PyImport_ImportModule("cysignals.signals"); if (!__pyx_t_1) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ImportFunction(__pyx_t_1, "verify_exc_value", (void (**)(void))&__pyx_f_9cysignals_7signals_verify_exc_value, "void (void)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ImportFunction(__pyx_t_1, "_sig_on_interrupt_received", (void (**)(void))&_sig_on_interrupt_received, "void (void)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ImportFunction(__pyx_t_1, "_sig_on_recover", (void (**)(void))&_sig_on_recover, "void (void)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ImportFunction(__pyx_t_1, "_sig_off_warning", (void (**)(void))&_sig_off_warning, "void (char const *, int)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ImportFunction(__pyx_t_1, "print_backtrace", (void (**)(void))&print_backtrace, "void (void)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  Py_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_RefNannyFinishContext();
   return 0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_RefNannyFinishContext();
+  return -1;
 }
 
 
@@ -6410,14 +6653,14 @@ if (!__Pyx_RefNanny) {
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
   if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
-  if (__pyx_module_is_main_builder_utils) {
+  if (__pyx_module_is_main_soundfactory__cyutils__builder_utils) {
     if (PyObject_SetAttr(__pyx_m, __pyx_n_s_name, __pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   }
   #if PY_MAJOR_VERSION >= 3
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(0, 1, __pyx_L1_error)
-    if (!PyDict_GetItemString(modules, "builder_utils")) {
-      if (unlikely(PyDict_SetItemString(modules, "builder_utils", __pyx_m) < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
+    if (!PyDict_GetItemString(modules, "soundfactory.cyutils.builder_utils")) {
+      if (unlikely(PyDict_SetItemString(modules, "soundfactory.cyutils.builder_utils", __pyx_m) < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
     }
   }
   #endif
@@ -6431,70 +6674,70 @@ if (!__Pyx_RefNanny) {
   (void)__Pyx_modinit_function_export_code();
   (void)__Pyx_modinit_type_init_code();
   if (unlikely(__Pyx_modinit_type_import_code() != 0)) goto __pyx_L1_error;
-  (void)__Pyx_modinit_variable_import_code();
-  (void)__Pyx_modinit_function_import_code();
+  if (unlikely(__Pyx_modinit_variable_import_code() != 0)) goto __pyx_L1_error;
+  if (unlikely(__Pyx_modinit_function_import_code() != 0)) goto __pyx_L1_error;
   /*--- Execution code ---*/
   #if defined(__Pyx_Generator_USED) || defined(__Pyx_Coroutine_USED)
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "builder_utils.pyx":2
+  /* "soundfactory/cyutils/builder_utils.pyx":2
  * #cython: language_level=3
  * import numpy as np             # <<<<<<<<<<<<<<
  * cimport numpy as np
- * 
+ * from libc.math cimport sin
  */
   __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "builder_utils.pyx":8
+  /* "soundfactory/cyutils/builder_utils.pyx":14
  * # DTYPE for this, which is assigned to the usual NumPy runtime
  * # type info object.
  * DTYPE = np.int             # <<<<<<<<<<<<<<
  * DTYPEI = np.int64
  * DTYPEF = np.float64
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_int); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_int); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_DTYPE, __pyx_t_2) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_DTYPE, __pyx_t_2) < 0) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "builder_utils.pyx":9
+  /* "soundfactory/cyutils/builder_utils.pyx":15
  * # type info object.
  * DTYPE = np.int
  * DTYPEI = np.int64             # <<<<<<<<<<<<<<
  * DTYPEF = np.float64
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 15, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_int64); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 9, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_int64); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 15, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_DTYPEI, __pyx_t_1) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_DTYPEI, __pyx_t_1) < 0) __PYX_ERR(0, 15, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "builder_utils.pyx":10
+  /* "soundfactory/cyutils/builder_utils.pyx":16
  * DTYPE = np.int
  * DTYPEI = np.int64
  * DTYPEF = np.float64             # <<<<<<<<<<<<<<
  * 
  * # "ctypedef" assigns a corresponding compile-time type to DTYPE_t. For
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 10, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float64); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 10, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float64); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_DTYPEF, __pyx_t_2) < 0) __PYX_ERR(0, 10, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_DTYPEF, __pyx_t_2) < 0) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "builder_utils.pyx":1
+  /* "soundfactory/cyutils/builder_utils.pyx":1
  * #cython: language_level=3             # <<<<<<<<<<<<<<
  * import numpy as np
  * cimport numpy as np
@@ -6504,12 +6747,12 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "../../../../../.virtualenvs/soundfactory/lib/python3.7/site-packages/Cython/Includes/numpy/__init__.pxd":1046
- *         raise ImportError("numpy.core.umath failed to import")
+  /* "cysignals/signals.pxd":93
  * 
- * cdef inline int import_ufunc() except -1:             # <<<<<<<<<<<<<<
- *     try:
- *         _import_umath()
+ * 
+ * cdef inline void __generate_declarations():             # <<<<<<<<<<<<<<
+ *     cysigs
+ *     _sig_on_interrupt_received
  */
 
   /*--- Wrapped vars code ---*/
@@ -6520,11 +6763,11 @@ if (!__Pyx_RefNanny) {
   __Pyx_XDECREF(__pyx_t_2);
   if (__pyx_m) {
     if (__pyx_d) {
-      __Pyx_AddTraceback("init builder_utils", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("init soundfactory.cyutils.builder_utils", __pyx_clineno, __pyx_lineno, __pyx_filename);
     }
     Py_CLEAR(__pyx_m);
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init builder_utils");
+    PyErr_SetString(PyExc_ImportError, "init soundfactory.cyutils.builder_utils");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -9620,6 +9863,109 @@ static CYTHON_INLINE int __Pyx_PyErr_GivenExceptionMatches2(PyObject *err, PyObj
     }
     return 0;
 }
+
+/* VoidPtrImport */
+  #ifndef __PYX_HAVE_RT_ImportVoidPtr
+#define __PYX_HAVE_RT_ImportVoidPtr
+static int __Pyx_ImportVoidPtr(PyObject *module, const char *name, void **p, const char *sig) {
+    PyObject *d = 0;
+    PyObject *cobj = 0;
+    d = PyObject_GetAttrString(module, (char *)"__pyx_capi__");
+    if (!d)
+        goto bad;
+    cobj = PyDict_GetItemString(d, name);
+    if (!cobj) {
+        PyErr_Format(PyExc_ImportError,
+            "%.200s does not export expected C variable %.200s",
+                PyModule_GetName(module), name);
+        goto bad;
+    }
+#if PY_VERSION_HEX >= 0x02070000
+    if (!PyCapsule_IsValid(cobj, sig)) {
+        PyErr_Format(PyExc_TypeError,
+            "C variable %.200s.%.200s has wrong signature (expected %.500s, got %.500s)",
+             PyModule_GetName(module), name, sig, PyCapsule_GetName(cobj));
+        goto bad;
+    }
+    *p = PyCapsule_GetPointer(cobj, sig);
+#else
+    {const char *desc, *s1, *s2;
+    desc = (const char *)PyCObject_GetDesc(cobj);
+    if (!desc)
+        goto bad;
+    s1 = desc; s2 = sig;
+    while (*s1 != '\0' && *s1 == *s2) { s1++; s2++; }
+    if (*s1 != *s2) {
+        PyErr_Format(PyExc_TypeError,
+            "C variable %.200s.%.200s has wrong signature (expected %.500s, got %.500s)",
+             PyModule_GetName(module), name, sig, desc);
+        goto bad;
+    }
+    *p = PyCObject_AsVoidPtr(cobj);}
+#endif
+    if (!(*p))
+        goto bad;
+    Py_DECREF(d);
+    return 0;
+bad:
+    Py_XDECREF(d);
+    return -1;
+}
+#endif
+
+/* FunctionImport */
+  #ifndef __PYX_HAVE_RT_ImportFunction
+#define __PYX_HAVE_RT_ImportFunction
+static int __Pyx_ImportFunction(PyObject *module, const char *funcname, void (**f)(void), const char *sig) {
+    PyObject *d = 0;
+    PyObject *cobj = 0;
+    union {
+        void (*fp)(void);
+        void *p;
+    } tmp;
+    d = PyObject_GetAttrString(module, (char *)"__pyx_capi__");
+    if (!d)
+        goto bad;
+    cobj = PyDict_GetItemString(d, funcname);
+    if (!cobj) {
+        PyErr_Format(PyExc_ImportError,
+            "%.200s does not export expected C function %.200s",
+                PyModule_GetName(module), funcname);
+        goto bad;
+    }
+#if PY_VERSION_HEX >= 0x02070000
+    if (!PyCapsule_IsValid(cobj, sig)) {
+        PyErr_Format(PyExc_TypeError,
+            "C function %.200s.%.200s has wrong signature (expected %.500s, got %.500s)",
+             PyModule_GetName(module), funcname, sig, PyCapsule_GetName(cobj));
+        goto bad;
+    }
+    tmp.p = PyCapsule_GetPointer(cobj, sig);
+#else
+    {const char *desc, *s1, *s2;
+    desc = (const char *)PyCObject_GetDesc(cobj);
+    if (!desc)
+        goto bad;
+    s1 = desc; s2 = sig;
+    while (*s1 != '\0' && *s1 == *s2) { s1++; s2++; }
+    if (*s1 != *s2) {
+        PyErr_Format(PyExc_TypeError,
+            "C function %.200s.%.200s has wrong signature (expected %.500s, got %.500s)",
+             PyModule_GetName(module), funcname, sig, desc);
+        goto bad;
+    }
+    tmp.p = PyCObject_AsVoidPtr(cobj);}
+#endif
+    *f = tmp.fp;
+    if (!(*f))
+        goto bad;
+    Py_DECREF(d);
+    return 0;
+bad:
+    Py_XDECREF(d);
+    return -1;
+}
+#endif
 
 /* InitStrings */
   static int __Pyx_InitStrings(__Pyx_StringTabEntry *t) {
