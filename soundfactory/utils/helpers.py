@@ -1,5 +1,10 @@
+import pickle
+from pathlib import Path
+import hashlib
+
 import numpy as np
 from math import log
+
 from soundfactory.constants import (
     CENTS_PER_OCTAVE,
     BASE,
@@ -7,9 +12,7 @@ from soundfactory.constants import (
     QUARTERTONE_CENTS,
 )
 from soundfactory.settings.config import BUILDER_CACHE_PATH
-import pickle
-from pathlib import Path
-import hashlib
+from soundfactory.settings.logging_settings import helperlog
 
 
 def cents_from_freq_ratio(upper_tone, lower_tone):
@@ -127,15 +130,23 @@ def save_cache(cache, path=BUILDER_CACHE_PATH):
     path_obj.parent.mkdir(parents=True, exist_ok=True)
     with open(path, 'wb') as f:
         pickle.dump(cache, f, protocol=pickle.HIGHEST_PROTOCOL)
+        helperlog.debug(f'Cache saved')
 
-        
+
 def builder_cache_key(freqs, amps, waves, phases, n_max, samplerate, duration):
     if phases is None:
         phases = [0] * len(freqs)
     key = sorted(zip(freqs, amps, waves, phases), key=lambda x: x[0])
     key += [n_max, samplerate, duration]
-    hash_object = hashlib.md5(repr(key).encode('utf-8'))
-    return hash_object.hexdigest()
+    key = '_'.join([str(k) for k in key])
+    return key
+
+
+def single_component_cache_key(self, freq, amp, wave, phase, n_max, samplerate, duration):
+    # To use on a class method
+    key = [freq, amp, wave, phase, n_max, samplerate, duration]
+    key = '_'.join([str(k) for k in key])
+    return key
 
 
 def cache_it(cache, key_encoder, path=BUILDER_CACHE_PATH):
@@ -143,8 +154,10 @@ def cache_it(cache, key_encoder, path=BUILDER_CACHE_PATH):
         def wrapped(*args):
             key = key_encoder(*args)
             val = cache.get(key)
-            if not val:
+            if val is None:
+                helperlog.debug(f'Value for {key} not found in Cache')
                 val = func(*args)
+                helperlog.debug(f'Setting {val} for {key} in Cache')
                 cache[key] = val
                 save_cache(cache, path)
             return val
