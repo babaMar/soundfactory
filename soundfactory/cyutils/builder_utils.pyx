@@ -1,6 +1,12 @@
 #cython: language_level=3
 import numpy as np
 cimport numpy as np
+from libc.math cimport sin
+
+from cpython.exc cimport PyErr_CheckSignals
+from cysignals.signals cimport sig_on, sig_off, sig_check
+from libc.stdio cimport fprintf, stdout
+
 
 # We now need to fix a datatype for our arrays. I've used the variable
 # DTYPE for this, which is assigned to the usual NumPy runtime
@@ -41,12 +47,15 @@ cpdef double fourier_sum(
         double freq,
         double phase,
         np.ndarray[DTYPE_t, ndim=1] nterms
-):
+) except *:
     """Partial sum of the fourier series up to nterms"""
-    partial_sums = np.sum(
+    cdef double _part_sum = 0.0
+
+    sig_check()
+    _part_sum = np.sum(
         coefficients * np.sin(wn_arr(nterms, freq) * x + nterms * to_radians(phase))
     )
-    return partial_sums
+    return _part_sum
 
 
 cpdef np.ndarray upsample_component(
@@ -60,8 +69,11 @@ cpdef np.ndarray upsample_component(
     cdef int N = times.shape[0]
     cdef np.ndarray res = np.zeros([N], dtype=DTYPEF)
     cdef double frequency = 1. / duration
+
     for i in range(N):
+        PyErr_CheckSignals()
         res[i] = amp * fourier_sum(times[i], coefficients, frequency, phase, nterms)
+
     return res
 
 
@@ -74,7 +86,9 @@ cpdef np.ndarray single_component(
     cdef double cycles = freq * duration
     cdef np.ndarray sample_range = np.arange(0, samples)
     cdef np.ndarray indexes = np.zeros([samples], dtype=DTYPEI)
+
     for i in range(samples):
+        PyErr_CheckSignals()
         indexes[i] = round(sample_range[i] * cycles) % samples
 
     return upsampled[indexes]
