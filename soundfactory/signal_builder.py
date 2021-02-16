@@ -1,11 +1,16 @@
 import numbers
 import numpy as np
+from pathlib import Path
 
 from .constants import DEFAULT_SAMPLERATE
 from .settings.signal import B_N_COEFF_MAP
 from .utils.signal import write
 from .settings.logging_settings import createlog
+from .utils.helpers import load_cache, single_component_cache_key, cache_it
 from soundfactory.cyutils import builder_utils as cy_builder_utils
+
+CACHE_PATH = str(Path(__file__).resolve().parent / 'signal_builder.pickle')
+CACHE = load_cache(path=CACHE_PATH)
 
 
 class SignalBuilderError(Exception):
@@ -60,12 +65,12 @@ class SignalBuilder:
         self.set_phases(phases)
         self.wave_types = wave_types
         self.check_input()
-        self.n_terms = np.arange(1, n_max + 1)
+        self.n_terms = np.arange(1, n_max + 1, dtype=np.int64)
         self.duration = duration
         self.samplerate = samplerate
         self.n_samples = int(self.duration * self.samplerate)
         self.time_space = np.linspace(
-            0.0, self.duration, self.n_samples, endpoint=False
+            0.0, self.duration, self.n_samples, endpoint=False, dtype=np.float64
         )
         self.a0 = 0
         self.signal = self.build_signal()
@@ -88,9 +93,22 @@ class SignalBuilder:
 
     def set_phases(self, phases):
         if phases is None:
-            self.phases = [0] * len(self.frequencies)
+            self.phases = [0.] * len(self.frequencies)
         else:
             self.phases = phases
+
+    @cache_it(CACHE, single_component_cache_key, path=CACHE_PATH)
+    def _compute_component(self, _freq, _amp, _phase, _shape, n_max, samplerate, duration):
+        # n_max and samplerate are used in the specified key_encoder to create the cache key
+        coefficients = B_N_COEFF_MAP[_shape]
+        coefficients = np.asarray(coefficients(self.n_terms), dtype=np.float64)
+        upsampled = cy_builder_utils.upsample_component(
+            _amp, _phase, duration, self.time_space, coefficients, self.n_terms
+        )
+        component = cy_builder_utils.single_component(
+            _freq, self.duration, upsampled, self.n_samples
+        )
+        return component
 
     def build_signal(self):
         signal = np.zeros(self.n_samples, dtype="float64")
@@ -99,17 +117,12 @@ class SignalBuilder:
         ):
             freq = round(freq, 2)
             createlog.info(
-                "Adding components from {s} wave of {f} hz frequency".format(
-                    s=shape, f=freq
+                "Adding components from {s} wave of {f} hz frequency with amplitude {a}".format(
+                    s=shape, f=freq, a=round(amp, 2)
                 )
             )
-            coefficients = B_N_COEFF_MAP[shape]
-            coefficients = coefficients(self.n_terms)
-            upsampled = cy_builder_utils.upsample_component(
-                amp, ph, self.duration, self.time_space, coefficients, self.n_terms
-            )
-            signal += cy_builder_utils.single_component(
-                freq, self.duration, upsampled, self.n_samples
+            signal += self._compute_component(
+                float(freq), float(amp), float(ph), shape, self.n_terms.shape[0], self.samplerate, float(self.duration)
             )
 
         return signal
