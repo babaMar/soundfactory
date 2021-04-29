@@ -1,0 +1,26 @@
+version: 2
+updates:
+- package-ecosystem: pip
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: matplotlib
+    versions:
+    - 3.3.4
+    - 3.4.0
+  - dependency-name: scipy
+    versions:
+    - 1.6.0
+    - 1.6.1
+    - 1.6.2
+  - dependency-name: pytz
+    versions:
+    - "2020.5"
+  - dependency-name: lxml
+    versions:
+    - 4.6.2
+  - dependency-name: cffi
+    versions:
+    - 1.14.4
