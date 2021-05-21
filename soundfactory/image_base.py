@@ -36,10 +36,11 @@ def default_amp_calculator(
 
 class Channel:
     def __init__(
-            self, data, name, amplitude_calculator=default_amp_calculator
+            self, data, name, resolution, amplitude_calculator=default_amp_calculator,
     ):
         self.data = np.asarray(data)
         self.name = name
+        self.resolution = resolution
         self._svd()
         logger.debug(
             '<{} band> Calculating eigenvalues and eigenvectors for U...'
@@ -60,10 +61,10 @@ class Channel:
         self.diagsvd = linalg.diagsvd(self.s, M, N)
         self.separability_index = self.s[0] ** 2 / sum(self.s ** 2)
 
-    def reconstruct(self, resolution):
+    def reconstruct(self):
         reduced_mat = np.dot(
-            self.U[:, :resolution],
-            np.dot(np.diag(self.s[:resolution]), self.V[:resolution, :]),
+            self.U[:, :self.resolution],
+            np.dot(np.diag(self.s[:self.resolution]), self.V[:self.resolution, :]),
         )
         return np.asarray(reduced_mat, dtype="uint8")
 
@@ -77,13 +78,13 @@ class Channel:
             limit
         )
 
-    def audio_signal(self, resolution, fudge, **kw):
+    def audio_signal(self, fudge, **kw):
         fundamental = 2**fudge * self.separability_index
-        amplitudes = self.calculate_amplitudes(resolution)
-        frequencies = fundamental * self.intervals[:resolution]
+        amplitudes = self.calculate_amplitudes(self.resolution)
+        frequencies = fundamental * self.intervals[:self.resolution]
         phases = kw.get("phases", None)
         n_max = kw.get("n_max", 1000)
-        waves = kw.get("waves", ["sine" for _ in range(resolution)])
+        waves = kw.get("waves", ["sine" for _ in range(self.resolution)])
         samplerate = kw.get("samplerate", 48000)
         duration = kw.get("duration", 1)
         s = self._cached_builder(
@@ -109,48 +110,69 @@ class Channel:
 
 class SoundImage:
     def __init__(
-            self, input_file, amplitude_calculator=default_amp_calculator
+            self, input_file, amplitude_calculator=default_amp_calculator, resolution=10
     ):
         self.name = str(input_file).split('/')[-1].split('.')[0]
         self.image = Image.open(input_file)
         self.amp_calc = amplitude_calculator
+        self.resolution = resolution
         self.width, self.height = self.image.size
         self.channels = self._channels()
         self.bands = tuple(self.channels.keys())
-        
+
     def _channels(self):
         return {
             band: Channel(
                 self.image.getchannel(band),
                 band,
-                amplitude_calculator=self.amp_calc
+                self.resolution,
+                amplitude_calculator=self.amp_calc,
             )
             for band in self.image.getbands()
         }
 
-    def reconstructed(self, resolution):
+    def convert(self):
+        # a possible mapping between Image space and Sound space might be formulated by associating the R, G, B
+        # representation to a 3-band subdivision of the audible frequency spectrum. As the visualised color of a certain
+        # pixel is the combination of the channel values, one can imagine that the associated sound to that pixel is the
+        # combination of an equivalent audible-band value. As for each color band we find 256 possible values, it seems
+        # reasonable to divide the entire audible spectrum in 3 bands (corresponding to the R, G, B channels) each made
+        # of 256 subdivisions. Basically, one assumes that the final signal is made of the sum
+        # of a low (R), mid (G), and high (B) contribution. To associate the R/G/B channel to a low/mid/high channel,
+        # seems reasonable to divide the low/mid/high band for 256, and obtain a relative frequency increment (d) size
+        # in Hz. So, assuming the common low/mid/high frequency ranges:
+        # d_low = (low_max - low_min) / 256, d_mid = (mid_max - mid_min)/256, d_high = (high_max - high_min)/256
+        # So that, to map a single pixel [i, j] value to a frequency value one can do:
+        # pixel_hz = R[i, j] * d_low + (G[i, j] * d_mid + mid_min) + (B[i, j] * d_high + high_min)
+        # Now, as the eye grasps the picture features rather than the single pixels, it seems also reasonable to cluster
+        # pixels together before attempting any conversion of sort. So an exemplified version of this algorithm might be
+        # 1. Analyse the image to identify the features
+        # 1a. Order them in terms of "importance"?
+        # 2. group the pixels belonging to each feature and associate a duration according to the feature population
+        # 3. perform a weighted average (luminosity?) on the cluster
+        # 4. perform the transformation above for each cluster
+        # 4.a According to the order and duration, concatenate the feature extracted sounds together
+        pass
+
+    def reconstructed(self):
         rec_im = np.zeros(
             (self.height, self.width, len(self.bands)), dtype="uint8"
         )
         for i, channel in enumerate(self.channels.values()):
-            rec_im[:, :, i] = channel.reconstruct(resolution)
+            rec_im[:, :, i] = channel.reconstruct()
         return Image.fromarray(rec_im)
 
-    def export_audio(self, left_band, right_band=None, resolution=10,
+    def export_audio(self, left_band, right_band=None,
                      fudge=5, path="./", bit_depth=16, **kw):
         outpath = Path(path) / self.name / "".join(
             (left_band, right_band or "", '.wav'))
         outpath.parent.mkdir(parents=True, exist_ok=True)
-        left_builder = self.channels.get(left_band).audio_signal(
-                resolution, fudge, **kw
-            )
+        left_builder = self.channels.get(left_band).audio_signal(fudge, **kw)
+        logger.info("saving audio to {}".format(str(outpath)))
         if right_band is None:
             left_builder.export(str(outpath), bit_depth=bit_depth)
-            logger.info("saving audio to {}".format(str(outpath)))
         else:
-            right_builder = self.channels.get(right_band).audio_signal(
-                resolution, fudge, **kw
-            )
+            right_builder = self.channels.get(right_band).audio_signal(fudge, **kw)
             assert left_builder.samplerate == right_builder.samplerate
             write_stereo(
                 left_builder.scaled_signal, right_builder.scaled_signal,

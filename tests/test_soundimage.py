@@ -31,7 +31,7 @@ def test_cmyk(cmyk_file):
 
 def test_class(rgb_file):
     channels = COLORSPACE["RGB"]["channels"]
-    sim = SoundImage(rgb_file)
+    sim = SoundImage(rgb_file, resolution=199)
     assert isinstance(sim.channels, dict)
     assert sorted(sim.bands) == sorted(channels)
 
@@ -42,7 +42,7 @@ def test_class(rgb_file):
         assert isinstance(channel.data, np.ndarray)
         assert channel.name == band
 
-    rec_im = sim.reconstructed(min([sim.width, sim.height]))
+    rec_im = sim.reconstructed()
     diff = ImageChops.difference(sim.image, rec_im)
     # (Almost) all pixels are black
     assert diff.histogram().count(0) >= 762
@@ -50,14 +50,14 @@ def test_class(rgb_file):
     folder = rgb_file.split('/')[-1].split('.')[0]
     # Mono
     l_band = "R"
-    sim.export_audio(l_band, resolution=2)
+    sim.export_audio(l_band)
     assert Path(
         Path(__file__).parent.parent / folder / str(l_band + '.wav')
     ).is_file()
     # Stereo
     for couple in combinations(channels, 2):
         l, r = couple
-        sim.export_audio(l, r, resolution=2)
+        sim.export_audio(l, r)
         assert Path(
             Path(__file__).parent.parent / folder / str(l + r + '.wav')
         ).is_file()
