@@ -1,10 +1,8 @@
 from scipy.signal import hilbert
-# from python_toolbox import caching
 import soundfile as sf
 import numpy as np
 
 
-#@caching.cache()
 def get_envelope(mono_audio):
     analytic_audio = hilbert(mono_audio)
     return np.abs(analytic_audio)
@@ -17,12 +15,6 @@ def load_audio(wavfile):
     # Stereo signal
     signal = f.read(dtype=np.float32)
     return signal, samplerate
-
-
-def wn(n, freq):
-    # Return the w_n angular frequency
-    wn = (2 * np.pi * n) * freq
-    return wn
 
 
 def find_soundfile_subtype(depth, default=16):
@@ -96,3 +88,11 @@ def write(signal, filename, bit_depth=16, samplerate=44100):
     subtype = find_soundfile_subtype(bit_depth)
     sf.write(filename, signal, samplerate, subtype=subtype)
 
+
+def write_stereo(left, right, filename, bit_depth=16, samplerate=44100):
+    if isinstance(left, str) and isinstance(right, str):
+        left, l_samplerate = load_audio(left)
+        right, r_samplerate = load_audio(right)
+    duration = min([len(left), len(right)])
+    signal = np.array([left[:duration], right[:duration]]).T
+    write(signal, filename, bit_depth=bit_depth, samplerate=samplerate)

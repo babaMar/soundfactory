@@ -27,3 +27,6 @@ playlog.setLevel(logging.INFO)
 
 signal_log = get_logger(name="signal")
 signal_log.setLevel(logging.DEBUG)
+
+helperlog = get_logger(name="helper")
+helperlog.setLevel(logging.INFO)

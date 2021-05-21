@@ -41,14 +41,24 @@ def triangle_wave(freq, phase=0, end=1., samples=DEFAULT_SAMPLERATE):
 
 
 @pytest.fixture
+def frequencies():
+    return [832.2, 30.1, 1.9, 1.0, 432.0]
+
+
+@pytest.fixture
+def n_max_range():
+    return [1, 10, 100, 1000]
+
+
+@pytest.fixture
 def lengths_samplerates():
-    yield ((121, 121.354), (1, 1), (1, 4), (12, 1), (3, 12), (3 * 44100, 44100))
+    yield (121, 121.354), (1, 1), (1, 4), (12, 1), (3, 12), (3 * 44100, 44100)
 
 
 @pytest.fixture
 def signals():
-    def _x(L, n):
-        return np.linspace(0, L, n)
+    def _x(length, n):
+        return np.linspace(0, length, n)
     yield (_x(1, 101),
            3.4 * np.sin(_x(1, 202)),
            2 * np.sin(_x(10, 80000)) + _x(1, 80000) + np.exp(_x(1, 80000)),
@@ -83,3 +93,35 @@ def mono_audio_file():
 @pytest.fixture
 def stereo_audio_file():
     return str(Path(__file__).parent.parent / 'samples' / 'A3-Calib-220.wav')
+
+
+@pytest.fixture
+def rgb_file():
+    return str(
+        Path(__file__).parent.parent
+        / 'samples' / 'images' / 'rembrandt_rgb.jpg'
+    )    
+
+
+@pytest.fixture
+def rgba_file():
+    return str(
+        Path(__file__).parent.parent
+        / 'samples' / 'images' / 'rembrandt_rgba.png'
+    )    
+
+
+@pytest.fixture
+def grey_file():
+    return str(
+        Path(__file__).parent.parent
+        / 'samples' / 'images' / 'rembrandt_grey.jpg'
+    )    
+
+
+@pytest.fixture
+def cmyk_file():
+    return str(
+        Path(__file__).parent.parent
+        / 'samples' / 'images' / 'rembrandt_cmyk.jpg'
+    )

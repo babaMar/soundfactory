@@ -24,7 +24,7 @@ You can find the documentation at https://soundfactory.readthedocs.io
 ---
 **WARNING**
 
-Before installing with `pip` check the [pre-requirements](https://soundfactory.readthedocs.io/en/latest/installation.html#prerequisites)
+Before installing with `pip` check the [pre-requirements](https://soundfactory.readthedocs.io/en/latest/Installation.html#prerequisites)
 
 ---
 

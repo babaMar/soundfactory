@@ -10,9 +10,6 @@ from soundfactory.constants import DEFAULT_SAMPLERATE
 
 
 TIME_RANGE = time_range()
-TEST_FREQUENCIES = [
-    832.2, 30.1, 1.9, 1, 432
-]
 APPROXIMATION_TOLERANCE = 0.01
 WAVE_ANALYTICS = [sine_wave, square_wave, sawtooth_wave, triangle_wave]
 WAVE_LABELS = ['sine', 'square', 'sawtooth', 'triangle']
@@ -28,11 +25,11 @@ class ApproximationDifferences:
 
 
 # Y: Diff (for each wave form) X: Freq
-def test_signal_approximation():
+def test_signal_approximation(frequencies):
     samplerate = DEFAULT_SAMPLERATE
     duration = 1.1
-    amplitudes = (2.5 * random() for _ in range(3))
-    for freq in TEST_FREQUENCIES:
+    amplitudes = list(2.5 * random() for _ in range(3))
+    for freq in frequencies:
         for analytic_sig, wave_shape, tolerance in WAVES:
             for amplitude in amplitudes:
                 sig = amplitude * analytic_sig(
@@ -41,7 +38,6 @@ def test_signal_approximation():
                     [freq],
                     [amplitude],
                     [wave_shape],
-                    n_max=1000,
                     duration=duration,
                     samplerate=samplerate
                 )
@@ -55,7 +51,6 @@ def test_export(testfile_path):
     samplerate = 44100
     f = [432]
     a = [1]
-    f, a = np.array(f), np.array(a)
     wave_types = ["sine"]
     s = SignalBuilder(f, a, wave_types, samplerate=samplerate)
     s.export(filename)
@@ -65,6 +60,8 @@ def test_export(testfile_path):
     freqs = np.fft.fftfreq(len(signal), d=1/samplerate)
     amps = 2 * (np.abs(fft) / len(signal))
     idx = np.where((amps > 1e-4) & (freqs >= 0))[0]
+
+    f, a = np.array(f), np.array(a)
     assert (freqs[idx] - f < 1e-5).all()
     assert (amps[idx] - a < 1e-5).all()
 
