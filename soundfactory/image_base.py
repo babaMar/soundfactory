@@ -163,9 +163,14 @@ class SoundImage:
         return Image.fromarray(rec_im)
 
     def export_audio(self, left_band, right_band=None,
-                     fudge=5, path="./", bit_depth=16, **kw):
-        outpath = Path(path) / self.name / "".join(
-            (left_band, right_band or "", '.wav'))
+                     fudge=5, path=None, bit_depth=16, **kw):
+        if path is None:
+            outpath = Path("./") / self.name / "".join(
+                (left_band, right_band or "", '.wav'))
+        else:
+            if not path.endswith(".wav"):
+                path = path + ".wav"
+            outpath = Path(path)
         outpath.parent.mkdir(parents=True, exist_ok=True)
         left_builder = self.channels.get(left_band).audio_signal(fudge, **kw)
         logger.info("saving audio to {}".format(str(outpath)))

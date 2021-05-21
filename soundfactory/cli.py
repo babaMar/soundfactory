@@ -6,6 +6,7 @@ from .settings.input_validators import (
     ExistentWav, Wav, ArbitraryNArgs, WaveComponent
 )
 from .settings.plot import AMP_THRESHOLD
+from .image_base import SoundImage
 
 
 @click.group()
@@ -89,7 +90,31 @@ def create(wave_component, out, samplerate, duration, fourierterms):
     "--input-file", "-i",
     metavar="INPUT",
     required=True,
-    type=ExistentWav())
+    # type=ExistentWav()
+)
+@click.option(
+    "--resolution", "-r",
+    metavar="RESOLUTION",
+    required=False,
+    default=10
+)
+@click.option(
+    "--out-file", "-o",
+    metavar="OUTFILE",
+    default=None
+)
+def transform(input_file, resolution, out_file):
+    si = SoundImage(input_file, resolution=resolution)
+    si.export_audio("R", path=out_file)
+
+
+@main.command()
+@click.option(
+    "--input-file", "-i",
+    metavar="INPUT",
+    required=True,
+    type=ExistentWav()
+)
 def play(input_file):
     pp(input_file)
 
