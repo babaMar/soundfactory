@@ -1,6 +1,6 @@
 # soundfactory
-[![Build Status](https://travis-ci.org/babaMar/soundfactory.svg?branch=development)](https://travis-ci.org/babaMar/soundfactory)
-[![codecov](https://codecov.io/gl/babaMar/soundfactory/branch/development/graph/badge.svg)](https://codecov.io/gl/babaMar/soundfactory)
+[![Build Status](https://travis-ci.org/babaMar/soundfactory.svg?branch=master)](https://travis-ci.org/babaMar/soundfactory)
+[![codecov](https://codecov.io/gl/babaMar/soundfactory/branch/master/graph/badge.svg)](https://codecov.io/gl/babaMar/soundfactory)
 [![Documentation Status](https://readthedocs.org/projects/soundfactory/badge/?version=latest)](https://soundfactory.readthedocs.io/en/latest/?badge=latest)
 
 `soundfactory` is a simple tool to experiment and be creative with audio taking a data-oriented approach.
