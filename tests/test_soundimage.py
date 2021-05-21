@@ -31,7 +31,7 @@ def test_cmyk(cmyk_file):
 
 def test_class(rgb_file):
     channels = COLORSPACE["RGB"]["channels"]
-    sim = SoundImage(rgb_file, resolution=199)
+    sim = SoundImage(rgb_file, resolution=160)
     assert isinstance(sim.channels, dict)
     assert sorted(sim.bands) == sorted(channels)
 
@@ -47,6 +47,7 @@ def test_class(rgb_file):
     # (Almost) all pixels are black
     assert diff.histogram().count(0) >= 762
 
+    sim = SoundImage(rgb_file, resolution=10)
     folder = rgb_file.split('/')[-1].split('.')[0]
     # Mono
     l_band = "R"
