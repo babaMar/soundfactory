@@ -6,7 +6,7 @@ cycler==0.10.0
 cysignals==1.10.2
 Cython==0.29.17
 getch==1.0
-llvmlite==0.32.1
+llvmlite==0.36.0
 lxml==4.6.2
 matplotlib==3.3.4
 numba==0.47.0
