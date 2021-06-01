@@ -27,7 +27,7 @@ with open('requirements.txt') as f:
 setup(
     name="soundfactory",
     packages=["soundfactory"],
-    version="0.1.0",
+    version="0.2.0",
     author="TSAK",
     author_email="tsakians@gmail.com",
     description="simple tools for audio-signal manipulations",
