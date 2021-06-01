@@ -3,7 +3,7 @@ cffi==1.14.5
 Click==7.0
 complexaudio==1.0.4
 cycler==0.10.0
-cysignals==1.10.2
+cysignals==1.10.3
 Cython==0.29.17
 getch==1.0
 llvmlite==0.32.1
