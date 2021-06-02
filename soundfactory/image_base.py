@@ -131,29 +131,6 @@ class SoundImage:
             for band in self.image.getbands()
         }
 
-    def convert(self):
-        # a possible mapping between Image space and Sound space might be formulated by associating the R, G, B
-        # representation to a 3-band subdivision of the audible frequency spectrum. As the visualised color of a certain
-        # pixel is the combination of the channel values, one can imagine that the associated sound to that pixel is the
-        # combination of an equivalent audible-band value. As for each color band we find 256 possible values, it seems
-        # reasonable to divide the entire audible spectrum in 3 bands (corresponding to the R, G, B channels) each made
-        # of 256 subdivisions. Basically, one assumes that the final signal is made of the sum
-        # of a low (R), mid (G), and high (B) contribution. To associate the R/G/B channel to a low/mid/high channel,
-        # seems reasonable to divide the low/mid/high band for 256, and obtain a relative frequency increment (d) size
-        # in Hz. So, assuming the common low/mid/high frequency ranges:
-        # d_low = (low_max - low_min) / 256, d_mid = (mid_max - mid_min)/256, d_high = (high_max - high_min)/256
-        # So that, to map a single pixel [i, j] value to a frequency value one can do:
-        # pixel_hz = R[i, j] * d_low + (G[i, j] * d_mid + mid_min) + (B[i, j] * d_high + high_min)
-        # Now, as the eye grasps the picture features rather than the single pixels, it seems also reasonable to cluster
-        # pixels together before attempting any conversion of sort. So an exemplified version of this algorithm might be
-        # 1. Analyse the image to identify the features
-        # 1a. Order them in terms of "importance"?
-        # 2. group the pixels belonging to each feature and associate a duration according to the feature population
-        # 3. perform a weighted average (luminosity?) on the cluster
-        # 4. perform the transformation above for each cluster
-        # 4.a According to the order and duration, concatenate the feature extracted sounds together
-        pass
-
     def reconstructed(self):
         rec_im = np.zeros(
             (self.height, self.width, len(self.bands)), dtype="uint8"
